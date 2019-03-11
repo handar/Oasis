@@ -1,4 +1,6 @@
 // jshint esversion:6
+// CSC648-01 Team 007
+
 const express = require('express');
 const hbs = require('hbs');
 const fs = require('fs');
@@ -26,7 +28,7 @@ hbs.registerHelper('getCurrentYear', () => {
   return new Date().getFullYear();
 });
 
-hbs.registerHelper('screamIt', (text)=> {
+hbs.registerHelper('screamIt', (text) => {
   return text.toUpperCase();
 });
 
