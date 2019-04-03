@@ -1,0 +1,26 @@
+<link rel="stylesheet" href="/css/style.css">
+<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+
+<div class="flex-container">
+    <div class="container">
+            <h1>LISTINGS</h1>
+            <p class="lead">Total listings are <strong><%= data %></strong> and counting more...</p>
+            <!-- Begin Form-->
+            <form method="POST" action="/search">                
+                <input type="text", name="min" class="form" placeholder="Min Price">
+                <input type="text", name="max" class="form" placeholder="Max Price">
+                <button>Search</button>
+            </form> <!-- End Form-->
+
+            <h1>Result</h1>
+            <div>
+                <ul>
+                    <li> </li>
+                    
+                </ul>
+            </div>
+
+    </div>
+</div>
+
+
