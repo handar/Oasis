@@ -5,6 +5,7 @@
     <div class="container">
             <h1>LISTINGS</h1>
             <p class="lead">Total listings are <strong><%= data %></strong> and counting more...</p>
+            
             <!-- Begin Form-->
             <form method="POST" action="/search">                
                 <input type="text", name="min" class="form" placeholder="Min Price">
@@ -12,14 +13,22 @@
                 <button>Search</button>
             </form> <!-- End Form-->
 
+            <br>
+            <br>
+            <hr>
+
+            <!-- Begin Result-->
             <h1>Result</h1>
             <div>
-                <ul>
-                    <li> </li>
-                    
-                </ul>
+                <li>Address: <%= address %></li>
+                <li>City: <%= city %></li>
+                <li>State: <%= state %></li>
+                <li>Zipcode: <%= zipcode %></li>
+                <li>Price: <%= price %></li>
+                <li>Size: <%= size %></li>
+                <li>Room: <%= room %></li>
+                <li>Bathroom: <%= bathroom %></li>
             </div>
-
     </div>
 </div>
 
