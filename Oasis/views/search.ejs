@@ -19,6 +19,13 @@
 
             <!-- Begin Result-->
             <h1>Result</h1>
+            
+            <% if ( resultCount > 0) { %>
+                <p>Found <%= resultCount %> properties that match your search critera.</p>
+           <% } %>
+
+            <br>
+
             <div>
                 <li>Address: <%= address %></li>
                 <li>City: <%= city %></li>
