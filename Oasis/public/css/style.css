@@ -16,6 +16,10 @@ body {
     height: 100%;
 }
 
+.container {
+    margin: auto;
+}
+
 h1 {
     margin: 10;
     font-size: 100px;
