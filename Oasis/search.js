@@ -9,6 +9,7 @@ const port = 3000;
 const mysql = require('mysql');
 const bodyParser = require('body-parser');
 
+var img_url = [];
 var prop_add = [];
 var prop_city = [];
 var prop_state = [];
@@ -67,6 +68,7 @@ app.get('/search', function(req, res) {
             data: count,
             resultCount: totalCount,
             dropCount: drop_count, 
+            listImg: img_url,
             address: prop_add,
             city: prop_city,
             state: prop_state,
@@ -163,6 +165,7 @@ function search_state(min_price, max_price, drop_state) {
 
         drop_count = result.length;
         for(var i = 0; i < result.length; i++) {
+            img_url.push(result[i].imgURL);
             prop_add.push(result[i].address);
             prop_city.push(result[i].city);
             prop_state.push(result[i].state);
@@ -183,6 +186,7 @@ function search(min_price, max_price) {
 
         drop_count = result.length;
         for(var i = 0; i < totalCount; i++) {
+            img_url.push(result[i].imgURL);
             prop_add.push(result[i].address);
             prop_city.push(result[i].city);
             prop_state.push(result[i].state);
