@@ -70,19 +70,11 @@ app.get('/search', function(req, res) {
 });
 
 // post
-app.post('/search', function(req, res) {
-   
+app.post('/search', function(req, res) {   
     // get the user's input parameter
     let min_price = req.body.min;
     let max_price = req.body.max;
 
-    /**
-     * Test for Valid User Input
-     * var sum = min_price + max_price;
-     * console.log(min_price);
-     * console.log(max_price);
-     * console.log('Sum is:' + sum);
-     */
     try {
         if (min_price == "" || max_price == "") throw "Input is empty. Please try again!";
         if (isNaN(min_price) || isNaN(max_price)) throw "Input is not a valid number. Please input a number between 0 and 10000.";
@@ -98,7 +90,7 @@ app.post('/search', function(req, res) {
         if (min_price < 0 || max_price < 0 || max_price > 10000) throw "Please input a number between 0 and 10000.";
         // query price range count
         totalCount = countResult(min_price, max_price);
-        console.log("totalCount_0")        
+        console.log("totalCount_0 :" + totalCount);        
         // query price range
         search(min_price, max_price);
         // redirect to the result page
@@ -125,15 +117,19 @@ function countResult(min_price, max_price) {
         console.log(count); // JSON object
         //totalCount = Number(result[0].count);
         totalCount= Number(result[0].count)
-        console.log('static totalCount_1: ' + totalCount); 
+        console.log('totalCount_1: ' + totalCount); 
         return totalCount;
         
         //console.log(totalCount);    // actual count
     });
 } // end countResult()
 
+/**
+ * Search database that match user inpur parameters of min and max price
+ * @param {*} min_price 
+ * @param {*} max_price 
+ */
 function search(min_price, max_price) {
-
     let totalCount = countResult(min_price, max_price);
     // query if the result count is greater than 1
     // console.log('total count is: ' + totalCount);
