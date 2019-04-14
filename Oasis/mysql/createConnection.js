@@ -19,7 +19,7 @@ exports.con = function () {
         user: 'root',
         password: '',
         // database: '',      /** uncomment it if creating database for the first time */
-        database: 'testdb',
+        database: 'oasisdb',
 
         // AWS RDS
         // host: 'oasisdb.cueqkbjnpfop.us-west-1.rds.amazonaws.com',

@@ -17,7 +17,7 @@ function createDB() {
     let db = createConnection.con();
 
     // make database
-    let sql = "CREATE DATABASE IF NOT EXISTS testDB";
+    let sql = "CREATE DATABASE IF NOT EXISTS oasisdb";
     db.query(sql, function(err, result) {
         if (err) throw err;
         console.log("Database Created Successfully!");

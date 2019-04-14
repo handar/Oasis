@@ -32,7 +32,7 @@ const createConnection = require(__dirname + "/mysql/createConnection.js");
 // const createDB = require(__dirname + "/mysql/createDB.js");
 // const dropDB = require(__dirname + "/mysql/dropDB.js");
 // const createTable = require(__dirname + "/mysql/createTable.js");
-// const insertInto = require(__dirname + "/mysql/insertInto.js");
+const insertInto = require(__dirname + "/mysql/insertInto.js");
 // const alterTable = require(__dirname + "/mysql/alterTable.js");
 // const dropTable = require(__dirname + "/mysql/dropTable.js");
 // const truncateTable = require(__dirname + "/mysql/truncateTable.js");
@@ -47,7 +47,7 @@ let db = createConnection.con();   // Create Database Connection
 // createTable();        // Creae Table 
 // createTable.property();  // Create table name property
 // createTable.users(); // Create table name users  
-// insertInto();        // Insert into table
+insertInto();        // Insert into table
 // alterTable();         // Alter Table
 // dropTable();          // Drop Table
 // truncateTable();     // Truncate Table
