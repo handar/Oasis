@@ -17,10 +17,9 @@ const createConnection = require(__dirname + '/createConnection.js');
 // create database connection
 let db = createConnection.con();
 
-
 function truncateTable() {
     // CREATE TABLE employee
-    let sql = "TRUNCATE TABLE employees";
+    let sql = "TRUNCATE TABLE property";
     db.query(sql, function(err, result, fields) {
         if (err) throw err;
         console.log('Table truncated successfully...');

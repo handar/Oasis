@@ -25,7 +25,7 @@ function insertInto() {
     // AUTO POPULATE DATABASE USING FAKER LIBRARY
     let data = [];
     let i;
-    for (i=1; i<=10; i++) {
+    for (i=1; i<=3; i++) {
         data.push([
             faker.address.streetAddress(),
             faker.address.city(),

@@ -7,10 +7,18 @@ var mysql = require('mysql');
 
 // Establish Database Connection
 var db = mysql.createConnection({
+    // AWS RDS
+    // AWS RDS
+    // host: 'oasisdb.cueqkbjnpfop.us-west-1.rds.amazonaws.com',
+    // user: 'oasisCSC648007',
+    // password: '41839cSc64807',
+    // database: 'oasisdb',
+
+    // local host
     host: 'localhost',
     user: 'root',
     password: '',
-    database: '',
+    database: 'oasisdb',
 });
 
 // Connect to MySQL
