@@ -1,10 +1,10 @@
 const express = require('express');
 const app = express();
 
+const bodyParser = require('body-parser');
 const port = 3000;
 
-const mysql = require('mysql');
-const bodyParser = require('body-parser');
+
 
 var img_url = [];
 var prop_add = [];
@@ -18,33 +18,39 @@ var prop_bathroom = [];
 let totalCount = 0;
 let drop_count = 0;
 
+/**
+ * CONFIGURATIONS
+ */
+app.set('view engine', 'ejs');      // set view engine
+app.use(bodyParser.urlencoded({extended: true}));       // body-parser
+app.use(express.static(__dirname + '/public'));     // css
 
-// CONFIGURATIONS
-    // set view engine
-app.set('view engine', 'ejs');
-    // body-parser
-app.use(bodyParser.urlencoded({extended: true}));
-    // css
-app.use(express.static(__dirname + '/public'));
+/**
+ * IMPORT MODULES - MySQL query  
+ */
+const createConnection = require(__dirname + "/mysql/createConnection.js");
+// const createDB = require(__dirname + "/mysql/createDB.js");
+// const dropDB = require(__dirname + "/mysql/dropDB.js");
+// const createTable = require(__dirname + "/mysql/createTable.js");
+// const insertInto = require(__dirname + "/mysql/insertInto.js");
+// const alterTable = require(__dirname + "/mysql/alterTable.js");
+// const dropTable = require(__dirname + "/mysql/dropTable.js");
+// const truncateTable = require(__dirname + "/mysql/truncateTable.js");
+// const faker = require(__dirname + "/mysql/faker.js");
 
-// Create Database connection
-let db = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: '',
-    database: 'searchapp',
-    // host: 'oasisdb.cueqkbjnpfop.us-west-1.rds.amazonaws.com',
-    // user: 'oasisCSC648007',
-    // password: '41839cSc64807',
-    // database: 'oasisdb',
-});
-
-// Connect to MySQL
-db.connect(function(err) {
-    if(err) throw err;
-    console.log("Connection established successfully to AWS RDBMS...");
-});
-
+/**
+ * MySQL Database Query Execution
+ */
+let db = createConnection.con();   // Create Database Connection
+// createDB();           // Create a Database name csc675
+// dropDB();                // DROP a database
+// createTable();        // Creae Table 
+// createTable.property();  // Create table name property
+// createTable.users(); // Create table name users  
+// insertInto();        // Insert into table
+// alterTable();         // Alter Table
+// dropTable();          // Drop Table
+// truncateTable();     // Truncate Table
 
 // search page
 app.get('/search', function(req, res) {         
@@ -146,7 +152,7 @@ function search_state(min_price, max_price, drop_state) {
 
         drop_count = result.length;
         for(var i = 0; i < result.length; i++) {
-            img_url.push(result[i].imgURL);
+            img_url.push(result[i].img);
             prop_add.push(result[i].address);
             prop_city.push(result[i].city);
             prop_state.push(result[i].state);
@@ -167,7 +173,7 @@ function search(min_price, max_price) {
 
         drop_count = result.length;
         for(var i = 0; i < totalCount; i++) {
-            img_url.push(result[i].imgURL);
+            img_url.push(result[i].img);
             prop_add.push(result[i].address);
             prop_city.push(result[i].city);
             prop_state.push(result[i].state);
