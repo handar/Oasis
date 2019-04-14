@@ -12,12 +12,10 @@
 
 // Import Module
 const createConnection = require(__dirname + '/createConnection.js');
-
+let db = createConnection();    // create database connection
 let count;
 
-function countAll() {
-    
-    let db = createConnection.con();    // create database connection
+function countAll() {  
     let sql = "SELECT COUNT(*) AS count FROM property";
     db.query(sql, function(err, result, field) {
         if (err) throw err;

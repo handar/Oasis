@@ -14,7 +14,7 @@ const createConnection = require(__dirname + "/createConnection.js");
 
 function dropDB() {
     // create database connection
-    let db = createConnection.con();
+    let db = createConnection();
 
     // make database
     let sql = "DROP DATABASE test";

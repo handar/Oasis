@@ -11,7 +11,7 @@
 
 const mysql = require('mysql');
 
-exports.con = function() {
+function createConnection() {
     // Create a database Connection
     let connection = mysql.createConnection({
         // local host
@@ -35,4 +35,7 @@ exports.con = function() {
     });
     return connection;
 } // end createConnection()
+
+// Export Module
+module.exports = createConnection;
 

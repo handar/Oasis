@@ -14,7 +14,7 @@ const createConnection = require(__dirname + "/createConnection.js");
 
 function createDB() {
     // create database connection
-    let db = createConnection.con();
+    let db = createConnection();
 
     // make database
     let sql = "CREATE DATABASE IF NOT EXISTS oasisdb";

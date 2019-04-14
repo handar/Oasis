@@ -13,7 +13,7 @@
 const createConnection = require(__dirname + '/createConnection.js');
 
 // create database connection
-let db = createConnection.con();
+let db = createConnection();
 
 // Export as module property
 exports.property = function () {

@@ -40,7 +40,7 @@ const createConnection = require(__dirname + "/mysql/createConnection.js");
 /**
  * MySQL Database Query Execution
  */
-// let db = createConnection.con();   // Create Database Connection
+// let db = createConnection();   // Create Database Connection
 // createDB();           // Create a Database name csc675
 // dropDB();                // DROP a database
 // createTable();        // Creae Table 
@@ -98,7 +98,7 @@ app.post('/search', function(req, res) {
         if (min_price < 0 || max_price < 0 || max_price > 10000) throw "Please input a number between 0 and 10000.";
         // query price range count
         totalCount = countResult(min_price, max_price);
-        console.log("totalCount_0")        
+        //console.log("totalCount_0")        
         // query price range
         if (drop_state == "") {
             search(min_price, max_price);    
@@ -121,23 +121,23 @@ app.post('/search', function(req, res) {
  * @param {*} max_price     max_price of the property
  */
 function countResult(min_price, max_price) {
-    let db = createConnection.con();   // Create Database Connection
+    let db = createConnection();   // Create Database Connection
     // find the total number of property within min and max price range
     let sql = "SELECT COUNT(*) AS count FROM property where price >= ? AND price <= ?";
     db.query(sql, [min_price, max_price] ,function(err, result, field) {
         if (err) throw err;
         //console.log(count); // undefined
         let count = JSON.stringify(result); 
-        console.log(count); // JSON object
+        //console.log(count); // JSON object
         //totalCount = Number(result[0].count);
         totalCount= Number(result[0].count)
-        console.log('static totalCount_1: ' + totalCount); 
+        //console.log('static totalCount_1: ' + totalCount); 
         return totalCount;
     });
 } // end countResult()
 
 function search_state(min_price, max_price, drop_state) {
-    let db = createConnection.con();   // Create Database Connection
+    let db = createConnection();   // Create Database Connection
     let sql = "SELECT * FROM property WHERE price >= ? AND price <= ? AND state = ?";
     db.query(sql, [min_price, max_price, drop_state], function(err, result, field) {
         if (err) throw err;
@@ -159,7 +159,7 @@ function search_state(min_price, max_price, drop_state) {
 }
 
 function search(min_price, max_price) {
-    let db = createConnection.con();   // Create Database Connection
+    let db = createConnection();   // Create Database Connection
     let sql = "SELECT * FROM property WHERE price >= ? AND price <= ?";
     db.query(sql, [min_price, max_price], function(err, result, field) {
         if (err) throw err;

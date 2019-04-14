@@ -8,7 +8,7 @@ faker.locale = 'en_US';
 
 // Import module
 const createConnection = require(__dirname + '/createConnection.js');
-let db = createConnection.con();
+let db = createConnection();
     // Generate a Random Number between min and max
 function getRandomInt(min, max) {
     min = Math.ceil(min);
