@@ -6,19 +6,9 @@ var mysql = require('mysql');
 var faker = require('faker');
 faker.locale = 'en_US';
 
-// establish database connection
-var db = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: '',
-    database: '',
-});
-
-// Connect to MySQL
-db.connect(function(err) {
-    if(err) throw err;
-    console.log("Connection established to MySQL DBMS successfully...");
-
+// Import module
+const createConnection = require(__dirname + '/createConnection.js');
+let db = createConnection.con();
     // Generate a Random Number between min and max
 function getRandomInt(min, max) {
     min = Math.ceil(min);

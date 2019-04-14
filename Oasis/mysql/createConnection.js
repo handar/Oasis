@@ -11,7 +11,7 @@
 
 const mysql = require('mysql');
 
-exports.con = function () {
+exports.con = function() {
     // Create a database Connection
     let connection = mysql.createConnection({
         // local host

@@ -4,8 +4,6 @@ const app = express();
 const bodyParser = require('body-parser');
 const port = 3000;
 
-
-
 var img_url = [];
 var prop_add = [];
 var prop_city = [];
@@ -32,53 +30,45 @@ const createConnection = require(__dirname + "/mysql/createConnection.js");
 // const createDB = require(__dirname + "/mysql/createDB.js");
 // const dropDB = require(__dirname + "/mysql/dropDB.js");
 // const createTable = require(__dirname + "/mysql/createTable.js");
-const insertInto = require(__dirname + "/mysql/insertInto.js");
+//const insertInto = require(__dirname + "/mysql/insertInto.js");
 // const alterTable = require(__dirname + "/mysql/alterTable.js");
 // const dropTable = require(__dirname + "/mysql/dropTable.js");
 // const truncateTable = require(__dirname + "/mysql/truncateTable.js");
 // const faker = require(__dirname + "/mysql/faker.js");
+ const countAll = require(__dirname + "/mysql/countAll.js");
 
 /**
  * MySQL Database Query Execution
  */
-let db = createConnection.con();   // Create Database Connection
+// let db = createConnection.con();   // Create Database Connection
 // createDB();           // Create a Database name csc675
 // dropDB();                // DROP a database
 // createTable();        // Creae Table 
 // createTable.property();  // Create table name property
 // createTable.users(); // Create table name users  
-insertInto();        // Insert into table
+//insertInto();        // Insert into table
 // alterTable();         // Alter Table
 // dropTable();          // Drop Table
 // truncateTable();     // Truncate Table
 
 // search page
-app.get('/search', function(req, res) {         
-    
-    //category = req.body.bound;
-    //console.log(category);
-    // Find count of users in DBMS
-    // Respond with that count
-    let sql = "SELECT COUNT(*) AS count FROM property";
-    db.query(sql, function(err, result, field) {
-        if (err) throw err;
-        let count = result[0].count;
-
-        res.render('search', {
-            data: count,
-            resultCount: totalCount,
-            dropCount: drop_count, 
-            listImg: img_url,
-            address: prop_add,
-            city: prop_city,
-            state: prop_state,
-            zipcode: prop_zipcode,
-            price: prop_price,
-            size: prop_size,
-            room: prop_room,
-            bathroom: prop_bathroom,
-        });
-    }); 
+app.get('/search', function(req, res) {    
+    let count = countAll();
+    //console.log("count0: " + count);
+    res.render('search', {
+        data: count,
+        resultCount: totalCount,
+        dropCount: drop_count, 
+        listImg: img_url,
+        address: prop_add,
+        city: prop_city,
+        state: prop_state,
+        zipcode: prop_zipcode,
+        price: prop_price,
+        size: prop_size,
+        room: prop_room,
+        bathroom: prop_bathroom,
+    });
 });
 
 // post
@@ -131,6 +121,7 @@ app.post('/search', function(req, res) {
  * @param {*} max_price     max_price of the property
  */
 function countResult(min_price, max_price) {
+    let db = createConnection.con();   // Create Database Connection
     // find the total number of property within min and max price range
     let sql = "SELECT COUNT(*) AS count FROM property where price >= ? AND price <= ?";
     db.query(sql, [min_price, max_price] ,function(err, result, field) {
@@ -146,6 +137,7 @@ function countResult(min_price, max_price) {
 } // end countResult()
 
 function search_state(min_price, max_price, drop_state) {
+    let db = createConnection.con();   // Create Database Connection
     let sql = "SELECT * FROM property WHERE price >= ? AND price <= ? AND state = ?";
     db.query(sql, [min_price, max_price, drop_state], function(err, result, field) {
         if (err) throw err;
@@ -167,6 +159,7 @@ function search_state(min_price, max_price, drop_state) {
 }
 
 function search(min_price, max_price) {
+    let db = createConnection.con();   // Create Database Connection
     let sql = "SELECT * FROM property WHERE price >= ? AND price <= ?";
     db.query(sql, [min_price, max_price], function(err, result, field) {
         if (err) throw err;
