@@ -1,3 +1,14 @@
+/**
+ * search.js        - A program to facilitate search feature.
+ * @author            Ratna Lama
+ * @author            Andrew Sarmiento
+ * @author  
+ * @date              4/11/2019
+ * 
+ * @description       Core logic to facilitate search feature in the website.
+ * 
+ */
+
 const express = require('express');
 const app = express();
 
@@ -30,7 +41,7 @@ const createConnection = require(__dirname + "/mysql/createConnection.js");
 // const createDB = require(__dirname + "/mysql/createDB.js");
 // const dropDB = require(__dirname + "/mysql/dropDB.js");
 // const createTable = require(__dirname + "/mysql/createTable.js");
-//const insertInto = require(__dirname + "/mysql/insertInto.js");
+// const insertInto = require(__dirname + "/mysql/insertInto.js");
 // const alterTable = require(__dirname + "/mysql/alterTable.js");
 // const dropTable = require(__dirname + "/mysql/dropTable.js");
 // const truncateTable = require(__dirname + "/mysql/truncateTable.js");
@@ -46,7 +57,7 @@ const createConnection = require(__dirname + "/mysql/createConnection.js");
 // createTable();        // Creae Table 
 // createTable.property();  // Create table name property
 // createTable.users(); // Create table name users  
-//insertInto();        // Insert into table
+// insertInto();        // Insert into table
 // alterTable();         // Alter Table
 // dropTable();          // Drop Table
 // truncateTable();     // Truncate Table
@@ -77,8 +88,8 @@ app.post('/search', function(req, res) {
     // get the user's input parameter
     let min_price = req.body.min;
     let max_price = req.body.max;
-    let drop_state = req.body.bound;
-    console.log(drop_state);
+    //let drop_state = req.body.bound;
+    //console.log(drop_state);
     /**
      * Test for Valid User Input
      * var sum = min_price + max_price;
@@ -100,12 +111,15 @@ app.post('/search', function(req, res) {
         totalCount = countResult(min_price, max_price);
         //console.log("totalCount_0")        
         // query price range
-        if (drop_state == "") {
-            search(min_price, max_price);    
-        }
-        if(drop_state != "") {
-            search_state(min_price, max_price, drop_state);
-        }
+        // if (drop_state == "") {
+        //     search(min_price, max_price);    
+        // }
+        // if(drop_state != "") {
+        //     search_state(min_price, max_price, drop_state);
+        // }
+
+        search(min_price, max_price);
+
         // redirect to the result page
         res.redirect('/search');
     } catch (error) {
@@ -136,27 +150,29 @@ function countResult(min_price, max_price) {
     });
 } // end countResult()
 
-function search_state(min_price, max_price, drop_state) {
-    let db = createConnection();   // Create Database Connection
-    let sql = "SELECT * FROM property WHERE price >= ? AND price <= ? AND state = ?";
-    db.query(sql, [min_price, max_price, drop_state], function(err, result, field) {
-        if (err) throw err;
+// function search_state(min_price, max_price, drop_state) {
+//     let db = createConnection();   // Create Database Connection
+//     // let sql = "SELECT * FROM property WHERE price >= ? AND price <= ? AND state = ?";
+//     // db.query(sql, [min_price, max_price, drop_state], function(err, result, field) {
+//     let sql = "SELECT * FROM property WHERE price >= ? AND price <= ?" ;
+//     db.query(sql, [min_price, max_price], function(err, result, field) {
+//         if (err) throw err;
 
-        drop_count = result.length;
-        for(var i = 0; i < result.length; i++) {
-            img_url.push(result[i].img);
-            prop_add.push(result[i].address);
-            prop_city.push(result[i].city);
-            prop_state.push(result[i].state);
-            prop_zipcode.push(result[i].zipcode);
-            prop_price.push(result[i].price);
-            prop_size.push(result[i].size);
-            prop_room.push(result[i].room);
-            prop_bathroom.push(result[i].bathroom);
-        }
-        console.log(result);
-    });
-}
+//         drop_count = result.length;
+//         for(var i = 0; i < result.length; i++) {
+//             img_url.push(result[i].img);
+//             prop_add.push(result[i].address);
+//             prop_city.push(result[i].city);
+//             prop_state.push(result[i].state);
+//             prop_zipcode.push(result[i].zipcode);
+//             prop_price.push(result[i].price);
+//             prop_size.push(result[i].size);
+//             prop_room.push(result[i].room);
+//             prop_bathroom.push(result[i].bathroom);
+//         }
+//         console.log(result);
+//     });
+// }
 
 function search(min_price, max_price) {
     let db = createConnection();   // Create Database Connection
@@ -165,6 +181,7 @@ function search(min_price, max_price) {
         if (err) throw err;
 
         drop_count = result.length;
+        console.log("drop_count: " + drop_count);
         for(var i = 0; i < totalCount; i++) {
             img_url.push(result[i].img);
             prop_add.push(result[i].address);

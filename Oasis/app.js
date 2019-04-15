@@ -1,5 +1,16 @@
-// jshint esversion:6
-// CSC648-01 Team 007
+/**
+ * app.js           - The main app that runs the server.
+ * @author            Ratna Lama
+ * @author            Andrew Sarmiento
+ * @author            Hadia Andar
+ * @author            Ade Adetayo
+ * @author            Shuyuan Deng
+ * @author            Adam Tremarche
+ * @date              4/11/2019
+ * 
+ * @description       Back end routes.
+ * 
+ */
 
 const express = require('express');
 const hbs = require('hbs');

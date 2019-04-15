@@ -20,7 +20,7 @@ const getRandomInt = require(__dirname + '/getRandomInt.js');
 // Populate Database using Faker Library
 function insertInto() {
     // create database connection
-    let db = createConnection.con();
+    let db = createConnection();
 
     // AUTO POPULATE DATABASE USING FAKER LIBRARY
     let data = [];
