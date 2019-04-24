@@ -1,4 +1,4 @@
-body {
+/* body {
     text-align: center;
     text-shadow: 0 .05rem .1rem rgba(0,0,0,.5);
     font-family: 'Roboto', sans-serif;
@@ -51,10 +51,142 @@ button {
     padding: 5px 30px;
     background: rgba(255,255,255,1.0);
     border-radius: 5px;
-    opacity: 0.8;    
+    opacity: 0.8;
 }
 
 ::-webkit-input-placeholder {
-    /* Chrome/Safari/Opera*/
+
     color: rgba(255,255,255,0.8);
+} */
+#search{
+  width: 650px;
+
 }
+
+#quote{
+  text-align: center;
+  margin-left: 10px;
+  font-size: 40px;
+  font-style: Helvetica oblique;
+
+}
+.p-2 #navbardrop{
+
+
+}
+.mb-3{
+  width:20%;
+}
+.jumbotron {
+  padding-top: 6rem;
+  padding-bottom: 6rem;
+  margin-bottom: 0;
+  background-color: #fff;
+}
+
+
+.jumbotron-heading {
+  font-weight: 300;
+}
+
+.jumbotron .container {
+  max-width: 40rem;
+}
+
+.album {
+
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+  background-color: #f7f7f7;
+}
+
+.card {
+  float: left;
+  width: 29%;
+  padding: 5px;
+  margin-bottom: 2rem;
+  border: 0;
+}
+
+.card > img {
+  margin-bottom: .75rem;
+  max-width: 100%;
+}
+
+.card-text {
+  font-size: 85%;
+}
+
+footer a {
+     /* margin-left: 250px; */
+     padding: 10px;
+     /* margin:100px; */
+
+}
+
+h1{
+  padding: 5px;
+}
+.sidebar {
+  position: fixed;
+  top: 51px;
+  bottom: 0;
+  left: 0;
+  z-index: 1000;
+  padding: 20px;
+  overflow-x: hidden;
+  overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
+  border-right: 1px solid #eee;
+}
+
+/* Sidebar navigation */
+.sidebar {
+  padding-left: 0;
+  padding-right: 0;
+  margin-bottom: 55px;
+}
+
+.sidebar .nav {
+  margin-bottom: 20px;
+}
+
+.sidebar .nav-item {
+  width: 100%;
+}
+
+.sidebar .nav-item + .nav-item {
+  margin-left: 0;
+}
+
+.sidebar .nav-link {
+  border-radius: 0;
+}
+.container{
+
+  /* height: 70%;
+  float:right;  */
+  margin-top: 50px;
+
+
+  /* margin-left: -55px */
+}
+#signin{
+
+  padding: 20px;
+  margin-left: 500px;
+}
+.bs-example{
+    	margin-left: 400px;
+    }
+	/* Fix alignment issue of label on extra small devices in Bootstrap 3.2 */
+  .form-horizontal .control-label{
+        padding-top: 7px;
+    }
+  .border{
+    width: 400px;
+    padding: 30px;
+  }
+  .btn-lg{
+    width: 350px;
+    background-color:#ac17e8;
+  }

@@ -6,7 +6,7 @@ Bootsrap Navigation Bar for CSC648
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
+<link rel="stylesheet" href="./css/style.css">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
@@ -16,67 +16,76 @@ Bootsrap Navigation Bar for CSC648
   <link rel="stylesheet" href="tempstyle.css">
 
   <title>Better Nav Bar</title>
+  <script>
+    document.getElementById("roomDrop").onclick = function () {
+      document.getElementById("navbardrop").innerHTML = 'Room';
+    };
+    document.getElementById("aparDrop").onclick = function () {
+      document.getElementById("navbardrop").innerHTML = 'Apartment';
+    };
+    document.getElementById("housDrop").onclick = function () {
+      document.getElementById("navbardrop").innerHTML = 'House';
+    };
+    document.getElementById("allDrop").onclick = function () {
+      document.getElementById("navbardrop").innerHTML = 'All';
+    };
+  </script>
 
 </head>
 
 <body>
+  <!--js function set filter word -->
+
 
   <!-- Top Half of the bar -->
-  <div class="d-flex align-items-baseline" style="background-color:#f2e124">
+  <div class="d-flex align-items-baseline" style="background-color:#5f5f5f">
 
     <!-- Title of website -->
-    <div class="mr-auto p-2">
-      <h1 class="display-5 mr-5">
-      &nbsp OASIS
-      </h1>
+
+    <div class="mr-auto p-2" href=>
+
+      <a class="nav-link display-5 mr-5" href="index.html" style="color:black; font-size:40px">OASIS</a>
     </div>
 
-    <!-- dropdown for filter TODO: change Display on button to name of filter? -->
-    <div class="p-2">
-      <ul class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown" style="color:#4a0c63">
-        Type
-        </a>
-        <div class="dropdown-menu">
-          <button class="dropdown-item" type="button">All</button>
-          <button class="dropdown-item" type="button">Room</button>
-          <button class="dropdown-item" type="button">Apartment</button>
-          <button class="dropdown-item" type="button">House</button>
-        </div>
-      </ul>
-    </div>
 
-    <!-- search button -->
-    <div class="p-2">
-      <form class="form-inline ml-5" action="/action_page.php">
-        <input class="form-control mr-sm-2" type="text" placeholder="Search">
-      <button class="btn btn-outline-dark" type="submit" style="background-color:#ac17e8"  style="width: 750px">
-        <i class="fas fa-search"></i>
-      </button>
+  <div class="input-group mb-3" style="width:50%; margin-right:85px">
+  <div class="input-group-prepend">
+    <button class="btn btn-light dropdown-toggle"id ="navbardrop" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">All</button>
+    <div class="dropdown-menu">
+      <a class="dropdown-item" id ="roomDrop" href="#">Room</a>
+      <a class="dropdown-item" id ="aparDrop" href="#">Apartment</a>
+      <a class="dropdown-item" id ="housDrop" href="#">House</a>
+      <div role="separator"   class="dropdown-divider"></div>
+
+    </div>
+  </div >
+  <input type="text" class="form-control"  aria-label="Text input with dropdown button">
+  <button class="btn btn-outline-dark" type="submit" style="background-color:#ac17e8" >
+    <i class="fas fa-search" ></i>
+  </button>
+</div>
+
+        <!-- <input class="form-control mr-sm-2" type="text" placeholder="Search" id ="search"> -->
+
+      <a class="nav-link" href="login.html" style="color:#f5f5f5 ">Log in</a>
+            |
+        <a class="nav-link" href="login.html" style="color:#f5f5f5; margin-right:20px">Sign up</a>
     </div>
 
     <!-- upload listing button -->
-    <div class="ml-auto p-2">
-      <button class="btn btn-outline-dark" type="submit" style="background-color:#ac17e8">
-        Post a Listing!
-      </button>
-    </div>
 
-    <!-- login / sign up link -->
-    <div class="p-2">
-      <a class="nav-link" href="#" style="color:#4a0c63">Login/Sign up</a>
-    </div>
-  </div>
 
 <!-- lower navbar -->
-<p style="background-color:#f2e124">
+<p style="background-color:#111">
   &nbsp &nbsp
-  <a href="index.html" style="color:#4a0c63">Home</a> |&nbsp
-  <a href="about.html" style="color:#4a0c63">About</a> |&nbsp
-  <a href="#" style="color:#4a0c63">Contact</a> |&nbsp
-  <a href="#" style="color:#4a0c63">Priavcy Policy</a> |&nbsp
-  <a href="#" style="color:#4a0c63">Site Map</a>
+
+  <a href="about.html" style="color:#f5f5f5">About</a> |&nbsp
+
+  <a href="#" style="color:#f5f5f5">Post a listing!</a>
 </p>
+
+
+
 
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
