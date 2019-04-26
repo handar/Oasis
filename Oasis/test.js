@@ -1,41 +1,22 @@
-var express = require('express');
-var app = express();
-const port = 8000;
 
+const http = require('http');
+fs = require('fs');
+const hostname = '127.0.0.1';
+const port = 3000;
 
-var mysql = require('mysql');
-var bodyParser = require('body-parser');
-
-
-// CONFIGURATIONS
-    // set view engine
-app.set('view engine', 'ejs');
-    // body-parser
-app.use(bodyParser.urlencoded({extended: true}));
-    // css
-app.use(express.static(__dirname + '/public'));
-
-
-// Create Database connection
-const db = mysql.createConnection({
-    // host: 'localhost',
-    // user: 'root',
-    // password: '',
-    // database: '',
-    host: 'oasisdb.cueqkbjnpfop.us-west-1.rds.amazonaws.com',
-    user: 'oasisCSC648007',
-    password: '41839cSc64807',
-    database: '',
+const server = http.createServer((req, res) => {
+  res.statusCode = 200;
+  res.setHeader('Content-Type', 'text/plain');
+  res.end('Hello World\n');
 });
 
-// //CREATE DATABASE
-// db.connect((err) => {
-//     if(err) throw err;
-//     console.log("Connected to Database Successfully...");
-//     db.query('USE oasisdb');
-// });
+fs.readFile('/index.html', function (err, html) {
+    if (err) {
+        throw err;
+        } 
+    });      
 
-// listen to port
-app.listen(port, function() {
-    console.log(`Server listening on port ${port}...`);
+server.listen(port, hostname, () => {
+  console.log(`Server running at http://${hostname}:${port}/`);
 });
+
