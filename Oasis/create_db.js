@@ -26,4 +26,7 @@ db.connect(function(err) {
     });
 
 });
+<<<<<<< HEAD
 
+=======
+>>>>>>> e9448c6f33ce6cd4f064b8e0957b35d8ada38a1c
