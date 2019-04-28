@@ -71,15 +71,16 @@ app.post("/search", function(req, res) {
   // get the user's input parameter
   let min_price = req.body.min;
   let max_price = req.body.max;
-
   try {
     if (min_price == "" || max_price == "")
       throw "Input is empty. Please try again!";
     if (isNaN(min_price) || isNaN(max_price))
-      throw "Input is not a valid number. Please input a number between 0 and 10000.";
+      throw "Input is not a valid number. Please enter a number between 0 and 10000.";
+
     // convert min and max to number
     min_price = Number(min_price);
     max_price = Number(max_price);
+
     // swap if min > max
     if (min_price > max_price) {
       let temp = min_price;
@@ -87,12 +88,15 @@ app.post("/search", function(req, res) {
       max_price = temp;
     }
     if (min_price < 0 || max_price < 0 || max_price > 10000)
-      throw "Please input a number between 0 and 10000.";
+      throw "Please enter a number between 0 and 10000.";
+
     // query price range count
     totalCount = countResult(min_price, max_price);
     console.log("totalCount_0 :" + totalCount);
+
     // query price range
     search(min_price, max_price);
+
     // redirect to the result page
     res.redirect("/search");
   } catch (error) {
