@@ -1,5 +1,7 @@
 # csc648-sp19-Team007
 
+# Team SAHARA - Project OASIS
+
 ## Team Members
 1. Ratna Lama
 2. Ade
@@ -18,7 +20,6 @@ You will also need my sql database connection. Currently you are directly connec
 
 when all the dependencies are installed, run : $ node search.js
 
-
-
-
+## Connection Endpoint
+http://52.53.190.148/
 
