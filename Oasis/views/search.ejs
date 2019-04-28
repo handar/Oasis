@@ -11,7 +11,6 @@
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
     <title>search</title>
-<<<<<<< HEAD
 </head>
 
 <body>
@@ -61,61 +60,10 @@
             <!-- End Result Card -->
         </div> <!-- End Jumbotron -->
     </div> <!-- end container -->
-=======
-  </head>
-  <body>
-      <!-- Begin container -->
-      <div class="container">
-          <!-- Begin Jumbotron -->
-            <div class="jumbotron">
-                    <h1>LISTINGS</h1>
-                      <p class="lead">Total listings are <strong><%= data %></strong> and counting more...</p>
-              
-                      <!-- Begin Form-->
-                      <form method="POST" action="/search">
-                          <div class="form-row">
-                              <div class="col-7">
-                                  <label for="minPrice"></label>
-                                  <input type="text", name="min" class="form-control" id="minPrice" placeholder="Min Price">
-                              </div>
-                              <div class="col">
-                                  <label for="maxPrice"></label>
-                                  <input type="text", name="max" class="form-control" id="maxPrice" placeholder="Max Price">
-                              </div>
-                          </div>
-                          <br />                
-                          <button type="submit" class="btn btn-primary btn-lg">Search</button>
-                      </form> <!-- End Form-->
-          
-                      <br />
-                      <hr>
-              
-                      <!-- Begin Result Card-->
-                      <% for (var i=0; i < dropCount; i++) { %>
-                          <div class="card" style="width: 18rem;">
-                              <img src="" alt="">
-                              <img src="<%= listImg[i] %>" class="card-img-top" alt="a house">
-                              <div class="card-body">
-                                  <h4 class="card-title">A beautiful house  $<%= price[i] %> </h5>
-                                  <p class="card-text">A charming house in a quite neighborhood. Recently remodeled, brand new equipments, close proximity to SFSU.</p>
-                                  <ul>
-                                      <li><%= address[i] %></li>
-                                      <li><%= city[i] %> , <%= state[i] %> <%= zipcode[i] %> </li>
-                                      <li><%= room[i] %> bed <%= bathroom[i] %> bath <%= size[i] %> sq. ft</li>
-                                  </ul>
-                              </div>
-                          </div>
-                          <br />  
-                      <% } %> <!-- End Result Card -->        
-            </div> <!-- End Jumbotron -->
-      </div> <!-- end container -->
-      
->>>>>>> 447a846a5ec07d9f34bb96737e5ef5091180b8a3
 
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-<<<<<<< HEAD
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
     </script>
@@ -128,10 +76,3 @@
 </body>
 
 </html>
-=======
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-  </body>
-</html>
->>>>>>> 447a846a5ec07d9f34bb96737e5ef5091180b8a3
