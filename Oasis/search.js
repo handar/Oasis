@@ -43,7 +43,7 @@ const countAll = require(__dirname + "/mysql/countAll.js");
 /**
  * MySQL Database Query Execution
  */
-// let db = createConnection();   // Create Database Connection
+let db = createConnection(); // Create Database Connection
 // createDB();           // Create a Database name csc675
 
 // search page
@@ -219,28 +219,28 @@ function search(min_price, max_price) {
 // }
 //}
 
-function search(min_price, max_price) {
-  let db = createConnection(); // Create Database Connection
-  let sql = "SELECT * FROM property WHERE price >= ? AND price <= ?";
-  db.query(sql, [min_price, max_price], function(err, result, field) {
-    if (err) throw err;
+// function search(min_price, max_price) {
+//   let db = createConnection(); // Create Database Connection
+//   let sql = "SELECT * FROM property WHERE price >= ? AND price <= ?";
+//   db.query(sql, [min_price, max_price], function(err, result, field) {
+//     if (err) throw err;
 
-    drop_count = result.length;
-    console.log("drop_count: " + drop_count);
-    for (var i = 0; i < totalCount; i++) {
-      img_url.push(result[i].img);
-      prop_add.push(result[i].address);
-      prop_city.push(result[i].city);
-      prop_state.push(result[i].state);
-      prop_zipcode.push(result[i].zipcode);
-      prop_price.push(result[i].price);
-      prop_size.push(result[i].size);
-      prop_room.push(result[i].room);
-      prop_bathroom.push(result[i].bathroom);
-    }
-    console.log(result);
-  });
-}
+//     drop_count = result.length;
+//     console.log("drop_count: " + drop_count);
+//     for (var i = 0; i < totalCount; i++) {
+//       img_url.push(result[i].img);
+//       prop_add.push(result[i].address);
+//       prop_city.push(result[i].city);
+//       prop_state.push(result[i].state);
+//       prop_zipcode.push(result[i].zipcode);
+//       prop_price.push(result[i].price);
+//       prop_size.push(result[i].size);
+//       prop_room.push(result[i].room);
+//       prop_bathroom.push(result[i].bathroom);
+//     }
+//     console.log(result);
+//   });
+// }
 
 // listen to port
 app.listen(port, function() {

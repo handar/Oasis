@@ -5,14 +5,17 @@ view messages page for CSC648 project
 -->
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+    integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
   <link rel="stylesheet" href="style.css">
 
   <!-- global site tag (gtag.js) - google analytics -->
@@ -20,56 +23,56 @@ view messages page for CSC648 project
 
   <!-- js functions -->
   <script>
+    //import the navbar
+    $(document).ready(function () {
+      $('#nav-placeholder').load('navbar.html');
+    });
 
-//import the navbar
-$(document).ready(function () {
-  $('#nav-placeholder').load('navbar.html');
-});
+    function swapDash(tabName) {
 
-function swapDash(tabName) {
+      var boxName = document.getElementById('boxName');
+      var inbox = document.getElementById('inbox');
+      var outbox = document.getElementById('outbox');
 
-  var boxName = document.getElementById('boxName');
-  var inbox = document.getElementById('inbox');
-  var outbox = document.getElementById('outbox');
+      //show inbox
+      if (tabName == 'inbox') {
+        boxName.innerHTML = 'Inbox';
+        inbox.style.display = 'block';
+        outbox.style.display = 'none';
+        listings.style.display = 'none';
+        favorites.style.display = 'none';
 
-  //show inbox
-  if (tabName == 'inbox') {
-    boxName.innerHTML = 'Inbox';
-    inbox.style.display = 'block';
-    outbox.style.display = 'none';
-    listings.style.display = 'none';
-    favorites.style.display = 'none';
+        //show outbox
+      } else if (tabName == 'outbox') {
+        boxName.innerHTML = 'Outbox';
+        outbox.style.display = 'block';
+        inbox.style.display = 'none';
+        listings.style.display = 'none';
+        favorites.style.display = 'none';
 
-    //show outbox
-  } else if (tabName == 'outbox') {
-    boxName.innerHTML = 'Outbox';
-    outbox.style.display = 'block';
-    inbox.style.display = 'none';
-    listings.style.display = 'none';
-    favorites.style.display = 'none';
+        //show my listings
+      } else if (tabName == 'listings') {
+        boxName.innerHTML = 'My Listings';
+        listings.style.display = 'block';
+        inbox.style.display = 'none';
+        outbox.style.display = 'none';
+        favorites.style.display = 'none';
 
-    //show my listings
-  } else if (tabName == 'listings') {
-    boxName.innerHTML = 'My Listings';
-    listings.style.display = 'block';
-    inbox.style.display = 'none';
-    outbox.style.display = 'none';
-    favorites.style.display = 'none';
-
-    //show my favorites
-  } else if (tabName == 'favorites') {
-    boxName.innerHTML = 'My Favorites';
-    favorites.style.display = 'block';
-    inbox.style.display = 'none';
-    outbox.style.display = 'none';
-    listings.style.display = 'none';
-  }
-};
+        //show my favorites
+      } else if (tabName == 'favorites') {
+        boxName.innerHTML = 'My Favorites';
+        favorites.style.display = 'block';
+        inbox.style.display = 'none';
+        outbox.style.display = 'none';
+        listings.style.display = 'none';
+      }
+    };
   </script>
 
   <title>Oasis</title>
 
 </head>
+
 <body>
 
   <!-- import the navigation bar -->
@@ -83,11 +86,16 @@ function swapDash(tabName) {
       <div class="container">
         <div class="list-group">
           <br>
-          <button type="button" id="inboxButton" class="list-group-item list-group-item-action" onclick="swapDash('inbox');">Inbox</button>
-          <button type="button" id="outboxButton" class="list-group-item list-group-item-action" onclick="swapDash('outbox');">Outbox</button>
-          <button type="button" id="listingsButton" class="list-group-item list-group-item-action" onclick="swapDash('listings');">My Listings</button>
-          <button type="button" id="favoritesButton" class="list-group-item list-group-item-action" onclick="swapDash('favorites');">My Favorites</button>
-          <button type="button" id="adminDashButton" class="list-group-item list-group-item-action" disabled>Admin Dashboard</button>
+          <button type="button" id="inboxButton" class="list-group-item list-group-item-action"
+            onclick="swapDash('inbox');">Inbox</button>
+          <button type="button" id="outboxButton" class="list-group-item list-group-item-action"
+            onclick="swapDash('outbox');">Outbox</button>
+          <button type="button" id="listingsButton" class="list-group-item list-group-item-action"
+            onclick="swapDash('listings');">My Listings</button>
+          <button type="button" id="favoritesButton" class="list-group-item list-group-item-action"
+            onclick="swapDash('favorites');">My Favorites</button>
+          <button type="button" id="adminDashButton" class="list-group-item list-group-item-action" disabled>Admin
+            Dashboard</button>
         </div>
       </div>
 
@@ -274,15 +282,20 @@ function swapDash(tabName) {
         </table>
       </div>
 
-      <br><h1>
+      <br>
+      <h1>
         Messenger:
       </h1><br>
-      <textarea name="description" form="listingInput" placeholder="Write your message here." rows="4" cols="89" required></textarea>
-      <input type="text" name="sentUser" placeholder="Enter the recipient's username here." required class="form-control">
+      <textarea name="description" form="listingInput" placeholder="Write your message here." rows="4" cols="89"
+        required></textarea>
+      <input type="text" name="sentUser" placeholder="Enter the recipient's username here." required
+        class="form-control">
       <br>
-      <button type="button" class="btn btn-outline-light" name="submit" onclick="" style="background-color:#ac17e8">Submit Message</button>
+      <button type="button" class="btn btn-outline-light" name="submit" onclick=""
+        style="background-color:#ac17e8">Submit Message</button>
       <br><br>
-      <button type="button" class="btn btn-outline-light" name="back" onclick="" style="background-color:#ac17e8">Back</button>
+      <button type="button" class="btn btn-outline-light" name="back" onclick=""
+        style="background-color:#ac17e8">Back</button>
       <br><br>
     </div>
 
@@ -290,4 +303,5 @@ function swapDash(tabName) {
     <div class="col-sm-1"></div>
 
 </body>
+
 </html>
