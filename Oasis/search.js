@@ -13,7 +13,7 @@ const express = require('express');
 const app = express();
 
 const bodyParser = require('body-parser');
-const port = 3000;
+const port = 80;
 
 var img_url = [];
 var prop_add = [];
