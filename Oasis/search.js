@@ -38,14 +38,6 @@ app.use(express.static(__dirname + "/public")); // css
  * IMPORT MODULES - MySQL query
  */
 const createConnection = require(__dirname + "/mysql/createConnection.js");
-// const createDB = require(__dirname + "/mysql/createDB.js");
-// const dropDB = require(__dirname + "/mysql/dropDB.js");
-// const createTable = require(__dirname + "/mysql/createTable.js");
-// const insertInto = require(__dirname + "/mysql/insertInto.js");
-// const alterTable = require(__dirname + "/mysql/alterTable.js");
-// const dropTable = require(__dirname + "/mysql/dropTable.js");
-// const truncateTable = require(__dirname + "/mysql/truncateTable.js");
-// const faker = require(__dirname + "/mysql/faker.js");
 const countAll = require(__dirname + "/mysql/countAll.js");
 
 /**
@@ -53,14 +45,6 @@ const countAll = require(__dirname + "/mysql/countAll.js");
  */
 // let db = createConnection();   // Create Database Connection
 // createDB();           // Create a Database name csc675
-// dropDB();                // DROP a database
-// createTable();        // Creae Table
-// createTable.property();  // Create table name property
-// createTable.users(); // Create table name users
-// insertInto();        // Insert into table
-// alterTable();         // Alter Table
-// dropTable();          // Drop Table
-// truncateTable();     // Truncate Table
 
 // search page
 app.get("/search", function(req, res) {
