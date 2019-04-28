@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+    <title>Oasis</title>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script>
+    $(document).ready(function(){
+
+        $('#nav-placeholder').load('navbar.html');
+
+    });
+    </script>
+
+  </head>
+  <body>
+
+    <div id="nav-placeholder">
+
+    </div>
+    <!--end of Navigation bar-->
+
+    <div class="container">
+    <p>New User Registration</p>
+
+    <p>Account Information (all fields are mandatory) Already have an account? Sign in here.</p>
+
+    <form>
+
+      <div class="form-group">
+        <label for="name">First and Last Name</label>
+        <input type="name" class="form-control" id="exampleInputPassword1" placeholder="First and Last Name">
+      </div>
+
+      <div class="form-group">
+        <label for="username">Username</label>
+        <input type="username" class="form-control" id="exampleInputPassword1" placeholder="Username">
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Email">
+        <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+      </div>
+
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+      </div>
+
+      <div class="form-group">
+        <label for="exampleInputPassword1">Repeat Password</label>
+        <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Repeat Password">
+
+      </div>  
+
+      <div class="form-service">
+        <p>Terms of service</p>
+      </div>
+
+      <div class="form-check">
+        <input type="checkbox" class="form-check-input" id="exampleCheck1">
+        <label class="form-check-label" for="exampleCheck1">Agree to terms</label>
+      </div>
+
+      <a href="#"><button class="btn btn-outline-dark" id= "buttonid” type="submit">
+        Cancel
+      </button></a>
+
+     <a href="#"><button class="btn btn-outline-dark" id= "buttonid” type="submit">
+        Create Account
+      </button></a>
+    </form> 
+  </div>
+  </body>
+</html>
