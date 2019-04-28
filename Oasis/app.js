@@ -17,7 +17,7 @@ const hbs = require('hbs');
 const fs = require('fs');
 
 const app = express();
-const port = 3000;
+const port = 80;
 
 // middleware
 hbs.registerPartials(__dirname + 'views/partials');
