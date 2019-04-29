@@ -1,0 +1,339 @@
+<!--
+Adam Tremarche
+4/22/19
+Admin Dashboard for CSC648 project
+ -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+  <link rel="stylesheet" href="css/style.css">
+
+  <!-- global site tag (gtag.js) - google analytics -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+  <!-- js scripts -->
+  <script>
+
+//import the nav bar
+$(document).ready(function () {
+  $('#nav-placeholder').load('navbar.html');
+});
+
+//swap between the admin lists
+function swapList(tabName) {
+
+  var userList = document.getElementById('usersList');
+  var listList = document.getElementById('allListingsList');
+  var unapList = document.getElementById('unapprovedList');
+
+  //display users list
+  if (tabName == 'users') {
+    userList.style.display = 'block';
+    listList.style.display = 'none';
+    unapList.style.display = 'none';
+
+  //display listings list
+  } else if (tabName == 'listings') {
+    userList.style.display = 'none';
+    listList.style.display = 'block';
+    unapList.style.display = 'none';
+
+  //display unapproved listings list
+  } else if (tabName == 'unapproved') {
+    userList.style.display = 'none';
+    listList.style.display = 'none';
+    unapList.style.display = 'block';
+
+  }
+
+};
+
+//display a user from the admin list
+function displayUser() {
+  var userItem = document.getElementById('userItem');
+  var listItem = document.getElementById('listingItem');
+  var unapItem = document.getElementById('unapprovedItem');
+
+  userItem.style.display = 'block';
+  listItem.style.display = 'none';
+  unapItem.style.display = 'none';
+};
+
+//display a listing from the admin list
+function displayListing() {
+  var userItem = document.getElementById('userItem');
+  var listItem = document.getElementById('listingItem');
+  var unapItem = document.getElementById('unapprovedItem');
+
+  userItem.style.display = 'none';
+  listItem.style.display = ' block';
+  unapItem.style.display = 'none';
+};
+
+//display an unapproved listing from the admin list
+function displayUnapproved() {
+  var userItem = document.getElementById('userItem');
+  var listItem = document.getElementById('listingItem');
+  var unapItem = document.getElementById('unapprovedItem');
+
+  userItem.style.display = 'none';
+  listItem.style.display = 'none';
+  unapItem.style.display = 'block';
+};
+
+//approve listing
+function approveListing() {
+  if (confirm('Are you sure you want to approve this listing?')) {
+    alert('Listing added!');
+  }
+};
+
+//deny listing
+function denyListing() {
+  if (confirm('Are you sure you want to deny this listing?')) {
+    alert('Listing deleted!');
+  }
+};
+
+//remove listings
+function removeListing() {
+  if (confirm('Are you sure you want to remove this listing?')) {
+    alert('Listing removed!');
+  }
+};
+
+//ban user
+function banUser() {
+  if (confirm('Are you sure you want to ban this user?')) {
+    alert('User banned!');
+  }
+};
+
+  </script>
+
+  <title>Oasis</title>
+
+</head>
+<body>
+
+  <!-- import the navigation bar -->
+  <div id="nav-placeholder"></div>
+
+  <div class="row">
+
+    <!-- admin lists -->
+    <div id="adminList" class="col-sm-4">
+
+      <!-- tab bar title -->
+      <div class="d-flex justify-content-center p-3 bg-secondary text-white">
+        <div class="p-3 bg-secondary" id="boxName">
+          Admin Dashboard
+        </div>
+      </div>
+
+      <!-- tab buttons -->
+      <div class="d-flex p-3 bg-secondary text-white">
+        <button type="button" class="btn btn-outline-light" onclick="swapList('unapproved');" style="background-color:#ac17e8">Unreviewed Listings</button>&nbsp&nbsp
+        <button type="button" class="btn btn-outline-light" onclick="swapList('users');" style="background-color:#ac17e8">All Users</button>&nbsp&nbsp
+        <button type="button" class="btn btn-outline-light" onclick="swapList('listings');" style="background-color:#ac17e8">All Listings</button>&nbsp&nbsp
+
+      </div>
+
+      <!-- all users list -->
+      <div id="usersList" class="container">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Username</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr onclick="displayUser();">
+              <td>bagelLord</td>
+            </tr>
+            <tr onclick="displayUser();">
+              <td>bagelLord</td>
+            </tr>
+            <tr onclick="displayUser();">
+              <td>bagelLord</td>
+            </tr>
+            <tr onclick="displayUser();">
+              <td>bagelLord</td>
+            </tr>
+            <tr onclick="displayUser();">
+              <td>bagelLord</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- all listings list -->
+      <div id="allListingsList" class="container">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Username</th>
+              <th>Address</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr onclick="displayListing();">
+              <td>bagelLord</td>
+              <td>123 Mission St.</td>
+            </tr>
+            <tr onclick="displayListing();">
+              <td>bagelLord</td>
+              <td>123 Mission St.</td>
+            </tr>
+            <tr onclick="displayListing();">
+              <td>bagelLord</td>
+              <td>123 Mission St.</td>
+            </tr>
+            <tr onclick="displayListing();">
+              <td>bagelLord</td>
+              <td>123 Mission St.</td>
+            </tr>
+            <tr onclick="displayListing();">
+              <td>bagelLord</td>
+              <td>123 Mission St.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- unapproved listings list -->
+      <div id="unapprovedList" class="container">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Username</th>
+              <th>Address</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr onclick="displayUnapproved();">
+              <td>LadyDonut</td>
+              <td>777 19th St.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- admin display -->
+    <div id="adminDisplay" class="col-sm-8">
+
+      <!-- unaprroved item -->
+      <div class="container" id="unapprovedItem">
+        <img class="d-block w-100" src="https://images.pexels.com/photos/106399/pexels-photo-106399.jpeg?auto=compress&cs=tinysrgb&h=650&w=940">
+        <br>
+        <b>Monthly Rent</b>
+        <br>$500
+        <br>
+        <br><b>Housing Type</b>
+        <br>Single Room
+        <br>
+        <br><b>Address</b>
+        <br>58 Middle Point Rd,
+        <br>San Francisco, CA, 94124
+        <br>
+        <br><b>Number of Rooms</b>
+        <br>1 bedroom, 1 bathroom
+        <br><br>
+        <b>Description</b>
+        <br>This is a cool room with friendly people. This is a cool room with friendly people. This is a cool room with friendly people. This is a cool room with friendly people. This is a cool room with friendly people. This is a cool room with friendly people. This is a cool room with friendly people. This is a cool room with friendly people. This is a cool room with friendly people. This is a cool room with friendly people. This is a cool room with friendly people. This is a cool room with friendly people. This is a cool room with friendly people. This is a cool room with friendly people.
+        <br><br>
+        <div class="d-flex justify-content-center p-3 bg-secondary text-white">
+          <button type="button" class="btn btn-outline-light" onclick="approveListing();" style="background-color:#ac17e8">Aprrove Listing</button>&nbsp&nbsp
+          <button type="button" class="btn btn-outline-light" onclick="denyListing();" style="background-color:#ac17e8">Deny Listing</button>&nbsp&nbsp
+          <button type="button" class="btn btn-outline-light" onclick="banUser();" style="background-color:#ac17e8">Ban User</button>&nbsp&nbsp
+        </div>
+      </div>
+
+      <!-- user item -->
+      <div class="container" id="userItem">
+        <b>User Name:</b> &nbsp bagelLord <br>
+        <b>Last Login:</b> &nbsp 4/28/19 5:00 PM <br>
+        <b>Number of Listings:</b> &nbsp 2 <br>
+          <div class="d-flex justify-content-center p-3 bg-secondary text-white">
+            <div class="p-3 bg-secondary">
+              Outbox
+            </div>
+          </div>
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>To</th>
+                  <th>Contents</th>
+                  <th>Date</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>MonicaP</td>
+                  <td>Yes! It's still available! Would you like to come look at it?</td>
+                  <td>7:45 PM 4/22/19</td>
+                </tr>
+                <tr>
+                  <td>MonicaP</td>
+                  <td>Yes! It's still available! Would you like to come look at it?</td>
+                  <td>7:45 PM 4/22/19</td>
+                </tr>
+                <tr>
+                  <td>MonicaP</td>
+                  <td>Yes! It's still available! Would you like to come look at it?</td>
+                  <td>7:45 PM 4/22/19</td>
+                </tr>
+                <tr>
+                  <td>MonicaP</td>
+                  <td>Yes! It's still available! Would you like to come look at it?</td>
+                  <td>7:45 PM 4/22/19</td>
+                </tr>
+                <tr>
+                  <td>MonicaP</td>
+                  <td>Yes! It's still available! Would you like to come look at it?</td>
+                  <td>7:45 PM 4/22/19</td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="d-flex justify-content-center p-3 bg-secondary text-white">
+              <button type="button" class="btn btn-outline-light" onclick="banUser();" style="background-color:#ac17e8">Ban User</button>&nbsp&nbsp
+            </div>
+      </div>
+
+      <!-- listing item -->
+      <div class="container" id="listingItem">
+        <img class="d-block w-100" src="https://images.pexels.com/photos/106399/pexels-photo-106399.jpeg?auto=compress&cs=tinysrgb&h=650&w=940">
+        <br>
+        <b>Monthly Rent</b>
+        <br>$500
+        <br>
+        <br><b>Housing Type</b>
+        <br>Single Room
+        <br>
+        <br><b>Address</b>
+        <br>58 Middle Point Rd,
+        <br>San Francisco, CA, 94124
+        <br>
+        <br><b>Number of Rooms</b>
+        <br>1 bedroom, 1 bathroom
+        <br><br>
+        <b>Description</b>
+        <br>This is a cool room with friendly people. This is a cool room with friendly people. This is a cool room with friendly people. This is a cool room with friendly people. This is a cool room with friendly people. This is a cool room with friendly people. This is a cool room with friendly people. This is a cool room with friendly people. This is a cool room with friendly people. This is a cool room with friendly people. This is a cool room with friendly people. This is a cool room with friendly people. This is a cool room with friendly people. This is a cool room with friendly people.
+        <br><br>
+        <div class="d-flex justify-content-center p-3 bg-secondary text-white">
+          <button type="button" class="btn btn-outline-light" onclick="removeListing();" style="background-color:#ac17e8">Remove Listing</button>&nbsp&nbsp
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

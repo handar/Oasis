@@ -62,25 +62,25 @@ button {
 
     color: rgba(255,255,255,0.8);
 } */
-#search{
+#search {
   width: 650px;
 
 }
 
-#quote{
+#quote {
   text-align: center;
   margin-left: 10px;
   font-size: 40px;
   font-style: Helvetica oblique;
 
 }
-.p-2 #navbardrop{
 
+.p-2 #navbardrop {}
 
+.mb-3 {
+  width: 20%;
 }
-.mb-3{
-  width:20%;
-}
+
 .jumbotron {
   padding-top: 6rem;
   padding-bottom: 6rem;
@@ -112,7 +112,7 @@ button {
   border: 0;
 }
 
-.card > img {
+.card>img {
   margin-bottom: .75rem;
   max-width: 100%;
 }
@@ -122,15 +122,16 @@ button {
 }
 
 footer a {
-     /* margin-left: 250px; */
-     padding: 10px;
-     /* margin:100px; */
+  /* margin-left: 250px; */
+  padding: 10px;
+  /* margin:100px; */
 
 }
 
-h1{
+h1 {
   padding: 5px;
 }
+
 .sidebar {
   position: fixed;
   top: 51px;
@@ -139,7 +140,8 @@ h1{
   z-index: 1000;
   padding: 20px;
   overflow-x: hidden;
-  overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
+  overflow-y: auto;
+  /* Scrollable contents if viewport is shorter than content. */
   border-right: 1px solid #eee;
 }
 
@@ -158,14 +160,15 @@ h1{
   width: 100%;
 }
 
-.sidebar .nav-item + .nav-item {
+.sidebar .nav-item+.nav-item {
   margin-left: 0;
 }
 
 .sidebar .nav-link {
   border-radius: 0;
 }
-.container{
+
+.container {
 
   /* height: 70%;
   float:right;  */
@@ -174,11 +177,55 @@ h1{
 
   /* margin-left: -55px */
 }
-#signin{
+
+#signin {
 
   padding: 20px;
   margin-left: 500px;
 }
+<<<<<<< HEAD
+
+.bs-example {
+  margin-left: 400px;
+}
+
+/* Fix alignment issue of label on extra small devices in Bootstrap 3.2 */
+.form-horizontal .control-label {
+  padding-top: 7px;
+}
+
+.border {
+  width: 400px;
+  padding: 30px;
+}
+
+.btn-lg {
+  width: 350px;
+  background-color: #ac17e8;
+}
+
+/* hidden objects for dash page */
+#inbox {
+  display: none;
+}
+
+#outbox {
+  display: none;
+}
+
+#listings {
+  display: none;
+}
+
+#favorites {
+  display: none;
+}
+
+/* description page */
+.buttonid {
+  background-color: #ac17e8;
+}
+=======
 .bs-example{
     	margin-left: 400px;
     }
@@ -212,8 +259,31 @@ h1{
     display:none;
   }
 
+  #usersList {
+  display:none;
+}
+
+#allListingsList {
+  display:none;
+}
+
+#unapprovedList {
+  display:none:
+}
+
+#unapprovedItem {
+  display:none;
+}
+
+#userItem {
+  display:none;
+}
+
+#listingItem {
+  display:none;
+}
   //description page
   .buttonid{
     background-color:#ac17e8;
   }
-
+>>>>>>> 6144c9a39006cc7ce79fbf82e5949e7529a0f08d
