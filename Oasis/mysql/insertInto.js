@@ -36,7 +36,7 @@ function insertInto() {
       getRandomInt(1, 5), // room
       getRandomInt(1, 3), // bathroom
       faker.image.city(), // fake city image
-      house,
+      "house",
       getRandomInt(1, 10)
     ]);
   } // end for loop
