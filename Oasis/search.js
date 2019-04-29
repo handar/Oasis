@@ -65,7 +65,7 @@ const countAllMinMax = require(__dirname + "/mysql/countAllMinMax.js");
 /**
  * MySQL Database Query Execution
  */
-//let db = createConnection(); // Create Database Connection
+let db = createConnection(); // Create Database Connection
 // createDB();           // Create a Database name csc675
 // alterTable();
 // insertInto();
@@ -157,15 +157,9 @@ app.post("/search", function(req, res) {
       throw "Please enter a number between 0 and 10000.";
 
     // query price range count
-<<<<<<< HEAD
-    //totalCount = countAllMinMax(min_price, max_price);
-    //totalCount = countResult()
-    //console.log("totalMinMaxCount :" + totalCount);
-=======
     totalCount = countResult(min_price, max_price);
     console.log(totalCount);
     // console.log("totalCount_0 :" + totalCount);
->>>>>>> 7b8aa29adb151ec72b80cf7c4de304de5ab3c587
 
     // query price range
     if (filter_type == "") {
@@ -235,28 +229,10 @@ app.post("/filter", function(req, res) {
  * @param {*} min_price     min_price of the property
  * @param {*} max_price     max_price of the property
  */
-<<<<<<< HEAD
-// function countResult(min_price, max_price) {
-//   // find the total number of property within min and max price range
-//   let sql =
-//     "SELECT COUNT(*) AS count FROM property where price >= ? AND price <= ? ";
-//   db.query(sql, [min_price, max_price], function(err, result, field) {
-//     if (err) throw err;
-//     //console.log(count); // undefined
-//     let count = JSON.stringify(result);
-//     console.log(count); // JSON object
-//     //totalCount = Number(result[0].count);
-//     totalCount = Number(result[0].count);
-//     console.log("totalCount_1: " + totalCount);
-//     return totalCount;
-
-//     //console.log(totalCount);    // actual count
-//   });
-// } // end countResult()
-=======
 function countResult(min_price, max_price) {
   // find the total number of property within min and max price range
-  let sql = "SELECT COUNT(*) AS count FROM property WHERE price >= ? AND price <= ?";
+  let sql =
+    "SELECT COUNT(*) AS count FROM property WHERE price >= ? AND price <= ?";
   db.query(sql, [min_price, max_price], function(err, result, field) {
     if (err) throw err;
     //console.log(count); // undefined
@@ -271,7 +247,6 @@ function countResult(min_price, max_price) {
     //console.log(totalCount);    // actual count
   });
 } // end countResult()
->>>>>>> 7b8aa29adb151ec72b80cf7c4de304de5ab3c587
 
 /**
  * Search database that match user inpur parameters of min and max price
@@ -279,72 +254,11 @@ function countResult(min_price, max_price) {
  * @param {*} max_price
  */
 function search(min_price, max_price) {
-<<<<<<< HEAD
-  let totalCount = countAllMinMax(min_price, max_price);
-=======
   // let totalCount = countResult(min_price, max_price);
->>>>>>> 7b8aa29adb151ec72b80cf7c4de304de5ab3c587
   // query if the result count is greater than 1
   // console.log('total count is: ' + totalCount);
   // console.log("TOTAL COUNT: " + totalCount);
 
-<<<<<<< HEAD
-  try {
-    //console.log("Again TOTALCOUNT_3 : " + totalCount);
-    if (totalCount < 1)
-      throw "Sorry found no matching result. Please try again with different price range.";
-    if (totalCount > 0) {
-      let db = createConnection();
-      let sql = "SELECT FROM property where price >= ? AND price <= ?";
-      db.query(sql, [min_price, max_price], function(err, result, field) {
-        if (err) throw err;
-        let item = JSON.stringify(result);
-        //console.log("Item result" + item);
-        prop_add = result[1].address;
-        prop_city = result[2].city;
-        prop_state = result[3].state;
-        prop_zipcode = result[4].state;
-        prop_price = result[5].price;
-        prop_size = result[6].size;
-        prop_room = result[7].room;
-        prop_bathroom = result[8].bathroom;
-
-        //console.log(result);
-
-        //emptying arrays for new search w/ new min and max
-        img_url = [];
-        prop_add = [];
-        prop_city = [];
-        prop_state = [];
-        prop_zipcode = [];
-        prop_price = [];
-        prop_size = [];
-        prop_room = [];
-        prop_bathroom = [];
-        prop_distance = [];
-
-        totalCount = result.length;
-        for (var i = 0; i < result.length; i++) {
-          img_url.push(result[i].imgURL);
-          prop_add.push(result[i].address);
-          prop_city.push(result[i].city);
-          prop_state.push(result[i].state);
-          prop_zipcode.push(result[i].zipcode);
-          prop_price.push(result[i].price);
-          prop_size.push(result[i].size);
-          prop_room.push(result[i].room);
-          prop_bathroom.push(result[i].bathroom);
-          prop_distance.push(result[i].distance);
-        }
-      }); // end query
-
-      // END DATABASE CONNECTION
-      db.end();
-    } // end if
-  } catch (error) {
-    throw error;
-  } // end try-catch
-=======
   // try {
   //   //console.log("Again TOTALCOUNT_3 : " + totalCount);
   //   if (totalCount < 1)
@@ -412,24 +326,23 @@ function search(min_price, max_price) {
   //   throw error;
   // } // end try-catch
   let sql = "SELECT * FROM property WHERE price >= ? AND price <= ?";
-    db.query(sql, [min_price, max_price], function(err, result, field) {
-        if (err) throw err;
+  db.query(sql, [min_price, max_price], function(err, result, field) {
+    if (err) throw err;
 
-        drop_count = result.length;
-        for(var i = 0; i < totalCount; i++) {
-            img_url.push(result[i].img);
-            prop_add.push(result[i].address);
-            prop_city.push(result[i].city);
-            prop_state.push(result[i].state);
-            prop_zipcode.push(result[i].zipcode);
-            prop_price.push(result[i].price);
-            prop_size.push(result[i].size);
-            prop_room.push(result[i].room);
-            prop_bathroom.push(result[i].bathroom);
-        }
-        console.log(result);
-    });
->>>>>>> 7b8aa29adb151ec72b80cf7c4de304de5ab3c587
+    drop_count = result.length;
+    for (var i = 0; i < totalCount; i++) {
+      img_url.push(result[i].img);
+      prop_add.push(result[i].address);
+      prop_city.push(result[i].city);
+      prop_state.push(result[i].state);
+      prop_zipcode.push(result[i].zipcode);
+      prop_price.push(result[i].price);
+      prop_size.push(result[i].size);
+      prop_room.push(result[i].room);
+      prop_bathroom.push(result[i].bathroom);
+    }
+    console.log(result);
+  });
 } // end search()
 
 function search_distance(min_price, max_price, filter_distance) {
@@ -443,22 +356,9 @@ function search_distance(min_price, max_price, filter_distance) {
   ) {
     if (err) throw err;
 
-<<<<<<< HEAD
-    //emptying arrays for new search w/ filter
-    img_url = [];
-    prop_add = [];
-    prop_city = [];
-    prop_state = [];
-    prop_zipcode = [];
-    prop_price = [];
-    prop_size = [];
-    prop_room = [];
-    prop_bathroom = [];
-    prop_distance = [];
-
-    totalCount = result.length;
+    drop_count = result.length;
     for (var i = 0; i < result.length; i++) {
-      img_url.push(result[i].imgURL);
+      img_url.push(result[i].img);
       prop_add.push(result[i].address);
       prop_city.push(result[i].city);
       prop_state.push(result[i].state);
@@ -471,23 +371,6 @@ function search_distance(min_price, max_price, filter_distance) {
     }
     console.log(result);
   });
-=======
-        drop_count = result.length;
-        for(var i = 0; i < result.length; i++) {
-            img_url.push(result[i].img);
-            prop_add.push(result[i].address);
-            prop_city.push(result[i].city);
-            prop_state.push(result[i].state);
-            prop_zipcode.push(result[i].zipcode);
-            prop_price.push(result[i].price);
-            prop_size.push(result[i].size);
-            prop_room.push(result[i].room);
-            prop_bathroom.push(result[i].bathroom);
-            prop_distance.push(result[i].distance);
-        }
-        console.log(result);
-    });
->>>>>>> 7b8aa29adb151ec72b80cf7c4de304de5ab3c587
 }
 
 function search_type(min_price, max_price, filter_type) {
@@ -501,22 +384,9 @@ function search_type(min_price, max_price, filter_type) {
   ) {
     if (err) throw err;
 
-<<<<<<< HEAD
-    //emptying arrays for new search w/ filter
-    img_url = [];
-    prop_add = [];
-    prop_city = [];
-    prop_state = [];
-    prop_zipcode = [];
-    prop_price = [];
-    prop_size = [];
-    prop_room = [];
-    prop_bathroom = [];
-    prop_distance = [];
-
-    totalCount = result.length;
+    drop_count = result.length;
     for (var i = 0; i < result.length; i++) {
-      img_url.push(result[i].imgURL);
+      img_url.push(result[i].img);
       prop_add.push(result[i].address);
       prop_city.push(result[i].city);
       prop_state.push(result[i].state);
@@ -529,23 +399,6 @@ function search_type(min_price, max_price, filter_type) {
     }
     console.log(result);
   });
-=======
-        drop_count = result.length;
-        for(var i = 0; i < result.length; i++) {
-            img_url.push(result[i].img);
-            prop_add.push(result[i].address);
-            prop_city.push(result[i].city);
-            prop_state.push(result[i].state);
-            prop_zipcode.push(result[i].zipcode);
-            prop_price.push(result[i].price);
-            prop_size.push(result[i].size);
-            prop_room.push(result[i].room);
-            prop_bathroom.push(result[i].bathroom);
-            prop_distance.push(result[i].distance);
-        }
-        console.log(result);
-    });
->>>>>>> 7b8aa29adb151ec72b80cf7c4de304de5ab3c587
 }
 
 function search_type_distance(
@@ -564,22 +417,9 @@ function search_type_distance(
   ) {
     if (err) throw err;
 
-<<<<<<< HEAD
-    //emptying arrays for new search w/ filter
-    img_url = [];
-    prop_add = [];
-    prop_city = [];
-    prop_state = [];
-    prop_zipcode = [];
-    prop_price = [];
-    prop_size = [];
-    prop_room = [];
-    prop_bathroom = [];
-    prop_distance = [];
-
-    totalCount = result.length;
+    drop_count = result.length;
     for (var i = 0; i < result.length; i++) {
-      img_url.push(result[i].imgURL);
+      img_url.push(result[i].img);
       prop_add.push(result[i].address);
       prop_city.push(result[i].city);
       prop_state.push(result[i].state);
@@ -592,23 +432,6 @@ function search_type_distance(
     }
     console.log(result);
   });
-=======
-        drop_count = result.length;
-        for(var i = 0; i < result.length; i++) {
-            img_url.push(result[i].img);
-            prop_add.push(result[i].address);
-            prop_city.push(result[i].city);
-            prop_state.push(result[i].state);
-            prop_zipcode.push(result[i].zipcode);
-            prop_price.push(result[i].price);
-            prop_size.push(result[i].size);
-            prop_room.push(result[i].room);
-            prop_bathroom.push(result[i].bathroom);
-            prop_distance.push(result[i].distance);
-        }
-        console.log(result);
-    });
->>>>>>> 7b8aa29adb151ec72b80cf7c4de304de5ab3c587
 }
 
 // listen to port
