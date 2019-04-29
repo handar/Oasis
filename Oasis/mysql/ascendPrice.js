@@ -12,41 +12,25 @@
 
 // Import Module
 const createConnection = require(__dirname + "/createConnection.js");
-let db = createConnection(); // create database connection
-//let count;
+// let db = createConnection(); // create database connection
 
 /**
- * query the database using the user's input parameter
-   min_price and max_price has been converted and checked that it is a number
- * @param {*} min_price     min_price of the property
- * @param {*} max_price     max_price of the property
+ * sort the database in ascending order based in price column
  */
 function ascendPrice() {
+  let db = createConnection(); // create database connection
   // select all property sorted by price column in ascending order
   let sql = "SELECT * FROM property ORDER by price ASC";
   db.query(sql, function(err, result, field) {
     if (err) throw err;
-    let count = JSON.stringify(result);
-    console.log(count); // JSON object
-    //totalCount = Number(result[0].count);
-    totalCount = Number(result[0].count);
-    console.log("totalCount_1: " + totalCount);
-    return totalCount;
-
-    //console.log(totalCount);    // actual count
+    //console.log(result);
+    let item = JSON.stringify(result);
+    console.log(item); // JSON object
   });
-} // end countResult()
 
-// function countAll() {
-//   let sql = "SELECT COUNT(*) AS count FROM property";
-//   db.query(sql, function(err, result, field) {
-//     if (err) throw err;
-//     count = result[0].count;
-//     //console.log('countAll1: ' + count);
-//   });
-//   //console.log('countAll2: ' + count);
-//   return count;
-// } // end function
+  // END DATABASE CONNECTION
+  db.end();
+} // end ascendPrice()
 
 // Export as module countResultMinMax
-module.exports = countResultMinMax;
+module.exports = ascendPrice;

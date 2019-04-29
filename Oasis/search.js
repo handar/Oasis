@@ -38,18 +38,21 @@ app.use(express.static(__dirname + "/public")); // css
  * IMPORT MODULES - MySQL query
  */
 const createConnection = require(__dirname + "/mysql/createConnection.js");
-const countAll = require(__dirname + "/mysql/countAll.js");
+const countAllProperty = require(__dirname + "/mysql/countAllProperty.js");
+// const ascendPrice = require(__dirname + "/mysql/ascendPrice.js");
+// const filterByMinMax = require(__dirname + "/mysql/filterByMinMax.js");
+const countAllMinMax = require(__dirname + "/mysql/countAllMinMax.js");
 
 /**
  * MySQL Database Query Execution
  */
-let db = createConnection(); // Create Database Connection
+// let db = createConnection(); // Create Database Connection
 // createDB();           // Create a Database name csc675
 
 // search page
 app.get("/search", function(req, res) {
-  let count = countAll();
-  //console.log("count0: " + count);
+  let count = countAllProperty();
+  console.log("countAllProperty @ Search Page: " + count);
   res.render("search", {
     data: count,
     resultCount: totalCount,
@@ -91,11 +94,13 @@ app.post("/search", function(req, res) {
       throw "Please enter a number between 0 and 10000.";
 
     // query price range count
-    totalCount = countResult(min_price, max_price);
-    console.log("totalCount_0 :" + totalCount);
+    //totalCount = countAllMinMax(min_price, max_price);
+    //totalCount = countResult()
+    //console.log("totalMinMaxCount :" + totalCount);
 
     // query price range
     search(min_price, max_price);
+    //filterByMinMax(min_price, max_price);
 
     // redirect to the result page
     res.redirect("/search");
@@ -105,29 +110,32 @@ app.post("/search", function(req, res) {
   }
 });
 
-/**
- * query the database using the user's input parameter
-   min_price and max_price has been converted and checked that it is a number
- * @param {*} min_price     min_price of the property
- * @param {*} max_price     max_price of the property
- */
-function countResult(min_price, max_price) {
-  // find the total number of property within min and max price range
-  let sql =
-    "SELECT COUNT(*) AS count FROM property where price >= ? AND price <= ? ";
-  db.query(sql, [min_price, max_price], function(err, result, field) {
-    if (err) throw err;
-    //console.log(count); // undefined
-    let count = JSON.stringify(result);
-    console.log(count); // JSON object
-    //totalCount = Number(result[0].count);
-    totalCount = Number(result[0].count);
-    console.log("totalCount_1: " + totalCount);
-    return totalCount;
+// /**
+//  * query the database using the user's input parameter
+//    min_price and max_price has been converted and checked that it is a number
+//  * @param {*} min_price     min_price of the property
+//  * @param {*} max_price     max_price of the property
+//  */
+// function countResult(min_price, max_price) {
+//   let db = createConnection(); // Create Database Connection
+//   // find the total number of property within min and max price range
+//   let sql =
+//     "SELECT COUNT(*) AS count FROM property where price >= ? AND price <= ? ";
+//   db.query(sql, [min_price, max_price], function(err, result, field) {
+//     if (err) throw err;
+//     //console.log(count); // undefined
+//     let count = JSON.stringify(result);
+//     console.log(count); // JSON object
+//     //totalCount = Number(result[0].count);
+//     totalCount = Number(result[0].count);
+//     console.log("totalCount_1: " + totalCount);
+//     return totalCount;
 
-    //console.log(totalCount);    // actual count
-  });
-} // end countResult()
+//     //console.log(totalCount);    // actual count
+//   });
+//   // END DATABASE CONNECTION
+//   db.end();
+// } // end countResult()
 
 /**
  * Search database that match user inpur parameters of min and max price
@@ -135,7 +143,7 @@ function countResult(min_price, max_price) {
  * @param {*} max_price
  */
 function search(min_price, max_price) {
-  let totalCount = countResult(min_price, max_price);
+  let totalCount = countAllMinMax(min_price, max_price);
   // query if the result count is greater than 1
   // console.log('total count is: ' + totalCount);
   console.log("TOTAL COUNT: " + totalCount);
@@ -145,12 +153,12 @@ function search(min_price, max_price) {
     if (totalCount < 1)
       throw "Sorry found no matching result. Please try again with different price range.";
     if (totalCount > 0) {
+      let db = createConnection(); // Create Database Connection
       let sql = "SELECT FROM property where price >= ? AND price <= ? ";
       db.query(sql, [min_price, max_price], function(err, result, field) {
         if (err) throw err;
         let item = JSON.stringify(result);
         console.log("Item result" + item);
-
         prop_add = result[1].address;
         prop_city = result[2].city;
         prop_state = result[3].state;
@@ -159,92 +167,20 @@ function search(min_price, max_price) {
         prop_size = result[6].size;
         prop_room = result[7].room;
         prop_bathroom = result[8].bathroom;
-
-        // var i, j;
-        // for (i = 1; i < result.length; i++) {
-        //     for (j = i; j <= 8 ; j++) {
-        //         prop_add = result[j].address;
-        //         prop_city = result[j].city;
-        //         prop_state = result[j].state;
-        //         prop_zipcode = result[j].state;
-        //         prop_price = result[j].price;
-        //         prop_size = result[j].size;
-        //         prop_room = result[j].room;
-        //         prop_bathroom = result[j].bathroom;
-        //     }
-        // }
       }); // end query
+
+      // END DATABASE CONNECTION
+      db.end();
     } // end if
   } catch (error) {
     throw error;
   } // end try-catch
 } // end search()
 
-// try {
-//     if (totalCount < 1 ) {
-//         throw "Sorry no result. Try again with different price range."
-
-//     } else {
-//         sql = "SELECT FROM property where price >= ? AND price <= ? ";
-//         db.query(sql, [min_price, max_price] ,function(err, result, field) {
-//             if (err) throw err;
-
-//             var item = JSON.stringify(result);
-//             console.log(item);
-
-//             // var i, j;
-//             // for (i = 1; i < result.length; i++) {
-//             //     for (j = i; j <= 8 ; j++) {
-//             //         prop_add = result[j].address;
-//             //         prop_city = result[j].city;
-//             //         prop_state = result[j].state;
-//             //         prop_zipcode = result[j].state;
-//             //         prop_price = result[j].price;
-//             //         prop_size = result[j].size;
-//             //         prop_room = result[j].room;
-//             //         prop_bathroom = result[j].bathroom;
-//             //     }
-//             // }
-
-//             prop_add = result[1].address;
-//             prop_city = result[2].city;
-//             prop_state = result[3].state;
-//             prop_zipcode = result[4].state;
-//             prop_price = result[5].price;
-//             prop_size = result[6].size;
-//             prop_room = result[7].room;
-//             prop_bathroom = result[8].bathroom;
-
-//         });
-//     }
-
-// } catch (error) {
-//     throw error;
-// }
-//}
-
-// function search(min_price, max_price) {
-//   let db = createConnection(); // Create Database Connection
-//   let sql = "SELECT * FROM property WHERE price >= ? AND price <= ?";
-//   db.query(sql, [min_price, max_price], function(err, result, field) {
-//     if (err) throw err;
-
-//     drop_count = result.length;
-//     console.log("drop_count: " + drop_count);
-//     for (var i = 0; i < totalCount; i++) {
-//       img_url.push(result[i].img);
-//       prop_add.push(result[i].address);
-//       prop_city.push(result[i].city);
-//       prop_state.push(result[i].state);
-//       prop_zipcode.push(result[i].zipcode);
-//       prop_price.push(result[i].price);
-//       prop_size.push(result[i].size);
-//       prop_room.push(result[i].room);
-//       prop_bathroom.push(result[i].bathroom);
-//     }
-//     console.log(result);
-//   });
-// }
+// ascendPrice
+// console.log("--------------ASCENDING PRICE---------------------");
+// ascendPrice();
+// console.log("--------------ASCENDING PRICE---------------------");
 
 // listen to port
 app.listen(port, function() {
