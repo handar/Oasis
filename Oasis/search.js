@@ -16,6 +16,7 @@ const bodyParser = require("body-parser");
 const port = 3000;
 
 var img_url = [];
+var prop_type = [];
 var prop_add = [];
 var prop_city = [];
 var prop_state = [];
@@ -24,8 +25,24 @@ var prop_price = [];
 var prop_size = [];
 var prop_room = [];
 var prop_bathroom = [];
+var prop_distance = [];
 let totalCount = 0;
 let drop_count = 0;
+
+let min_price;
+let max_price;
+
+let filter_distance;
+let select_none = "selected";
+let select_first = "";
+let select_second = "";
+let select_third = "";
+
+let filter_type;
+let select_all = "selected";
+let select_room = "";
+let select_apartment = "";
+let select_house = "";
 
 /**
  * CONFIGURATIONS
@@ -55,6 +72,7 @@ app.get("/search", function(req, res) {
     resultCount: totalCount,
     dropCount: drop_count,
     listImg: img_url,
+    type: prop_type,
     address: prop_add,
     city: prop_city,
     state: prop_state,
@@ -62,15 +80,56 @@ app.get("/search", function(req, res) {
     price: prop_price,
     size: prop_size,
     room: prop_room,
-    bathroom: prop_bathroom
+    bathroom: prop_bathroom,
+    min: min_price,
+    max: max_price,
+    all: select_all,
+    room: select_room,
+    apartment: select_apartment,
+    house: select_house,
+    distance: prop_distance,
+    none: select_none,
+    first: select_first,
+    second: select_second,
+    third: select_third
   });
 });
 
 // post
 app.post("/search", function(req, res) {
   // get the user's input parameter
-  let min_price = req.body.min;
-  let max_price = req.body.max;
+  // let min_price = req.body.min;
+  // let max_price = req.body.max;
+  min_price = req.body.min;
+  max_price = req.body.max;
+  filter_type = req.body.type;
+
+  //set 'selected' value for type option tag 
+  if (filter_type == "") {
+    select_all = "selected";
+    select_room = "";
+    select_apartment = "";
+    select_house = "";
+  }
+  if (filter_type == "room") {
+    select_all = "";
+    select_room = "selected";
+    select_apartment = "";
+    select_house = "";
+  }
+  if (filter_type == "apartment") {
+    select_all = "";
+    select_room = "";
+    select_apartment = "selected";
+    select_house = "";
+  }
+  if (filter_type == "house") {
+    select_all = "";
+    select_room = "";
+    select_apartment = "";
+    select_house = "selected";
+  }
+
   try {
     if (min_price == "" || max_price == "")
       throw "Input is empty. Please try again!";
@@ -95,14 +154,65 @@ app.post("/search", function(req, res) {
     console.log("totalCount_0 :" + totalCount);
 
     // query price range
-    search(min_price, max_price);
-
+    if (filter_type == "") {
+      search(min_price, max_price);
+    }
+    if (filter_type != "") {
+      search_type(min_price, max_price, filter_type);
+    }
+    //search(min_price, max_price);
     // redirect to the result page
     res.redirect("/search");
   } catch (error) {
     throw error;
     //res.redirect('/search');
   }
+});
+
+// app.get("/search/filter", function(req, res) {
+//   console.log("testing GET...");
+// });
+
+app.post("/filter", function(req, res) {
+  // get miles from campus filter
+  filter_distance = req.body.distance;
+  //console.log(distance_from);
+
+  //set 'selected' value for filter option tag 
+  if (filter_distance == "") {
+    select_none = "selected";
+    select_first = "";
+    select_second = "";
+    select_third = "";
+  }
+  if (filter_distance == 1) {
+    select_none = "";
+    select_first = "selected";
+    select_second = "";
+    select_third = "";
+  }
+  if (filter_distance == 5) {
+    select_none = "";
+    select_first = "";
+    select_second = "selected";
+    select_third = "";
+  }
+  if (filter_distance == 50) {
+    select_none = "";
+    select_first = "";
+    select_second = "";
+    select_third = "selected";
+  }
+
+  // query search with filter
+  if (filter_type == "") {
+      search_distance(min_price, max_price, filter_distance);
+    }
+    if (filter_type != "") {
+      search_type_distance(min_price, max_price, filter_type, filter_distance);
+    }
+  //search_distance(min_price, max_price, filter_distance);
+  res.redirect("/search");
 });
 
 /**
@@ -145,7 +255,7 @@ function search(min_price, max_price) {
     if (totalCount < 1)
       throw "Sorry found no matching result. Please try again with different price range.";
     if (totalCount > 0) {
-      let sql = "SELECT FROM property where price >= ? AND price <= ? ";
+      let sql = "SELECT FROM property where price >= ? AND price <= ?";
       db.query(sql, [min_price, max_price], function(err, result, field) {
         if (err) throw err;
         let item = JSON.stringify(result);
@@ -160,6 +270,20 @@ function search(min_price, max_price) {
         prop_room = result[7].room;
         prop_bathroom = result[8].bathroom;
 
+        console.log(result);
+
+        //emptying arrays for new search w/ new min and max
+        img_url = [];
+        prop_add = [];
+        prop_city = [];
+        prop_state = [];
+        prop_zipcode = [];
+        prop_price = [];
+        prop_size = [];
+        prop_room = [];
+        prop_bathroom = [];
+        prop_distance = [];
+
         // var i, j;
         // for (i = 1; i < result.length; i++) {
         //     for (j = i; j <= 8 ; j++) {
@@ -173,6 +297,20 @@ function search(min_price, max_price) {
         //         prop_bathroom = result[j].bathroom;
         //     }
         // }
+
+        totalCount = result.length;
+        for(var i = 0; i < result.length; i++) {
+            img_url.push(result[i].imgURL);
+            prop_add.push(result[i].address);
+            prop_city.push(result[i].city);
+            prop_state.push(result[i].state);
+            prop_zipcode.push(result[i].zipcode);
+            prop_price.push(result[i].price);
+            prop_size.push(result[i].size);
+            prop_room.push(result[i].room);
+            prop_bathroom.push(result[i].bathroom);
+            prop_distance.push(result[i].distance);
+        }
       }); // end query
     } // end if
   } catch (error) {
@@ -180,6 +318,107 @@ function search(min_price, max_price) {
   } // end try-catch
 } // end search()
 
+function search_distance(min_price, max_price, filter_distance) {
+  let sql = "SELECT * FROM property WHERE price >= ? AND price <= ? AND distance < ?";
+  db.query(sql, [min_price, max_price, filter_distance], function(err, result, field) {
+        if (err) throw err;
+
+        //emptying arrays for new search w/ filter
+        img_url = [];
+        prop_add = [];
+        prop_city = [];
+        prop_state = [];
+        prop_zipcode = [];
+        prop_price = [];
+        prop_size = [];
+        prop_room = [];
+        prop_bathroom = [];
+        prop_distance = [];
+
+        totalCount = result.length;
+        for(var i = 0; i < result.length; i++) {
+            img_url.push(result[i].imgURL);
+            prop_add.push(result[i].address);
+            prop_city.push(result[i].city);
+            prop_state.push(result[i].state);
+            prop_zipcode.push(result[i].zipcode);
+            prop_price.push(result[i].price);
+            prop_size.push(result[i].size);
+            prop_room.push(result[i].room);
+            prop_bathroom.push(result[i].bathroom);
+            prop_distance.push(result[i].distance);
+        }
+        console.log(result);
+    });
+}
+
+function search_type(min_price, max_price, filter_type) {
+  let sql = "SELECT * FROM property WHERE price >= ? AND price <= ? AND type = ?";
+  db.query(sql, [min_price, max_price, filter_type], function(err, result, field) {
+        if (err) throw err;
+
+        //emptying arrays for new search w/ filter
+        img_url = [];
+        prop_add = [];
+        prop_city = [];
+        prop_state = [];
+        prop_zipcode = [];
+        prop_price = [];
+        prop_size = [];
+        prop_room = [];
+        prop_bathroom = [];
+        prop_distance = [];
+
+        totalCount = result.length;
+        for(var i = 0; i < result.length; i++) {
+            img_url.push(result[i].imgURL);
+            prop_add.push(result[i].address);
+            prop_city.push(result[i].city);
+            prop_state.push(result[i].state);
+            prop_zipcode.push(result[i].zipcode);
+            prop_price.push(result[i].price);
+            prop_size.push(result[i].size);
+            prop_room.push(result[i].room);
+            prop_bathroom.push(result[i].bathroom);
+            prop_distance.push(result[i].distance);
+        }
+        console.log(result);
+    });
+}
+
+function search_type_distance(min_price, max_price, filter_type, filter_distance) {
+  let sql = "SELECT * FROM property WHERE price >= ? AND price <= ? AND type = ? AND distance < ?";
+  db.query(sql, [min_price, max_price, filter_type, filter_distance], function(err, result, field) {
+        if (err) throw err;
+
+        //emptying arrays for new search w/ filter
+        img_url = [];
+        prop_add = [];
+        prop_city = [];
+        prop_state = [];
+        prop_zipcode = [];
+        prop_price = [];
+        prop_size = [];
+        prop_room = [];
+        prop_bathroom = [];
+        prop_distance = [];
+
+        totalCount = result.length;
+        for(var i = 0; i < result.length; i++) {
+            img_url.push(result[i].imgURL);
+            prop_add.push(result[i].address);
+            prop_city.push(result[i].city);
+            prop_state.push(result[i].state);
+            prop_zipcode.push(result[i].zipcode);
+            prop_price.push(result[i].price);
+            prop_size.push(result[i].size);
+            prop_room.push(result[i].room);
+            prop_bathroom.push(result[i].bathroom);
+            prop_distance.push(result[i].distance);
+        }
+        console.log(result);
+    });
+}
 // try {
 //     if (totalCount < 1 ) {
 //         throw "Sorry no result. Try again with different price range."
