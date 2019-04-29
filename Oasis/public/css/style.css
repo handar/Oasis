@@ -212,8 +212,30 @@ h1{
     display:none;
   }
 
+  #usersList {
+  display:none;
+}
+
+#allListingsList {
+  display:none;
+}
+
+#unapprovedList {
+  display:none:
+}
+
+#unapprovedItem {
+  display:none;
+}
+
+#userItem {
+  display:none;
+}
+
+#listingItem {
+  display:none;
+}
   //description page
   .buttonid{
     background-color:#ac17e8;
   }
-
