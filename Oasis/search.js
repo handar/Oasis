@@ -59,17 +59,21 @@ const countAllProperty = require(__dirname + "/mysql/countAllProperty.js");
 // const ascendPrice = require(__dirname + "/mysql/ascendPrice.js");
 // const filterByMinMax = require(__dirname + "/mysql/filterByMinMax.js");
 const countAllMinMax = require(__dirname + "/mysql/countAllMinMax.js");
+// const alterTable = require(__dirname + "/mysql/alterTable.js");
+// const insertInto = require(__dirname + "/mysql/insertInto.js");
 
 /**
  * MySQL Database Query Execution
  */
-// let db = createConnection(); // Create Database Connection
+//let db = createConnection(); // Create Database Connection
 // createDB();           // Create a Database name csc675
+// alterTable();
+// insertInto();
 
 // search page
 app.get("/search", function(req, res) {
   let count = countAllProperty();
-  console.log("countAllProperty @ Search Page: " + count);
+  //console.log("countAllProperty @ Search Page: " + count);
   res.render("search", {
     data: count,
     resultCount: totalCount,
@@ -107,7 +111,7 @@ app.post("/search", function(req, res) {
   max_price = req.body.max;
   filter_type = req.body.type;
 
-  //set 'selected' value for type option tag 
+  //set 'selected' value for type option tag
   if (filter_type == "") {
     select_all = "selected";
     select_room = "";
@@ -158,11 +162,6 @@ app.post("/search", function(req, res) {
     //console.log("totalMinMaxCount :" + totalCount);
 
     // query price range
-<<<<<<< HEAD
-    search(min_price, max_price);
-    //filterByMinMax(min_price, max_price);
-
-=======
     if (filter_type == "") {
       search(min_price, max_price);
     }
@@ -170,7 +169,6 @@ app.post("/search", function(req, res) {
       search_type(min_price, max_price, filter_type);
     }
     //search(min_price, max_price);
->>>>>>> 666a798e50769f13b47722f4c6f4f6a8a61b3f3a
     // redirect to the result page
     res.redirect("/search");
   } catch (error) {
@@ -179,34 +177,6 @@ app.post("/search", function(req, res) {
   }
 });
 
-<<<<<<< HEAD
-// /**
-//  * query the database using the user's input parameter
-//    min_price and max_price has been converted and checked that it is a number
-//  * @param {*} min_price     min_price of the property
-//  * @param {*} max_price     max_price of the property
-//  */
-// function countResult(min_price, max_price) {
-//   let db = createConnection(); // Create Database Connection
-//   // find the total number of property within min and max price range
-//   let sql =
-//     "SELECT COUNT(*) AS count FROM property where price >= ? AND price <= ? ";
-//   db.query(sql, [min_price, max_price], function(err, result, field) {
-//     if (err) throw err;
-//     //console.log(count); // undefined
-//     let count = JSON.stringify(result);
-//     console.log(count); // JSON object
-//     //totalCount = Number(result[0].count);
-//     totalCount = Number(result[0].count);
-//     console.log("totalCount_1: " + totalCount);
-//     return totalCount;
-
-//     //console.log(totalCount);    // actual count
-//   });
-//   // END DATABASE CONNECTION
-//   db.end();
-// } // end countResult()
-=======
 // app.get("/search/filter", function(req, res) {
 //   console.log("testing GET...");
 // });
@@ -216,7 +186,7 @@ app.post("/filter", function(req, res) {
   filter_distance = req.body.distance;
   //console.log(distance_from);
 
-  //set 'selected' value for filter option tag 
+  //set 'selected' value for filter option tag
   if (filter_distance == "") {
     select_none = "selected";
     select_first = "";
@@ -244,11 +214,11 @@ app.post("/filter", function(req, res) {
 
   // query search with filter
   if (filter_type == "") {
-      search_distance(min_price, max_price, filter_distance);
-    }
-    if (filter_type != "") {
-      search_type_distance(min_price, max_price, filter_type, filter_distance);
-    }
+    search_distance(min_price, max_price, filter_distance);
+  }
+  if (filter_type != "") {
+    search_type_distance(min_price, max_price, filter_type, filter_distance);
+  }
   //search_distance(min_price, max_price, filter_distance);
   res.redirect("/search");
 });
@@ -259,24 +229,23 @@ app.post("/filter", function(req, res) {
  * @param {*} min_price     min_price of the property
  * @param {*} max_price     max_price of the property
  */
-function countResult(min_price, max_price) {
-  // find the total number of property within min and max price range
-  let sql =
-    "SELECT COUNT(*) AS count FROM property where price >= ? AND price <= ? ";
-  db.query(sql, [min_price, max_price], function(err, result, field) {
-    if (err) throw err;
-    //console.log(count); // undefined
-    let count = JSON.stringify(result);
-    console.log(count); // JSON object
-    //totalCount = Number(result[0].count);
-    totalCount = Number(result[0].count);
-    console.log("totalCount_1: " + totalCount);
-    return totalCount;
+// function countResult(min_price, max_price) {
+//   // find the total number of property within min and max price range
+//   let sql =
+//     "SELECT COUNT(*) AS count FROM property where price >= ? AND price <= ? ";
+//   db.query(sql, [min_price, max_price], function(err, result, field) {
+//     if (err) throw err;
+//     //console.log(count); // undefined
+//     let count = JSON.stringify(result);
+//     console.log(count); // JSON object
+//     //totalCount = Number(result[0].count);
+//     totalCount = Number(result[0].count);
+//     console.log("totalCount_1: " + totalCount);
+//     return totalCount;
 
-    //console.log(totalCount);    // actual count
-  });
-} // end countResult()
->>>>>>> 666a798e50769f13b47722f4c6f4f6a8a61b3f3a
+//     //console.log(totalCount);    // actual count
+//   });
+// } // end countResult()
 
 /**
  * Search database that match user inpur parameters of min and max price
@@ -287,23 +256,19 @@ function search(min_price, max_price) {
   let totalCount = countAllMinMax(min_price, max_price);
   // query if the result count is greater than 1
   // console.log('total count is: ' + totalCount);
-  console.log("TOTAL COUNT: " + totalCount);
+  // console.log("TOTAL COUNT: " + totalCount);
 
   try {
-    console.log("Again TOTALCOUNT_3 : " + totalCount);
+    //console.log("Again TOTALCOUNT_3 : " + totalCount);
     if (totalCount < 1)
       throw "Sorry found no matching result. Please try again with different price range.";
     if (totalCount > 0) {
-<<<<<<< HEAD
-      let db = createConnection(); // Create Database Connection
-      let sql = "SELECT FROM property where price >= ? AND price <= ? ";
-=======
+      let db = createConnection();
       let sql = "SELECT FROM property where price >= ? AND price <= ?";
->>>>>>> 666a798e50769f13b47722f4c6f4f6a8a61b3f3a
       db.query(sql, [min_price, max_price], function(err, result, field) {
         if (err) throw err;
         let item = JSON.stringify(result);
-        console.log("Item result" + item);
+        //console.log("Item result" + item);
         prop_add = result[1].address;
         prop_city = result[2].city;
         prop_state = result[3].state;
@@ -312,10 +277,8 @@ function search(min_price, max_price) {
         prop_size = result[6].size;
         prop_room = result[7].room;
         prop_bathroom = result[8].bathroom;
-<<<<<<< HEAD
-=======
 
-        console.log(result);
+        //console.log(result);
 
         //emptying arrays for new search w/ new min and max
         img_url = [];
@@ -329,34 +292,19 @@ function search(min_price, max_price) {
         prop_bathroom = [];
         prop_distance = [];
 
-        // var i, j;
-        // for (i = 1; i < result.length; i++) {
-        //     for (j = i; j <= 8 ; j++) {
-        //         prop_add = result[j].address;
-        //         prop_city = result[j].city;
-        //         prop_state = result[j].state;
-        //         prop_zipcode = result[j].state;
-        //         prop_price = result[j].price;
-        //         prop_size = result[j].size;
-        //         prop_room = result[j].room;
-        //         prop_bathroom = result[j].bathroom;
-        //     }
-        // }
-
         totalCount = result.length;
-        for(var i = 0; i < result.length; i++) {
-            img_url.push(result[i].imgURL);
-            prop_add.push(result[i].address);
-            prop_city.push(result[i].city);
-            prop_state.push(result[i].state);
-            prop_zipcode.push(result[i].zipcode);
-            prop_price.push(result[i].price);
-            prop_size.push(result[i].size);
-            prop_room.push(result[i].room);
-            prop_bathroom.push(result[i].bathroom);
-            prop_distance.push(result[i].distance);
+        for (var i = 0; i < result.length; i++) {
+          img_url.push(result[i].imgURL);
+          prop_add.push(result[i].address);
+          prop_city.push(result[i].city);
+          prop_state.push(result[i].state);
+          prop_zipcode.push(result[i].zipcode);
+          prop_price.push(result[i].price);
+          prop_size.push(result[i].size);
+          prop_room.push(result[i].room);
+          prop_bathroom.push(result[i].bathroom);
+          prop_distance.push(result[i].distance);
         }
->>>>>>> 666a798e50769f13b47722f4c6f4f6a8a61b3f3a
       }); // end query
 
       // END DATABASE CONNECTION
@@ -367,179 +315,130 @@ function search(min_price, max_price) {
   } // end try-catch
 } // end search()
 
-<<<<<<< HEAD
-// ascendPrice
-// console.log("--------------ASCENDING PRICE---------------------");
-// ascendPrice();
-// console.log("--------------ASCENDING PRICE---------------------");
-=======
 function search_distance(min_price, max_price, filter_distance) {
-  let sql = "SELECT * FROM property WHERE price >= ? AND price <= ? AND distance < ?";
-  db.query(sql, [min_price, max_price, filter_distance], function(err, result, field) {
-        if (err) throw err;
+  let db = createConnection();
+  let sql =
+    "SELECT * FROM property WHERE price >= ? AND price <= ? AND distance < ?";
+  db.query(sql, [min_price, max_price, filter_distance], function(
+    err,
+    result,
+    field
+  ) {
+    if (err) throw err;
 
-        //emptying arrays for new search w/ filter
-        img_url = [];
-        prop_add = [];
-        prop_city = [];
-        prop_state = [];
-        prop_zipcode = [];
-        prop_price = [];
-        prop_size = [];
-        prop_room = [];
-        prop_bathroom = [];
-        prop_distance = [];
+    //emptying arrays for new search w/ filter
+    img_url = [];
+    prop_add = [];
+    prop_city = [];
+    prop_state = [];
+    prop_zipcode = [];
+    prop_price = [];
+    prop_size = [];
+    prop_room = [];
+    prop_bathroom = [];
+    prop_distance = [];
 
-        totalCount = result.length;
-        for(var i = 0; i < result.length; i++) {
-            img_url.push(result[i].imgURL);
-            prop_add.push(result[i].address);
-            prop_city.push(result[i].city);
-            prop_state.push(result[i].state);
-            prop_zipcode.push(result[i].zipcode);
-            prop_price.push(result[i].price);
-            prop_size.push(result[i].size);
-            prop_room.push(result[i].room);
-            prop_bathroom.push(result[i].bathroom);
-            prop_distance.push(result[i].distance);
-        }
-        console.log(result);
-    });
+    totalCount = result.length;
+    for (var i = 0; i < result.length; i++) {
+      img_url.push(result[i].imgURL);
+      prop_add.push(result[i].address);
+      prop_city.push(result[i].city);
+      prop_state.push(result[i].state);
+      prop_zipcode.push(result[i].zipcode);
+      prop_price.push(result[i].price);
+      prop_size.push(result[i].size);
+      prop_room.push(result[i].room);
+      prop_bathroom.push(result[i].bathroom);
+      prop_distance.push(result[i].distance);
+    }
+    console.log(result);
+  });
 }
 
 function search_type(min_price, max_price, filter_type) {
-  let sql = "SELECT * FROM property WHERE price >= ? AND price <= ? AND type = ?";
-  db.query(sql, [min_price, max_price, filter_type], function(err, result, field) {
-        if (err) throw err;
+  let db = createConnection();
+  let sql =
+    "SELECT * FROM property WHERE price >= ? AND price <= ? AND type = ?";
+  db.query(sql, [min_price, max_price, filter_type], function(
+    err,
+    result,
+    field
+  ) {
+    if (err) throw err;
 
-        //emptying arrays for new search w/ filter
-        img_url = [];
-        prop_add = [];
-        prop_city = [];
-        prop_state = [];
-        prop_zipcode = [];
-        prop_price = [];
-        prop_size = [];
-        prop_room = [];
-        prop_bathroom = [];
-        prop_distance = [];
+    //emptying arrays for new search w/ filter
+    img_url = [];
+    prop_add = [];
+    prop_city = [];
+    prop_state = [];
+    prop_zipcode = [];
+    prop_price = [];
+    prop_size = [];
+    prop_room = [];
+    prop_bathroom = [];
+    prop_distance = [];
 
-        totalCount = result.length;
-        for(var i = 0; i < result.length; i++) {
-            img_url.push(result[i].imgURL);
-            prop_add.push(result[i].address);
-            prop_city.push(result[i].city);
-            prop_state.push(result[i].state);
-            prop_zipcode.push(result[i].zipcode);
-            prop_price.push(result[i].price);
-            prop_size.push(result[i].size);
-            prop_room.push(result[i].room);
-            prop_bathroom.push(result[i].bathroom);
-            prop_distance.push(result[i].distance);
-        }
-        console.log(result);
-    });
+    totalCount = result.length;
+    for (var i = 0; i < result.length; i++) {
+      img_url.push(result[i].imgURL);
+      prop_add.push(result[i].address);
+      prop_city.push(result[i].city);
+      prop_state.push(result[i].state);
+      prop_zipcode.push(result[i].zipcode);
+      prop_price.push(result[i].price);
+      prop_size.push(result[i].size);
+      prop_room.push(result[i].room);
+      prop_bathroom.push(result[i].bathroom);
+      prop_distance.push(result[i].distance);
+    }
+    console.log(result);
+  });
 }
 
-function search_type_distance(min_price, max_price, filter_type, filter_distance) {
-  let sql = "SELECT * FROM property WHERE price >= ? AND price <= ? AND type = ? AND distance < ?";
-  db.query(sql, [min_price, max_price, filter_type, filter_distance], function(err, result, field) {
-        if (err) throw err;
+function search_type_distance(
+  min_price,
+  max_price,
+  filter_type,
+  filter_distance
+) {
+  let db = createConnection();
+  let sql =
+    "SELECT * FROM property WHERE price >= ? AND price <= ? AND type = ? AND distance < ?";
+  db.query(sql, [min_price, max_price, filter_type, filter_distance], function(
+    err,
+    result,
+    field
+  ) {
+    if (err) throw err;
 
-        //emptying arrays for new search w/ filter
-        img_url = [];
-        prop_add = [];
-        prop_city = [];
-        prop_state = [];
-        prop_zipcode = [];
-        prop_price = [];
-        prop_size = [];
-        prop_room = [];
-        prop_bathroom = [];
-        prop_distance = [];
+    //emptying arrays for new search w/ filter
+    img_url = [];
+    prop_add = [];
+    prop_city = [];
+    prop_state = [];
+    prop_zipcode = [];
+    prop_price = [];
+    prop_size = [];
+    prop_room = [];
+    prop_bathroom = [];
+    prop_distance = [];
 
-        totalCount = result.length;
-        for(var i = 0; i < result.length; i++) {
-            img_url.push(result[i].imgURL);
-            prop_add.push(result[i].address);
-            prop_city.push(result[i].city);
-            prop_state.push(result[i].state);
-            prop_zipcode.push(result[i].zipcode);
-            prop_price.push(result[i].price);
-            prop_size.push(result[i].size);
-            prop_room.push(result[i].room);
-            prop_bathroom.push(result[i].bathroom);
-            prop_distance.push(result[i].distance);
-        }
-        console.log(result);
-    });
+    totalCount = result.length;
+    for (var i = 0; i < result.length; i++) {
+      img_url.push(result[i].imgURL);
+      prop_add.push(result[i].address);
+      prop_city.push(result[i].city);
+      prop_state.push(result[i].state);
+      prop_zipcode.push(result[i].zipcode);
+      prop_price.push(result[i].price);
+      prop_size.push(result[i].size);
+      prop_room.push(result[i].room);
+      prop_bathroom.push(result[i].bathroom);
+      prop_distance.push(result[i].distance);
+    }
+    console.log(result);
+  });
 }
-// try {
-//     if (totalCount < 1 ) {
-//         throw "Sorry no result. Try again with different price range."
-
-//     } else {
-//         sql = "SELECT FROM property where price >= ? AND price <= ? ";
-//         db.query(sql, [min_price, max_price] ,function(err, result, field) {
-//             if (err) throw err;
-
-//             var item = JSON.stringify(result);
-//             console.log(item);
-
-//             // var i, j;
-//             // for (i = 1; i < result.length; i++) {
-//             //     for (j = i; j <= 8 ; j++) {
-//             //         prop_add = result[j].address;
-//             //         prop_city = result[j].city;
-//             //         prop_state = result[j].state;
-//             //         prop_zipcode = result[j].state;
-//             //         prop_price = result[j].price;
-//             //         prop_size = result[j].size;
-//             //         prop_room = result[j].room;
-//             //         prop_bathroom = result[j].bathroom;
-//             //     }
-//             // }
-
-//             prop_add = result[1].address;
-//             prop_city = result[2].city;
-//             prop_state = result[3].state;
-//             prop_zipcode = result[4].state;
-//             prop_price = result[5].price;
-//             prop_size = result[6].size;
-//             prop_room = result[7].room;
-//             prop_bathroom = result[8].bathroom;
-
-//         });
-//     }
-
-// } catch (error) {
-//     throw error;
-// }
-//}
-
-// function search(min_price, max_price) {
-//   let db = createConnection(); // Create Database Connection
-//   let sql = "SELECT * FROM property WHERE price >= ? AND price <= ?";
-//   db.query(sql, [min_price, max_price], function(err, result, field) {
-//     if (err) throw err;
-
-//     drop_count = result.length;
-//     console.log("drop_count: " + drop_count);
-//     for (var i = 0; i < totalCount; i++) {
-//       img_url.push(result[i].img);
-//       prop_add.push(result[i].address);
-//       prop_city.push(result[i].city);
-//       prop_state.push(result[i].state);
-//       prop_zipcode.push(result[i].zipcode);
-//       prop_price.push(result[i].price);
-//       prop_size.push(result[i].size);
-//       prop_room.push(result[i].room);
-//       prop_bathroom.push(result[i].bathroom);
-//     }
-//     console.log(result);
-//   });
-// }
->>>>>>> 666a798e50769f13b47722f4c6f4f6a8a61b3f3a
 
 // listen to port
 app.listen(port, function() {
