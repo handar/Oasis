@@ -151,7 +151,8 @@ app.post("/search", function(req, res) {
 
     // query price range count
     totalCount = countResult(min_price, max_price);
-    console.log("totalCount_0 :" + totalCount);
+    console.log(totalCount);
+    // console.log("totalCount_0 :" + totalCount);
 
     // query price range
     if (filter_type == "") {
@@ -223,8 +224,7 @@ app.post("/filter", function(req, res) {
  */
 function countResult(min_price, max_price) {
   // find the total number of property within min and max price range
-  let sql =
-    "SELECT COUNT(*) AS count FROM property where price >= ? AND price <= ? ";
+  let sql = "SELECT COUNT(*) AS count FROM property WHERE price >= ? AND price <= ?";
   db.query(sql, [min_price, max_price], function(err, result, field) {
     if (err) throw err;
     //console.log(count); // undefined
@@ -232,7 +232,8 @@ function countResult(min_price, max_price) {
     console.log(count); // JSON object
     //totalCount = Number(result[0].count);
     totalCount = Number(result[0].count);
-    console.log("totalCount_1: " + totalCount);
+    // console.log("totalCount_1: " + totalCount);
+    // totalCount = result.length;
     return totalCount;
 
     //console.log(totalCount);    // actual count
@@ -245,62 +246,84 @@ function countResult(min_price, max_price) {
  * @param {*} max_price
  */
 function search(min_price, max_price) {
-  let totalCount = countResult(min_price, max_price);
+  // let totalCount = countResult(min_price, max_price);
   // query if the result count is greater than 1
   // console.log('total count is: ' + totalCount);
-  console.log("TOTAL COUNT: " + totalCount);
+  // console.log("TOTAL COUNT: " + totalCount);
 
-  try {
-    console.log("Again TOTALCOUNT_3 : " + totalCount);
-    if (totalCount < 1)
-      throw "Sorry found no matching result. Please try again with different price range.";
-    if (totalCount > 0) {
-      let sql = "SELECT FROM property where price >= ? AND price <= ?";
-      db.query(sql, [min_price, max_price], function(err, result, field) {
+  // try {
+  //   //console.log("Again TOTALCOUNT_3 : " + totalCount);
+  //   if (totalCount < 1)
+  //     throw "Sorry found no matching result. Please try again with different price range.";
+  //   if (totalCount > 0) {
+  //     let sql = "SELECT FROM property where price >= ? AND price <= ?";
+  //     db.query(sql, [min_price, max_price], function(err, result, field) {
+  //       if (err) throw err;
+  //       // let item = JSON.stringify(result);
+  //       // console.log("Item result" + item);
+
+  //       // prop_add = result[1].address;
+  //       // prop_city = result[2].city;
+  //       // prop_state = result[3].state;
+  //       // prop_zipcode = result[4].state;
+  //       // prop_price = result[5].price;
+  //       // prop_size = result[6].size;
+  //       // prop_room = result[7].room;
+  //       // prop_bathroom = result[8].bathroom;
+
+  //       // console.log(result);
+
+  //       //emptying arrays for new search w/ new min and max
+  //       img_url = [];
+  //       prop_add = [];
+  //       prop_city = [];
+  //       prop_state = [];
+  //       prop_zipcode = [];
+  //       prop_price = [];
+  //       prop_size = [];
+  //       prop_room = [];
+  //       prop_bathroom = [];
+  //       prop_distance = [];
+
+  //       // var i, j;
+  //       // for (i = 1; i < result.length; i++) {
+  //       //     for (j = i; j <= 8 ; j++) {
+  //       //         prop_add = result[j].address;
+  //       //         prop_city = result[j].city;
+  //       //         prop_state = result[j].state;
+  //       //         prop_zipcode = result[j].state;
+  //       //         prop_price = result[j].price;
+  //       //         prop_size = result[j].size;
+  //       //         prop_room = result[j].room;
+  //       //         prop_bathroom = result[j].bathroom;
+  //       //     }
+  //       // }
+
+  //       drop_count = result.length;
+  //       for(var i = 0; i < result.length; i++) {
+  //           img_url.push(result[i].imgURL);
+  //           prop_add.push(result[i].address);
+  //           prop_city.push(result[i].city);
+  //           prop_state.push(result[i].state);
+  //           prop_zipcode.push(result[i].zipcode);
+  //           prop_price.push(result[i].price);
+  //           prop_size.push(result[i].size);
+  //           prop_room.push(result[i].room);
+  //           prop_bathroom.push(result[i].bathroom);
+  //           //prop_distance.push(result[i].distance);
+  //       }
+  //     }); // end query
+  //   } // end if
+  // } catch (error) {
+  //   throw error;
+  // } // end try-catch
+  let sql = "SELECT * FROM property WHERE price >= ? AND price <= ?";
+    db.query(sql, [min_price, max_price], function(err, result, field) {
         if (err) throw err;
-        let item = JSON.stringify(result);
-        console.log("Item result" + item);
 
-        prop_add = result[1].address;
-        prop_city = result[2].city;
-        prop_state = result[3].state;
-        prop_zipcode = result[4].state;
-        prop_price = result[5].price;
-        prop_size = result[6].size;
-        prop_room = result[7].room;
-        prop_bathroom = result[8].bathroom;
-
-        console.log(result);
-
-        //emptying arrays for new search w/ new min and max
-        img_url = [];
-        prop_add = [];
-        prop_city = [];
-        prop_state = [];
-        prop_zipcode = [];
-        prop_price = [];
-        prop_size = [];
-        prop_room = [];
-        prop_bathroom = [];
-        prop_distance = [];
-
-        // var i, j;
-        // for (i = 1; i < result.length; i++) {
-        //     for (j = i; j <= 8 ; j++) {
-        //         prop_add = result[j].address;
-        //         prop_city = result[j].city;
-        //         prop_state = result[j].state;
-        //         prop_zipcode = result[j].state;
-        //         prop_price = result[j].price;
-        //         prop_size = result[j].size;
-        //         prop_room = result[j].room;
-        //         prop_bathroom = result[j].bathroom;
-        //     }
-        // }
-
-        totalCount = result.length;
-        for(var i = 0; i < result.length; i++) {
-            img_url.push(result[i].imgURL);
+        drop_count = result.length;
+        for(var i = 0; i < totalCount; i++) {
+            img_url.push(result[i].img);
             prop_add.push(result[i].address);
             prop_city.push(result[i].city);
             prop_state.push(result[i].state);
@@ -309,13 +332,9 @@ function search(min_price, max_price) {
             prop_size.push(result[i].size);
             prop_room.push(result[i].room);
             prop_bathroom.push(result[i].bathroom);
-            prop_distance.push(result[i].distance);
         }
-      }); // end query
-    } // end if
-  } catch (error) {
-    throw error;
-  } // end try-catch
+        console.log(result);
+    });
 } // end search()
 
 function search_distance(min_price, max_price, filter_distance) {
@@ -335,9 +354,9 @@ function search_distance(min_price, max_price, filter_distance) {
         prop_bathroom = [];
         prop_distance = [];
 
-        totalCount = result.length;
+        drop_count = result.length;
         for(var i = 0; i < result.length; i++) {
-            img_url.push(result[i].imgURL);
+            img_url.push(result[i].img);
             prop_add.push(result[i].address);
             prop_city.push(result[i].city);
             prop_state.push(result[i].state);
@@ -369,9 +388,9 @@ function search_type(min_price, max_price, filter_type) {
         prop_bathroom = [];
         prop_distance = [];
 
-        totalCount = result.length;
+        drop_count = result.length;
         for(var i = 0; i < result.length; i++) {
-            img_url.push(result[i].imgURL);
+            img_url.push(result[i].img);
             prop_add.push(result[i].address);
             prop_city.push(result[i].city);
             prop_state.push(result[i].state);
@@ -403,9 +422,9 @@ function search_type_distance(min_price, max_price, filter_type, filter_distance
         prop_bathroom = [];
         prop_distance = [];
 
-        totalCount = result.length;
+        drop_count = result.length;
         for(var i = 0; i < result.length; i++) {
-            img_url.push(result[i].imgURL);
+            img_url.push(result[i].img);
             prop_add.push(result[i].address);
             prop_city.push(result[i].city);
             prop_state.push(result[i].state);

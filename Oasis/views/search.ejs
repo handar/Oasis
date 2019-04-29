@@ -64,10 +64,16 @@
       <hr />
 
       <!-- Begin Result Card-->
-      <% for (var i=0; i < resultCount; i++) { %>
+
+      <% if ( resultCount > 0) { %>
+        <h1>Result</h1>
+        <p>Found <%= resultCount %> properties that match your search critera.</p>
+      <% } %>
+
+      <% for (var i=0; i < dropCount; i++) { %>
       <div class="card" style="width: 18rem;">
-        <img src="" alt="" />
-        <img src="<%= listImg[i] %>" class="card-img-top" alt="a house" />
+        <!-- <img src="" alt="" /> -->
+        <img src="<%= listImg[i] %>" width="300" height="200" class="card-img-top" alt="a house">
         <div class="card-body">
           <h5 class="card-title">A beautiful house $<%= price[i] %></h5>
           <p class="card-text">A beutiful house in a quite neighborhood.</p>
