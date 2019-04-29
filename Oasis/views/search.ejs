@@ -1,42 +1,110 @@
-<link rel="stylesheet" href="/css/style.css">
-<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+<!DOCTYPE html>
+<html lang="en">
 
-<div class="flex-container">
-    <div class="container">
-            <h1>LISTINGS</h1>
-            <p class="lead">Total listings are <strong><%= data %></strong> and counting more...</p>
-            
-            <!-- Begin Form-->
-            <form method="POST" action="/search">                
-                <input type="text", name="min" class="form" placeholder="Min Price">
-                <input type="text", name="max" class="form" placeholder="Max Price">
-                <button>Search</button>
-            </form> <!-- End Form-->
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 
-            <br>
-            <br>
-            <hr>
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
 
-            <!-- Begin Result-->
-            <h1>Result</h1>
-            
-            <% if ( resultCount > 0) { %>
-                <p>Found <%= resultCount %> properties that match your search critera.</p>
-           <% } %>
+  <title>search</title>
+</head>
 
-            <br>
+<body>
+  <!-- Begin container -->
+  <div class="container">
+    <!-- Begin Jumbotron -->
+    <div class="jumbotron">
+      <h1>LISTINGS</h1>
+      <p class="lead">
+        Total listings are <strong><%= data %></strong> and counting more...
+      </p>
 
-            <div>
-                <li>Address: <%= address %></li>
-                <li>City: <%= city %></li>
-                <li>State: <%= state %></li>
-                <li>Zipcode: <%= zipcode %></li>
-                <li>Price: <%= price %></li>
-                <li>Size: <%= size %></li>
-                <li>Room: <%= room %></li>
-                <li>Bathroom: <%= bathroom %></li>
+      <!-- Begin Form-->
+      <form action="/search" method="POST">
+        <div class="form-row">
+          <div class="col-7">
+            <label for="minPrice"></label>
+            <input type="text" , name="min" value="<%= min %>" class="form-control" id="minPrice" placeholder="Min Price" />
+          </div>
+          <div class="col">
+            <label for="maxPrice"></label>
+            <input type="text" , name="max" value="<%= max %>" class="form-control" id="maxPrice" placeholder="Max Price" />
+          </div>
+        </div>
+        <br />
+          <select class="custom-select" name="type" id="inputGroupSelect04">
+            <option value="" <%=all %>>All</option>
+            <option value="room" <%=room %>>Room</option>
+            <option value="apartment" <%=apartment %>>Apartment</option>
+            <option value="house" <%=house %>>House</option>
+          </select>
+        <button type="submit" class="btn btn-primary btn-lg">Search</button>
+      </form>
+      <!-- End Form-->
+
+      <form action="/filter" method="POST">
+      <h7><i>miles from campus</i></h7>
+            <div class="input-group">
+              <select class="custom-select" name="distance" id="inputGroupSelect04">
+                <option value="" <%=none %>>Choose...</option>
+                <option value="1" <%=first %>> < 1 mile</option>
+                <option value="5" <%=second %>> < 5 miles </option>
+                <option value="50" <%=third %>> > 5 miles</option>
+              </select>
+              <div class="input-group-append">
+                <button class="btn btn-primary btn-lg" type="submit">filter</button>
+              </div>
             </div>
+      </form>
+      <br />
+      <hr />
+
+      <!-- Begin Result Card-->
+
+      <% if ( resultCount > 0) { %>
+        <h1>Result</h1>
+        <p>Found <%= resultCount %> properties that match your search critera.</p>
+      <% } %>
+
+      <% for (var i=0; i < dropCount; i++) { %>
+      <div class="card" style="width: 18rem;">
+        <!-- <img src="" alt="" /> -->
+        <img src="<%= listImg[i] %>" width="300" height="200" class="card-img-top" alt="a house">
+        <div class="card-body">
+          <h5 class="card-title">A beautiful house $<%= price[i] %></h5>
+          <p class="card-text">A beutiful house in a quite neighborhood.</p>
+          <ul>
+            <li><%= address[i] %></li>
+            <li><%= city[i] %> , <%= state[i] %> <%= zipcode[i] %></li>
+            <li>
+              <%= room[i] %> bed <%= bathroom[i] %> bath <%= size[i] %> sq. ft
+            </li>
+          </ul>
+        </div>
+      </div>
+      <br />
+      <% } %>
+      <!-- End Result Card -->
     </div>
-</div>
+    <!-- End Jumbotron -->
+  </div>
+  <!-- end container -->
 
+  <!-- Optional JavaScript -->
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
+  </script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
+  </script>
+</body>
 
+</html>

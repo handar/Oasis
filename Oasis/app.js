@@ -1,80 +1,91 @@
-// jshint esversion:6
-// CSC648-01 Team 007
+/**
+ * app.js           - The main app that runs the server.
+ * @author            Ratna Lama
+ * @author            Andrew Sarmiento
+ * @author            Hadia Andar
+ * @author            Ade Adetayo
+ * @author            Shuyuan Deng
+ * @author            Adam Tremarche
+ * @date              4/11/2019
+ *
+ * @description       Back end routes.
+ *
+ */
 
-const express = require('express');
-const hbs = require('hbs');
-const fs = require('fs');
+const express = require("express");
+const hbs = require("hbs");
+const fs = require("fs");
 
 const app = express();
-const port = 8000;
+const port = 3000;
 
 // middleware
-hbs.registerPartials(__dirname + 'views/partials');
-app.set('view engine', 'hbs');
-app.use(express.static(__dirname + '/public'));
+hbs.registerPartials(__dirname + "views/partials");
+app.set("view engine", "hbs");
+app.use(express.static(__dirname + "/public"));
 
 // log
 app.use((req, res, next) => {
   var now = new Date().toString();
-  var log = '${now}: ${req.method} ${req.url}';
+  var log = "${now}: ${req.method} ${req.url}";
 
   console.log();
-  fs.appendFile('server.log', log + '\n');
+  fs.appendFile("server.log", log + "\n");
   next();
 });
 
 // hbs helper function
-hbs.registerHelper('getCurrentYear', () => {
+hbs.registerHelper("getCurrentYear", () => {
   return new Date().getFullYear();
 });
 
-hbs.registerHelper('screamIt', (text) => {
+hbs.registerHelper("screamIt", text => {
   return text.toUpperCase();
 });
 
 // homepae (index) routing
-app.get('/', (req, res) => {
-  res.render('home.hbs', {
-    pageTitle: 'Software Engineering class SFSU',
-    semesterYear: 'Spring 2019',
-    section: '01',
-    team: 'Team007',
+app.get("/", (req, res) => {
+  res.render("home.hbs", {
+    pageTitle: "Software Engineering class SFSU",
+    semesterYear: "Spring 2019",
+    section: "01",
+    team: "Team007"
   });
 });
 
 // about: Ratna Lama
-app.get('/ratnalama', (req, res) => {
-  res.render('ratnalama.hbs', {
-    pageTitle: 'About Me: ',
+app.get("/ratnalama", (req, res) => {
+  res.render("ratnalama.hbs", {
+    pageTitle: "About Me: "
   });
 });
 
 // about: Hadia Andar
-app.get('/', function (req, res) {
-  res.sendFile(__dirname + '/hadiaandar.html');
+app.get("/", function(req, res) {
+  res.sendFile(__dirname + "/hadiaandar.html");
 });
 
 // about: Adam Tremarche
-app.get('/', function (req, res) {
-  res.sendFile(__dirname + '/adamtremarche.html');
+app.get("/", function(req, res) {
+  res.sendFile(__dirname + "/adamtremarche.html");
 });
 
 // about: Andrew document.setAttribute('attr', value);rmiento
-app.get('/', function (req, res) {
-  res.sendFile(__dirname + '/andrewsarmiento.html');
+app.get("/", function(req, res) {
+  res.sendFile(__dirname + "/andrewsarmiento.html");
 });
 
 // about: Ade Adetayo
-app.get('/', function (req, res) {
-  res.sendFile(__dirname + '/adeadetayo.html');
+app.get("/", function(req, res) {
+  res.sendFile(__dirname + "/adeadetayo.html");
 });
 
 // about: Shuyuan Deng
-app.get('/', function (req, res) {
-  res.sendFile(__dirname + '/shuyuandeng.html');
+app.get("/", function(req, res) {
+  res.sendFile(__dirname + "/shuyuandeng.html");
 });
 
 // listen from express module
-app.listen(port, function () {
-  console.log('App listening on port ' + port + ' ...');
+app.listen(port, function() {
+  console.log("App listening on port " + port + " ...");
 });
