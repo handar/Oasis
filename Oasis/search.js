@@ -61,6 +61,8 @@ const countAllProperty = require(__dirname + "/mysql/countAllProperty.js");
 const countAllMinMax = require(__dirname + "/mysql/countAllMinMax.js");
 // const alterTable = require(__dirname + "/mysql/alterTable.js");
 // const insertInto = require(__dirname + "/mysql/insertInto.js");
+let count = countAllProperty();
+console.log("count @search: " + count);
 
 /**
  * MySQL Database Query Execution
@@ -72,8 +74,8 @@ let db = createConnection(); // Create Database Connection
 
 // search page
 app.get("/search", function(req, res) {
-  let count = countAllProperty();
-  //console.log("countAllProperty @ Search Page: " + count);
+  // let count = countAllProperty();
+  console.log("countAllProperty @ Search Page: " + count);
   res.render("search", {
     data: count,
     resultCount: totalCount,
@@ -158,7 +160,7 @@ app.post("/search", function(req, res) {
 
     // query price range count
     totalCount = countResult(min_price, max_price);
-    console.log(totalCount);
+    console.log("countResult" + totalCount);
     // console.log("totalCount_0 :" + totalCount);
 
     // query price range

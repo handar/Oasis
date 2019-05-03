@@ -20,7 +20,8 @@ function countAllProperty() {
   let sql = "SELECT COUNT(*) AS count FROM property";
   db.query(sql, function(err, result, field) {
     if (err) throw err;
-    countAllProp = JSON.stringify(result[0].count);
+    //countAllProp = JSON.stringify(result[0].count);
+    countAllProp = JSON.stringify(result);
   });
   // END DATABASE CONNECTION
   db.end();
