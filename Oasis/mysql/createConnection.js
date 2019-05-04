@@ -15,15 +15,15 @@ function createConnection() {
   // Create a database Connection
   let connection = mysql.createConnection({
     // AWS RDS
-    host: "oasisdb.cueqkbjnpfop.us-west-1.rds.amazonaws.com",
-    user: "oasisCSC648007",
-    password: "41839cSc64807",
+    // host: "oasisdb.cueqkbjnpfop.us-west-1.rds.amazonaws.com",
+    // user: "oasisCSC648007",
+    // password: "41839cSc64807",
+    // database: "oasisdb"
+    host: "localhost",
+    user: "root",
+    password: "",
+    //database: '',      /** uncomment it if creating database for the first time */
     database: "oasisdb"
-    // host: 'localhost',
-    // user: 'root',
-    // password: '',
-    // //database: '',      /** uncomment it if creating database for the first time */
-    // database: 'oasisdb',
   });
 
   // Connect to MySQL

@@ -13,7 +13,7 @@ const express = require("express");
 const app = express();
 
 const bodyParser = require("body-parser");
-const port = 80;
+const port = 3000;
 
 var img_url = [];
 var prop_type = [];
@@ -232,6 +232,7 @@ app.post("/filter", function(req, res) {
  * @param {*} max_price     max_price of the property
  */
 function countResult(min_price, max_price) {
+  // let db = createConnection(); // create database connection
   // find the total number of property within min and max price range
   let sql =
     "SELECT COUNT(*) AS count FROM property WHERE price >= ? AND price <= ?";
@@ -248,6 +249,8 @@ function countResult(min_price, max_price) {
 
     //console.log(totalCount);    // actual count
   });
+  // END DATABASE CONNECTION
+  // db.end();
 } // end countResult()
 
 /**
@@ -327,6 +330,7 @@ function search(min_price, max_price) {
   // } catch (error) {
   //   throw error;
   // } // end try-catch
+  // let db = createConnection(); // create database connection
   let sql = "SELECT * FROM property WHERE price >= ? AND price <= ?";
   db.query(sql, [min_price, max_price], function(err, result, field) {
     if (err) throw err;
@@ -348,7 +352,7 @@ function search(min_price, max_price) {
 } // end search()
 
 function search_distance(min_price, max_price, filter_distance) {
-  let db = createConnection();
+  // let db = createConnection();
   let sql =
     "SELECT * FROM property WHERE price >= ? AND price <= ? AND distance < ?";
   db.query(sql, [min_price, max_price, filter_distance], function(
@@ -373,10 +377,12 @@ function search_distance(min_price, max_price, filter_distance) {
     }
     console.log(result);
   });
+  // END DATABASE CONNECTION
+  // db.end();
 }
 
 function search_type(min_price, max_price, filter_type) {
-  let db = createConnection();
+  // let db = createConnection();
   let sql =
     "SELECT * FROM property WHERE price >= ? AND price <= ? AND type = ?";
   db.query(sql, [min_price, max_price, filter_type], function(
@@ -401,6 +407,8 @@ function search_type(min_price, max_price, filter_type) {
     }
     console.log(result);
   });
+  // END DATABASE CONNECTION
+  // db.end();
 }
 
 function search_type_distance(
@@ -409,7 +417,7 @@ function search_type_distance(
   filter_type,
   filter_distance
 ) {
-  let db = createConnection();
+  // let db = createConnection();
   let sql =
     "SELECT * FROM property WHERE price >= ? AND price <= ? AND type = ? AND distance < ?";
   db.query(sql, [min_price, max_price, filter_type, filter_distance], function(
@@ -434,6 +442,8 @@ function search_type_distance(
     }
     console.log(result);
   });
+  // END DATABASE CONNECTION
+  // db.end();
 }
 
 // listen to port

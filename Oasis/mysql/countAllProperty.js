@@ -13,19 +13,25 @@
 // Import Module
 const createConnection = require(__dirname + "/createConnection.js");
 
-let countAllProp;
+// let countAllProp;
 
 function countAllProperty() {
+  let countAllProp = 0;
   let db = createConnection(); // create database connection
   let sql = "SELECT COUNT(*) AS count FROM property";
   db.query(sql, function(err, result, field) {
     if (err) throw err;
-    //countAllProp = JSON.stringify(result[0].count);
-    countAllProp = JSON.stringify(result);
+    countAllProp = JSON.stringify(result[0].count);
+    console.log("countAllProp_01.js: " + JSON.stringify(result[0].count));
+    return countAllProp;
+
+    // countAllProp = JSON.stringify(result[0].count);
+    // countAllProp = JSON.stringify(result);
   });
   // END DATABASE CONNECTION
-  db.end();
-  return countAllProp;
+  // db.end();
+  // console.log("countAllProp_02.js: " + countAllProp);
+  // return countAllProp;
 } // end countAllProperty()
 
 // Export as module employee
