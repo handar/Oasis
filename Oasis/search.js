@@ -15,6 +15,13 @@ const app = express();
 const bodyParser = require("body-parser");
 const port = 3000;
 
+//testing Lou's address for google map api
+//var lou;
+
+var prop_info = [];
+var map;
+
+var prop_id = [];
 var img_url = [];
 var prop_type = [];
 var prop_add = [];
@@ -77,6 +84,8 @@ app.get("/search", function(req, res) {
   // let count = countAllProperty();
   console.log("countAllProperty @ Search Page: " + count);
   res.render("search", {
+    //lous: lou;
+    id: prop_id,
     data: count,
     resultCount: totalCount,
     dropCount: drop_count,
@@ -337,6 +346,7 @@ function search(min_price, max_price) {
 
     drop_count = result.length;
     for (var i = 0; i < totalCount; i++) {
+      prop_id.push(result[i].id);
       img_url.push(result[i].img);
       prop_add.push(result[i].address);
       prop_city.push(result[i].city);
@@ -347,12 +357,13 @@ function search(min_price, max_price) {
       prop_room.push(result[i].room);
       prop_bathroom.push(result[i].bathroom);
     }
+    //lou = result[0].address + " " + result[0].city + " " + result[0].state;
+    //console.log(lou);
     console.log(result);
   });
 } // end search()
 
 function search_distance(min_price, max_price, filter_distance) {
-  // let db = createConnection();
   let sql =
     "SELECT * FROM property WHERE price >= ? AND price <= ? AND distance < ?";
   db.query(sql, [min_price, max_price, filter_distance], function(
@@ -362,8 +373,22 @@ function search_distance(min_price, max_price, filter_distance) {
   ) {
     if (err) throw err;
 
+    //emptying arrays for new search w/ filter
+    prop_id = [];
+    img_url = [];
+    prop_add = [];
+    prop_city = [];
+    prop_state = [];
+    prop_zipcode = [];
+    prop_price = [];
+    prop_size = [];
+    prop_room = [];
+    prop_bathroom = [];
+    prop_distance = [];
+
     drop_count = result.length;
     for (var i = 0; i < result.length; i++) {
+      prop_id.push(result[i].id);
       img_url.push(result[i].img);
       prop_add.push(result[i].address);
       prop_city.push(result[i].city);
@@ -377,12 +402,9 @@ function search_distance(min_price, max_price, filter_distance) {
     }
     console.log(result);
   });
-  // END DATABASE CONNECTION
-  // db.end();
 }
 
 function search_type(min_price, max_price, filter_type) {
-  // let db = createConnection();
   let sql =
     "SELECT * FROM property WHERE price >= ? AND price <= ? AND type = ?";
   db.query(sql, [min_price, max_price, filter_type], function(
@@ -392,8 +414,22 @@ function search_type(min_price, max_price, filter_type) {
   ) {
     if (err) throw err;
 
+    //emptying arrays for new search w/ filter
+    prop_id = [];
+    img_url = [];
+    prop_add = [];
+    prop_city = [];
+    prop_state = [];
+    prop_zipcode = [];
+    prop_price = [];
+    prop_size = [];
+    prop_room = [];
+    prop_bathroom = [];
+    prop_distance = [];
+
     drop_count = result.length;
     for (var i = 0; i < result.length; i++) {
+      prop_id.push(result[i].id);
       img_url.push(result[i].img);
       prop_add.push(result[i].address);
       prop_city.push(result[i].city);
@@ -407,8 +443,6 @@ function search_type(min_price, max_price, filter_type) {
     }
     console.log(result);
   });
-  // END DATABASE CONNECTION
-  // db.end();
 }
 
 function search_type_distance(
@@ -417,7 +451,6 @@ function search_type_distance(
   filter_type,
   filter_distance
 ) {
-  // let db = createConnection();
   let sql =
     "SELECT * FROM property WHERE price >= ? AND price <= ? AND type = ? AND distance < ?";
   db.query(sql, [min_price, max_price, filter_type, filter_distance], function(
@@ -427,8 +460,22 @@ function search_type_distance(
   ) {
     if (err) throw err;
 
+    //emptying arrays for new search w/ filter
+    prop_id = [];
+    img_url = [];
+    prop_add = [];
+    prop_city = [];
+    prop_state = [];
+    prop_zipcode = [];
+    prop_price = [];
+    prop_size = [];
+    prop_room = [];
+    prop_bathroom = [];
+    prop_distance = [];
+
     drop_count = result.length;
     for (var i = 0; i < result.length; i++) {
+      prop_id.push(result[i].id);
       img_url.push(result[i].img);
       prop_add.push(result[i].address);
       prop_city.push(result[i].city);
@@ -442,8 +489,51 @@ function search_type_distance(
     }
     console.log(result);
   });
-  // END DATABASE CONNECTION
-  // db.end();
+}
+
+app.get("/details", function(req, res) {
+  res.render("details", {
+    info: prop_info,
+    map: map,
+    resultCount: drop_count
+  });
+});
+
+app.get("/details/:id", function(req, res) {
+  console.log("ID: ", req.params.id);
+  loadProperty(req.params.id);
+
+  res.redirect("/details");
+  //res.send('Listing info');
+});
+
+function loadProperty(id) {
+  let sql = "SELECT * FROM property WHERE id = ?";
+  db.query(sql, id, function(err, result, field) {
+    if (err) throw err;
+    //console.log(result[0].id);
+    map = result[0].address + " " + result[0].city + " " + result[0].state;
+
+    drop_count = result.length;
+
+    //resetting property info array to blank
+    prop_info = [];
+
+    prop_info.push(result[0].id);
+    prop_info.push(result[0].type);
+    prop_info.push(result[0].address);
+    prop_info.push(result[0].city);
+    prop_info.push(result[0].state);
+    prop_info.push(result[0].zipcode);
+    prop_info.push(result[0].price);
+    prop_info.push(result[0].size);
+    prop_info.push(result[0].room);
+    prop_info.push(result[0].bathroom);
+    prop_info.push(result[0].img);
+
+    console.log(map);
+    console.log(prop_info);
+  });
 }
 
 // listen to port
