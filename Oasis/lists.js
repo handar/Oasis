@@ -25,28 +25,32 @@ var prop_price = [];
 var prop_size = [];
 var prop_room = [];
 var prop_bathroom = [];
-var prop_distance = [];
-let totalCount = 0;
-let drop_count = 0;
+var countAllProp = 0;
+var resultLength = 0;
 
-let min_price;
-let max_price;
+// var prop_distance = [];
+// let totalCount = 0;
+// let drop_count = 0;
 
-let filter_distance;
-let select_none = "selected";
-let select_first = "";
-let select_second = "";
-let select_third = "";
+// let min_price;
+// let max_price;
 
-let filter_type;
-let select_all = "selected";
-let select_room = "";
-let select_apartment = "";
-let select_house = "";
+// let filter_distance;
+// let select_none = "selected";
+// let select_first = "";
+// let select_second = "";
+// let select_third = "";
+
+// let filter_type;
+// let select_all = "selected";
+// let select_room = "";
+// let select_apartment = "";
+// let select_house = "";
 
 // NEW SEARCh : type + searchParam
 // let type = "";
 // let searchParam = "";
+// var countAllProp = count;
 
 /**
  * CONFIGURATIONS
@@ -59,14 +63,14 @@ app.use(express.static(__dirname + "/public")); // css
  * IMPORT MODULES - MySQL query
  */
 const createConnection = require(__dirname + "/mysql/createConnection.js");
-// const countAllProperty = require(__dirname + "/mysql/countAllProperty.js");
+const countAllProperty = require(__dirname + "/mysql/countAllProperty.js");
 // const ascendPrice = require(__dirname + "/mysql/ascendPrice.js");
 // const filterByMinMax = require(__dirname + "/mysql/filterByMinMax.js");
 const countAllMinMax = require(__dirname + "/mysql/countAllMinMax.js");
 // const alterTable = require(__dirname + "/mysql/alterTable.js");
 // const insertInto = require(__dirname + "/mysql/insertInto.js");
-const selectAll = require(__dirname + "/mysql/selectAll.js");
-const percentLlike = require(__dirname + "/mysql/percentLike.js");
+// const selectAll = require(__dirname + "/mysql/selectAll.js");
+// const percentLlike = require(__dirname + "/mysql/percentLike.js");
 
 /**
  * MySQL Database Query Execution
@@ -76,20 +80,19 @@ const percentLlike = require(__dirname + "/mysql/percentLike.js");
 // alterTable();
 // insertInto();
 //
-let count = countAllProperty();
-// console.log("countAll: " + countAllProperty());
-console.log("count @list: " + count);
+// let count = countAllProperty();
+// // console.log("countAll: " + countAllProperty());
+// console.log("count @list: " + count);
 
 /**
  * GET
  */
 app.get("/lists", function(req, res) {
-  // let count = countAllProperty();
-  console.log("countAllProperty @ Search Page: " + count);
+  // count = countAllProperty();
+  // console.log("countAllProperty @ lists Page: " + count);
   res.render("lists", {
-    data: count,
-    resultCount: totalCount,
-    dropCount: drop_count,
+    countAllListings: countAllProp,
+    resultCount: resultLength,
     listImg: img_url,
     type: prop_type,
     address: prop_add,
@@ -99,18 +102,7 @@ app.get("/lists", function(req, res) {
     price: prop_price,
     size: prop_size,
     room: prop_room,
-    bathroom: prop_bathroom,
-    min: min_price,
-    max: max_price,
-    all: select_all,
-    room: select_room,
-    apartment: select_apartment,
-    house: select_house,
-    distance: prop_distance,
-    none: select_none,
-    first: select_first,
-    second: select_second,
-    third: select_third
+    bathroom: prop_bathroom
   });
 });
 
@@ -131,28 +123,104 @@ app.post("/lists", function(req, res) {
   if (type === "all") {
     selectAll();
   } else {
-    percentLlike(type, search);
+    percentLike(type, search);
   }
+  // show the results
+  res.redirect("/lists");
 });
 
-function countAllProperty() {
-  let countAllProp = 0;
+// Select All listings table
+function selectAll() {
   let db = createConnection(); // create database connection
-  let sql = "SELECT COUNT(*) AS count FROM property";
+  let sql = "SELECT * FROM property";
   db.query(sql, function(err, result, field) {
     if (err) throw err;
-    countAllProp = JSON.stringify(result[0].count);
-    console.log("countAllProp_01.js: " + JSON.stringify(result[0].count));
-    return countAllProp;
+    resultLength = Number(result.length);
+    countAllProp = Number(resultLength);
+
+    // console.log("SelectAll result: " + result);
+    console.log("selectAll length: " + result.length);
+    console.log("CountAllProp: " + countAllProp);
+
+    let item = JSON.stringify(result);
+    console.log("item is " + item); // JSON object
+    if (result.length > 0) {
+      for (var i = 0; i < result.length; i++) {
+        img_url.push(item[i].img);
+        prop_type.push(item[i].type);
+        prop_add.push(item[i].address);
+        prop_city.push(result[i].city);
+        prop_state.push(result[i].state);
+        prop_zipcode.push(result[i].zipcode);
+        prop_price.push(result[i].price);
+        prop_size.push(result[i].size);
+        prop_room.push(result[i].room);
+        prop_bathroom.push(result[i].bathroom);
+      }
+    } else {
+      console.log("Sorry no result found!");
+    }
   });
   // END DATABASE CONNECTION
   db.end();
-} // end countAllProperty()
+} // selectAll()
+
+function percentLike(propType, searchParam) {
+  let type = propType;
+  let search = "%" + searchParam + "%";
+  let db = createConnection(); // create database connection
+  let sql = "SELECT * FROM property WHERE type = ? OR address LIKE ?";
+  db.query(sql, [type, search], function(err, result, field) {
+    if (err) throw err;
+    // console.log(result);
+    console.log("percentLIke result @length: " + result.length);
+    resultLength = Number(result.length);
+    // let item = JSON.stringify(result);
+    // console.log("result @length: " + result.length); // JSON object
+    // resultLength = result.length;
+
+    if (result.length > 0) {
+      for (var i = 0; i < result.length; i++) {
+        img_url.push(result[i].img);
+        prop_type.push(result[i].type);
+        prop_add.push(result[i].address);
+        prop_city.push(result[i].city);
+        prop_state.push(result[i].state);
+        prop_zipcode.push(result[i].zipcode);
+        prop_price.push(result[i].price);
+        prop_size.push(result[i].size);
+        prop_room.push(result[i].room);
+        prop_bathroom.push(result[i].bathroom);
+      }
+    } else {
+      console.log("Sorry no result found!");
+    }
+  });
+  // END DATABASE CONNECTION
+  db.end();
+  // return resultLength;
+} // percentLike()
 
 // listen to port
 app.listen(port, function() {
   console.log(`Server listening on port ${port}...`);
 });
+
+// function countAllProperty() {
+//   // var countAllProp = 0;
+//   let db = createConnection(); // create database connection
+//   let sql = "SELECT COUNT(*) AS count FROM property";
+//   db.query(sql, function(err, result, field) {
+//     if (err) throw err;
+//     countAllProp = JSON.stringify(result[0].count);
+//     console.log("countAllProp_01.js: " + countAllProp);
+//     // return countAllProp;
+//   });
+//   // END DATABASE CONNECTION
+//   db.end();
+//   console.log("countAllProp_02.js: " + countAllProp);
+//   return countAllProp;
+// } // end countAllProperty()
 
 // post
 // app.post("/lists", function(req, res) {
