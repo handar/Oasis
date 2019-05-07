@@ -15,6 +15,10 @@ const app = express();
 const bodyParser = require("body-parser");
 const port = 80;
 
+// CODE REVIEW
+// There are a lot of variables here that only I know its purpose 
+// My try to add short comments here and there to better explain 
+// the prupose to others who haven't worked on this code  
 var img_url = [];
 var prop_type = [];
 var prop_add = [];
@@ -79,10 +83,10 @@ app.get("/search", function(req, res) {
   res.render("search", {
     data: count,
     resultCount: totalCount,
-    dropCount: drop_count,
-    listImg: img_url,
-    type: prop_type,
-    address: prop_add,
+    dropCount: drop_count,    // CODE REVIEW 
+    listImg: img_url,         // This is a lot of variables to pass
+    type: prop_type,          // Consider only the ones that are 
+    address: prop_add,        // absolutely necessary
     city: prop_city,
     state: prop_state,
     zipcode: prop_zipcode,
@@ -255,6 +259,9 @@ function countResult(min_price, max_price) {
  * @param {*} min_price
  * @param {*} max_price
  */
+// CODE REVIEW
+// Before turning in final project, consider cleaning up commented 
+// code that you don't need anymore
 function search(min_price, max_price) {
   // let totalCount = countResult(min_price, max_price);
   // query if the result count is greater than 1
@@ -435,6 +442,12 @@ function search_type_distance(
     console.log(result);
   });
 }
+
+// CODE REVIEW
+// I see the purpose of every function but a single .js file
+// with over 400 lines of code. I'd consider making a folder 
+// where you can store and call the functions when needed
+// as to avoid cluttering all the backend code onto one page
 
 // listen to port
 app.listen(port, function() {
