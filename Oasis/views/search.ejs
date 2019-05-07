@@ -16,7 +16,6 @@
 <body>
   <!-- Begin container -->
   <div class="container">
-
     <!-- Begin Jumbotron -->
     <div class="jumbotron">
       <h1>LISTINGS</h1>
@@ -24,9 +23,7 @@
         Total listings are <strong><%= data %></strong> and counting more...
       </p>
 
-      <!-- Begin Form -->
-
-      <!-- Begin Form #1-->
+      <!-- Begin Form-->
       <form action="/search" method="POST">
         <div class="form-row">
           <div class="col-7">
@@ -40,7 +37,6 @@
               placeholder="Max Price" />
           </div>
         </div>
-
         <br />
         <select class="custom-select" name="type" id="inputGroupSelect04">
           <option value="" <%=all %>>All</option>
@@ -49,9 +45,9 @@
           <option value="house" <%=house %>>House</option>
         </select>
         <button type="submit" class="btn btn-primary btn-lg">Search</button>
-      </form> <!-- End Form #1 -->
+      </form>
+      <!-- End Form-->
 
-      <!-- Begin Form #2 -->
       <form action="/filter" method="POST">
         <h7><i>miles from campus</i></h7>
         <div class="input-group">
@@ -66,11 +62,12 @@
             <button class="btn btn-primary btn-lg" type="submit">filter</button>
           </div>
         </div>
-      </form> <!-- End Form #2 -->
+      </form>
       <br />
       <hr />
 
       <!-- Begin Result Card-->
+
       <% if ( resultCount > 0) { %>
       <h1>Result</h1>
       <p>Found <%= resultCount %> properties that match your search critera.</p>
@@ -100,8 +97,10 @@
       <br />
       <% } %>
       <!-- End Result Card -->
-    </div> <!-- End Jumbotron -->
-  </div> <!-- end container -->
+    </div>
+    <!-- End Jumbotron -->
+  </div>
+  <!-- end container -->
 
   <!-- Google Maps API -->
   <!-- <h3 align="center">My Google Maps Demo</h3> -->
@@ -118,7 +117,6 @@
     // var geocoder;
     // var map, map1;
     // var test;
-
     // function initMap() {
     // // create the maps
     // var myOptions = {
@@ -126,12 +124,8 @@
     //     center: new google.maps.LatLng(37.721984, -122.478211),
     // }
     // map = new google.maps.Map(document.getElementById("m1"), myOptions);
-
     // //map2 = new google.maps.Map(document.getElementById("m2"), myOptions);
     // }
-
-
-
     var home = "1219 39th Ave San Francisco California";
     // Initialize and add the map
     function initMap() {
@@ -149,7 +143,6 @@
       //   codeAddress(test);
       // <% } %>
     }
-
     function codeAddress(address) 
     {
       geocoder.geocode( {address:address}, function(results, status) 

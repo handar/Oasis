@@ -62,27 +62,18 @@ app.use(express.static(__dirname + "/public")); // css
  * IMPORT MODULES - MySQL query
  */
 const createConnection = require(__dirname + "/mysql/createConnection.js");
-const countAllProperty = require(__dirname + "/mysql/countAllProperty.js");
-// const ascendPrice = require(__dirname + "/mysql/ascendPrice.js");
-// const filterByMinMax = require(__dirname + "/mysql/filterByMinMax.js");
-const countAllMinMax = require(__dirname + "/mysql/countAllMinMax.js");
-// const alterTable = require(__dirname + "/mysql/alterTable.js");
-// const insertInto = require(__dirname + "/mysql/insertInto.js");
-let count = countAllProperty();
-console.log("count @search: " + count);
+const countAll = require(__dirname + "/mysql/countAll.js");
 
 /**
  * MySQL Database Query Execution
  */
 let db = createConnection(); // Create Database Connection
 // createDB();           // Create a Database name csc675
-// alterTable();
-// insertInto();
 
 // search page
 app.get("/search", function(req, res) {
-  // let count = countAllProperty();
-  console.log("countAllProperty @ Search Page: " + count);
+  let count = countAll();
+  //console.log("count0: " + count);
   res.render("search", {
     //lous: lou;
     id: prop_id,
@@ -169,7 +160,7 @@ app.post("/search", function(req, res) {
 
     // query price range count
     totalCount = countResult(min_price, max_price);
-    console.log("countResult" + totalCount);
+    console.log(totalCount);
     // console.log("totalCount_0 :" + totalCount);
 
     // query price range
@@ -241,7 +232,6 @@ app.post("/filter", function(req, res) {
  * @param {*} max_price     max_price of the property
  */
 function countResult(min_price, max_price) {
-  // let db = createConnection(); // create database connection
   // find the total number of property within min and max price range
   let sql =
     "SELECT COUNT(*) AS count FROM property WHERE price >= ? AND price <= ?";
@@ -258,8 +248,6 @@ function countResult(min_price, max_price) {
 
     //console.log(totalCount);    // actual count
   });
-  // END DATABASE CONNECTION
-  // db.end();
 } // end countResult()
 
 /**
@@ -339,7 +327,6 @@ function search(min_price, max_price) {
   // } catch (error) {
   //   throw error;
   // } // end try-catch
-  // let db = createConnection(); // create database connection
   let sql = "SELECT * FROM property WHERE price >= ? AND price <= ?";
   db.query(sql, [min_price, max_price], function(err, result, field) {
     if (err) throw err;
@@ -490,6 +477,71 @@ function search_type_distance(
     console.log(result);
   });
 }
+// try {
+//     if (totalCount < 1 ) {
+//         throw "Sorry no result. Try again with different price range."
+
+//     } else {
+//         sql = "SELECT FROM property where price >= ? AND price <= ? ";
+//         db.query(sql, [min_price, max_price] ,function(err, result, field) {
+//             if (err) throw err;
+
+//             var item = JSON.stringify(result);
+//             console.log(item);
+
+//             // var i, j;
+//             // for (i = 1; i < result.length; i++) {
+//             //     for (j = i; j <= 8 ; j++) {
+//             //         prop_add = result[j].address;
+//             //         prop_city = result[j].city;
+//             //         prop_state = result[j].state;
+//             //         prop_zipcode = result[j].state;
+//             //         prop_price = result[j].price;
+//             //         prop_size = result[j].size;
+//             //         prop_room = result[j].room;
+//             //         prop_bathroom = result[j].bathroom;
+//             //     }
+//             // }
+
+//             prop_add = result[1].address;
+//             prop_city = result[2].city;
+//             prop_state = result[3].state;
+//             prop_zipcode = result[4].state;
+//             prop_price = result[5].price;
+//             prop_size = result[6].size;
+//             prop_room = result[7].room;
+//             prop_bathroom = result[8].bathroom;
+
+//         });
+//     }
+
+// } catch (error) {
+//     throw error;
+// }
+//}
+
+// function search(min_price, max_price) {
+//   let db = createConnection(); // Create Database Connection
+//   let sql = "SELECT * FROM property WHERE price >= ? AND price <= ?";
+//   db.query(sql, [min_price, max_price], function(err, result, field) {
+//     if (err) throw err;
+
+//     drop_count = result.length;
+//     console.log("drop_count: " + drop_count);
+//     for (var i = 0; i < totalCount; i++) {
+//       img_url.push(result[i].img);
+//       prop_add.push(result[i].address);
+//       prop_city.push(result[i].city);
+//       prop_state.push(result[i].state);
+//       prop_zipcode.push(result[i].zipcode);
+//       prop_price.push(result[i].price);
+//       prop_size.push(result[i].size);
+//       prop_room.push(result[i].room);
+//       prop_bathroom.push(result[i].bathroom);
+//     }
+//     console.log(result);
+//   });
+// }
 
 app.get("/details", function(req, res) {
   res.render("details", {

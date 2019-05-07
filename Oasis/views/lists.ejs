@@ -3,12 +3,13 @@
 
 <head>
    <!-- Required meta tags -->
-   <meta charset="utf-8" />
-   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+   <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
    <!-- Bootstrap CSS -->
    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+   <link rel="stylesheet" href="/css/liststyle.css">
 
    <title>Home page - search listings</title>
 </head>
@@ -17,9 +18,9 @@
    <!-- Begin container -->
    <div class="container">
 
-      <!-- Begin Jumbotron -->
+      <!-- Begin Navigation -->
       <div class="jumbotron">
-         <h1>LISTINGS</h1>
+         <h3>Navigation</h3>
          <p class="lead">
             Total listings are <strong><%= countAllListings %></strong> and counting more...
          </p>
@@ -41,39 +42,74 @@
                      <!-- </fieldset> -->
                </div>
             </div>
-         </form> <!-- End Form #00 -->
+         </form>
+         <!--End Form #00-->
+      </div> <!-- End Jumbotron-->
+      <!-- End Navigation -->
 
-         <br />
-         <hr />
+      <!-- Begin Result Card -->
+      <!-- <div class="jumbotron"> -->
+      <div class="jumbotron">
+         <div class="row">
+            <h3>Filter Section</h3>
+            <br />
+            <!-- Filter Column -->
+            <div class="col-sm-4">
+               <br />
+               <br />
+               <br />
+               <p><button type="button" class="btn btn-primary">Low To High</button></p>
+               <br />
+               <P><button type="button" class="btn btn-primary">High To Low</button></P>
+               <br />
+            </div><!-- End Filter Column -->
 
+            <!-- Result Column-->
+            <div class="col-sm-8 vertical-bar">
+               <!-- Begin Result Card-->
+               <% if ( resultCount > 0) { %>
+               <h1>Result</h1>
+               <p>Found <%= resultCount %> properties that match your search critera.</p>
+               <% } %>
 
-         <!-- Begin Result Card-->
-         <% if ( resultCount > 0) { %>
-         <h1>Result</h1>
-         <p>Found <%= resultCount %> properties that match your search critera.</p>
-         <% } %>
-
-         <% for (var i=0; i < resultCount; i++) { %>
-         <div class="card" style="width: 18rem;">
-            <img src="<%= listImg[i] %>" alt="house" class="img-thumbnail">
-            <!-- <img src="<%= listImg[i] %>" width="300" height="200" class="card-img-top" alt="a house"> -->
-            <div class="card-body">
-               <h5 class="card-title">A beautiful house $<%= price[i] %></h5>
-               <p class="card-text">A beautiful house in a quite neighborhood.</p>
-               <ul>
-                  <li><%= address[i] %></li>
-                  <li><%= city[i] %> , <%= state[i] %> <%= zipcode[i] %></li>
-                  <li>
-                     <%= room[i] %> bed <%= bathroom[i] %> bath <%= size[i] %> sq. ft
-                  </li>
-               </ul>
-            </div>
-         </div>
-         <br />
-         <% } %>
-         <!-- End Result Card -->
-
+               <% for (var i=0; i < resultCount; i++) { %>
+               <div class="card" style="width: 18rem;">
+                  <img src="<%= listImg[i] %>" alt="house" class="img-thumbnail">
+                  <!-- <img src="<%= listImg[i] %>" width="100" height="100" class="card-img-top" alt="a house"> -->
+                  <div class="card-body">
+                     <h5 class="card-title">A beautiful house $<%= price[i] %></h5>
+                     <p><%= room[i] %> bed <%= bathroom[i] %> bath <%= size[i] %> sq. ft</p>
+                     <a href="/details/<%= id[i] %>" class="btn btn-primary btn-sm" tabindex="-1" role="button"
+                        aria-disabled="true">More
+                        details...</a>
+                  </div>
+               </div>
+               <br />
+               <% } %>
+               <!-- End Result Card -->
+            </div> <!-- End Result Column-->
+         </div> <!-- End Row-->
       </div> <!-- End Jumbotron -->
+
+
+   </div> <!-- End Container -->
+
+
+   <!-- Begin Footer -->
+   <div class="jumbotron">
+      <!-- <div class="row"> -->
+      <!-- footer -->
+      <footer class="col-12" style="background-color:grey">
+         <!-- <div class="container"> -->
+         <a href="#" style="color:#f5f5f5">Contact</a>
+         <a href="#" style="color:#f5f5f5">Priavcy Policy</a>
+         <!-- </div> -->
+      </footer>
+      <!-- </div>  -->
+      <!-- End Footer -->
+   </div> <!-- End Jumbotron -->
+
+
    </div> <!-- end container -->
 
    <!-- Optional JavaScript -->
