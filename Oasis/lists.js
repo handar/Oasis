@@ -13,7 +13,7 @@ const express = require("express");
 const app = express();
 
 const bodyParser = require("body-parser");
-const port = 3000;
+const port = process.env.PORT || 5000;
 
 var prop_info = [];
 var map;
@@ -23,15 +23,18 @@ var img_url = [];
 var prop_type = [];
 var prop_add = [];
 var prop_city = [];
-var prop_state = [];
+var prop_state = "California"; // Default State
 var prop_zipcode = [];
 var prop_price = [];
 var prop_size = [];
 var prop_room = [];
+var prop_title = [];
+var prop_description = [];
 var prop_bathroom = [];
+
 var countAllProp = 0;
 var resultLength = 0;
-
+var terms = "";
 /**
  * CONFIGURATIONS
  */
@@ -83,8 +86,48 @@ app.get("/lists", function(req, res) {
     price: prop_price,
     size: prop_size,
     room: prop_room,
-    bathroom: prop_bathroom
+    bathroom: prop_bathroom,
+    title: prop_title
   });
+});
+
+app.get("/postlisting", function(req, res) {
+  res.render("postlisting");
+});
+
+app.post("/postlisting", function(req, res) {
+  prop_add = req.body.streetAddress;
+  prop_city = req.body.city;
+  // prop_state = "California"; // default STATE: Californias
+  prop_zipcode = req.body.zipcode;
+  prop_price = req.body.rentPrice;
+  prop_room = req.body.room;
+  prop_bathroom = req.body.bathroom;
+  prop_type = req.body.rentalType;
+  prop_title = req.body.title;
+  img = req.body.propertyImg;
+  terms = req.body.policyTerms;
+  prop_description = req.body.description;
+
+  // console.log
+  console.log(
+    "-------------Post a Listing Info:---------------------------------"
+  );
+  console.log("Address: " + prop_add);
+  console.log("city: " + prop_city);
+  console.log("state: " + prop_state);
+  console.log("zipcode: " + prop_zipcode);
+  console.log("price: " + prop_price);
+  console.log("room: " + prop_room);
+  console.log("bathroom: " + prop_bathroom);
+  console.log("Property Type: " + prop_type);
+  console.log("Property img: " + img);
+  console.log("Property Terms: " + terms);
+  console.log("Property Title: " + prop_title);
+  console.log("Property Description: " + prop_description);
+  console.log(
+    "--------------------------------------------------------------------"
+  );
 });
 
 /**
@@ -124,7 +167,7 @@ app.get("/details/:id", function(req, res) {
 // Select All listings table
 function selectAll() {
   let db = createConnection(); // create database connection
-  let sql = "SELECT * FROM property";
+  let sql = "SELECT * FROM listing";
   db.query(sql, function(err, result, field) {
     if (err) throw err;
     resultLength = Number(result.length);
@@ -149,6 +192,7 @@ function selectAll() {
         prop_size.push(result[i].size);
         prop_room.push(result[i].room);
         prop_bathroom.push(result[i].bathroom);
+        prop_title.push(result[i].title);
       }
     } else {
       console.log("Sorry no result found!");
@@ -162,7 +206,7 @@ function percentLike(propType, searchParam) {
   let type = propType;
   let search = "%" + searchParam + "%";
   let db = createConnection(); // create database connection
-  let sql = "SELECT * FROM property WHERE type = ? OR address LIKE ?";
+  let sql = "SELECT * FROM listing WHERE type = ? OR address LIKE ?";
   db.query(sql, [type, search], function(err, result, field) {
     if (err) throw err;
     // console.log(result);
@@ -185,6 +229,7 @@ function percentLike(propType, searchParam) {
         prop_size.push(result[i].size);
         prop_room.push(result[i].room);
         prop_bathroom.push(result[i].bathroom);
+        prop_title.push(result[i].title);
       }
     } else {
       console.log("Sorry no result found!");
@@ -197,7 +242,7 @@ function percentLike(propType, searchParam) {
 
 function loadListings(id) {
   let db = createConnection(); // create database connection
-  let sql = "SELECT * FROM property WHERE id = ? ";
+  let sql = "SELECT * FROM listing WHERE id = ? ";
   db.query(sql, id, function(err, result, field) {
     if (err) throw err;
     console.log("result" + result);
@@ -217,6 +262,7 @@ function loadListings(id) {
     prop_info.push(result[0].room);
     prop_info.push(result[0].bathroom);
     prop_info.push(result[0].img);
+    prop_title.push(result[i].title);
     console.log(map);
     console.log(prop_info);
   });
