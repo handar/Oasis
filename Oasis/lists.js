@@ -28,13 +28,13 @@ var prop_zipcode = [];
 var prop_price = [];
 var prop_size = [];
 var prop_room = [];
-var prop_title = [];
-var prop_description = [];
 var prop_bathroom = [];
+var prop_title = [];
+// var prop_description = [];
 
 var countAllProp = 0;
 var resultLength = 0;
-var terms = "";
+// var terms = "";
 /**
  * CONFIGURATIONS
  */
@@ -54,6 +54,7 @@ const countAllMinMax = require(__dirname + "/mysql/countAllMinMax.js");
 // const insertInto = require(__dirname + "/mysql/insertInto.js");
 // const selectAll = require(__dirname + "/mysql/selectAll.js");
 // const percentLlike = require(__dirname + "/mysql/percentLike.js");
+const insertIntoListing = require(__dirname + "/mysql/insertIntoListing.js");
 
 /**
  * MySQL Database Query Execution
@@ -96,38 +97,96 @@ app.get("/postlisting", function(req, res) {
 });
 
 app.post("/postlisting", function(req, res) {
-  prop_add = req.body.streetAddress;
-  prop_city = req.body.city;
-  // prop_state = "California"; // default STATE: Californias
-  prop_zipcode = req.body.zipcode;
-  prop_price = req.body.rentPrice;
-  prop_room = req.body.room;
-  prop_bathroom = req.body.bathroom;
-  prop_type = req.body.rentalType;
-  prop_title = req.body.title;
-  img = req.body.propertyImg;
-  terms = req.body.policyTerms;
-  prop_description = req.body.description;
+  // capture user input
+  let add = req.body.streetAddress; // string
+  let city = req.body.city; // string
+  // prop_state = "California"; // default STATE: California --> string
+  let zipcode = req.body.zipcode; // string
+  let price = Number(req.body.rentPrice); // number (int)
+  let size = Number(req.body.size); // number (int)
+  let room = Number(req.body.room); // number (int)
+  let bathroom = Number(req.body.bathroom); // number (int)
+  let img = req.body.propertyImg; // string
+  let type = req.body.rentalType; // string
+  let title = req.body.title; // string
+  let description = req.body.description; // string
+
+  // only needed to check that the lister has agreed to terms when terms == "on"
+  let terms = req.body.policyTerms;
 
   // console.log
   console.log(
     "-------------Post a Listing Info:---------------------------------"
   );
-  console.log("Address: " + prop_add);
-  console.log("city: " + prop_city);
+  console.log("Address: " + add);
+  console.log("city: " + city);
+  console.log("typeof city: " + typeof city);
   console.log("state: " + prop_state);
-  console.log("zipcode: " + prop_zipcode);
-  console.log("price: " + prop_price);
-  console.log("room: " + prop_room);
-  console.log("bathroom: " + prop_bathroom);
-  console.log("Property Type: " + prop_type);
+  console.log("zipcode: " + zipcode);
+  console.log("typeof zipcode: " + typeof zipcode);
+  console.log("price: " + price);
+  console.log("typeof price: " + typeof price);
+  console.log("Room size: " + size);
+  console.log("typeof size: " + typeof size);
+  console.log("room: " + room);
+  console.log("typeof room: " + typeof room);
+  console.log("bathroom: " + bathroom);
+  console.log("typeof bathroom: " + typeof bathroom);
   console.log("Property img: " + img);
+  console.log("Property Type: " + type);
+  console.log("Property Title: " + title);
+  console.log("Property Description: " + description);
   console.log("Property Terms: " + terms);
-  console.log("Property Title: " + prop_title);
-  console.log("Property Description: " + prop_description);
+
   console.log(
     "--------------------------------------------------------------------"
   );
+
+  // pack input data into array
+  let data = [];
+  data.push(add);
+  data.push(city);
+  data.push(prop_state);
+  data.push(zipcode);
+  data.push(price);
+  data.push(size);
+  data.push(room);
+  data.push(bathroom);
+  data.push(img);
+  data.push(type);
+  data.push(title);
+  data.push(description);
+
+  // inpu validation
+  try {
+    // terms validation
+    if (terms != "on") {
+      throw "Please accept our terms and conditions so we can process your listing.";
+    }
+
+    // address validation
+    if (add.length > 40) {
+      throw "Street address is too long. Please enter address less than 40 characters. Example: 123 Main St.";
+    }
+
+    // city validation
+    if (typeof city != "string") {
+      throw "City name cannot have digits. Please enter city name again. Example: San Francisco";
+    }
+    if (city.length > 40) {
+      throw "City name is too long. Please enter city name less than 40 characters. Example: San Francisco";
+    }
+
+    // zipcode validation
+    // if ()
+
+    // insertIntoListing
+    insertIntoListing(data);
+
+    // insertInto
+  } catch (error) {
+    throw error;
+  }
 });
 
 /**

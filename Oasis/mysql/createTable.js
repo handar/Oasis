@@ -1,30 +1,30 @@
 /**
- * createTable.js    - A program to create a table into MySQL database. 
+ * createTable.js    - A program to create a table into MySQL database.
  * @author             Ratna Lama
- * @author        
- * @author  
+ * @author
+ * @author
  * @date               4/11/2019
- * 
- * @description        CREATE TABLE IF NOT EXISTS <table_name> 
- * 
+ *
+ * @description        CREATE TABLE IF NOT EXISTS <table_name>
+ *
  */
 
 // Import Module
-const createConnection = require(__dirname + '/createConnection.js');
+const createConnection = require(__dirname + "/createConnection.js");
 
 // create database connection
 let db = createConnection();
 
 // Export as module property
-exports.property = function () {
-    // CREATE TABLE property
-    let sql = "CREATE TABLE IF NOT EXISTS property (id INT PRIMARY KEY AUTO_INCREMENT, address VARCHAR(100), city VARCHAR(100), state VARCHAR(100), zipcode VARCHAR(30), price INT, size INT, room INT, bathroom INT, img VARCHAR(255))";
-    db.query(sql, function(err, result, fields) {
-        if (err) throw err;
-        console.log('Table created successfully...');
-    });
-} // end function
-
+exports.property = function() {
+  // CREATE TABLE property
+  let sql =
+    "CREATE TABLE IF NOT EXISTS property (id INT PRIMARY KEY AUTO_INCREMENT, address VARCHAR(100), city VARCHAR(100), state VARCHAR(100), zipcode VARCHAR(30), price INT, size INT, room INT, bathroom INT, img VARCHAR(255))";
+  db.query(sql, function(err, result, fields) {
+    if (err) throw err;
+    console.log("Table created successfully...");
+  });
+}; // end function
 
 // Export as module users
 //     exports.users = function () {
@@ -35,5 +35,3 @@ exports.property = function () {
 //         console.log('Table created successfully...');
 //     });
 // } // end function
-
-
