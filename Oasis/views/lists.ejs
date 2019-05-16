@@ -3,28 +3,28 @@
 
 <head>
    <!-- Required meta tags -->
-   <meta charset="utf-8">
-   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+   <meta charset="utf-8" />
+   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 
    <!-- Bootstrap CSS -->
    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-   <link rel="stylesheet" href="/css/liststyle.css">
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
+   <link rel="stylesheet" href="/css/liststyle.css" />
 
    <title>Home page - search listings</title>
 </head>
 
 <body>
-
-
    <!-- Begin container -->
    <div class="container">
-
       <!-- Begin Navigation -->
       <div class="jumbotron">
-         <h3>Navigation</h3>
+         <h1>Welcome to GatoRents Listing Platform!</h1>
+         <hr />
+
          <p class="lead">
-            Total listings are <strong><%= countAllListings %></strong> and counting more...
+            Total listings are <strong><%= countAllListings %></strong> and
+            counting more...
          </p>
 
          <!-- Begin Form #00 -->
@@ -39,46 +39,87 @@
                         <option value="house">House</option>
                         <option value="apartment">Apartment</option>
                      </select>
-                     <input type="text" name="search">
-                     <input type="submit" value="Search">
+                     <input type="text" name="search" />
+                     <input type="submit" value="Search" />
                   </fieldset>
                </div>
             </div>
          </form>
          <!--End Form #00-->
-      </div> <!-- End Jumbotron-->
+         <br>
+         <br>
+         <hr>
+
+         <div>
+            <h2>Post Your Listing</h2>
+            <a href="postlisting">add your listing +</a>
+
+         </div>
+
+         <br />
+         <hr />
+         <!-- Begin Result Card-->
+         <% if ( resultCount > 0) { %>
+         <h1>Result</h1>
+         <hr />
+         <p>
+            Found <%= resultCount %> properties that match your search critera.
+         </p>
+         <% } %> <% for (var i=0; i < resultCount; i++) { %>
+         <div class="card" style="width: 18rem;">
+            <img src="<%= listImg[i] %>" alt="house" class="img-thumbnail" />
+            <!-- <img src="<%= listImg[i] %>" width="100" height="100" class="card-img-top" alt="a house"> -->
+            <div class="card-body">
+               <h5 class="card-title"><%= title[i] %> $<%= price[i] %></h5>
+               <p>
+                  <%= room[i] %> bed <%= bathroom[i] %> bath <%= size[i] %> sq. ft
+               </p>
+               <a href="/details/<%= id[i] %>" class="btn btn-primary btn-sm" tabindex="-1" role="button"
+                  aria-disabled="true">More details...</a>
+            </div>
+         </div>
+         <br />
+         <% } %>
+         <!-- End Result Card -->
+      </div>
+      <!-- End Jumbotron-->
       <!-- End Navigation -->
 
       <!-- Begin Result Card -->
       <!-- <div class="jumbotron"> -->
-      <div class="jumbotron">
-         <div class="row">
-            <h3>Filter Section</h3>
-            <br />
-            <!-- Filter Column -->
-            <div class="col-sm-4">
+      <!-- <div class="jumbotron"> -->
+      <!-- <div class="row"> -->
+      <!-- <p><button type="button" class="btn btn-primary">Low To High</button></p>
+            <br>
+            <p><button type="button" class="btn btn-primary">High To Low</button></p> -->
+      <!-- <h3>Filter Section</h3>
+            <br /> -->
+      <!-- Filter Column -->
+      <!-- <div class="col-sm-4">
                <br />
                <br />
                <br />
                <p><button type="button" class="btn btn-primary">Low To High</button></p>
                <br />
-               <P><button type="button" class="btn btn-primary">High To Low</button></P>
+               <p><button type="button" class="btn btn-primary">High To Low</button></p>
                <br />
-            </div><!-- End Filter Column -->
+            </div>
+            <-- End Filter Column -->
 
-            <!-- Result Column-->
-            <div class="col-sm-8 vertical-bar">
-               <!-- Begin Result Card-->
-               <% if ( resultCount > 0) { %>
+      <!-- Result Column-->
+      <!-- <div class="col-sm-8 vertical-bar"> -->
+      <!-- Begin Result Card-->
+      <!-- <% if ( resultCount > 0) { %>
                <h1>Result</h1>
+               <hr>
                <p>Found <%= resultCount %> properties that match your search critera.</p>
                <% } %>
 
                <% for (var i=0; i < resultCount; i++) { %>
                <div class="card" style="width: 18rem;">
-                  <img src="<%= listImg[i] %>" alt="house" class="img-thumbnail">
-                  <!-- <img src="<%= listImg[i] %>" width="100" height="100" class="card-img-top" alt="a house"> -->
-                  <div class="card-body">
+                  <img src="<%= listImg[i] %>" alt="house" class="img-thumbnail"> -->
+      <!-- <img src="<%= listImg[i] %>" width="100" height="100" class="card-img-top" alt="a house"> -->
+      <!-- <div class="card-body">
                      <h5 class="card-title"><%= title[i] %> $<%= price[i] %></h5>
                      <p><%= room[i] %> bed <%= bathroom[i] %> bath <%= size[i] %> sq. ft</p>
                      <a href="/details/<%= id[i] %>" class="btn btn-primary btn-sm" tabindex="-1" role="button"
@@ -87,32 +128,34 @@
                   </div>
                </div>
                <br />
-               <% } %>
-               <!-- End Result Card -->
-            </div> <!-- End Result Column-->
-         </div> <!-- End Row-->
-      </div> <!-- End Jumbotron -->
+               <% } %> -->
+      <!-- End Result Card -->
+      <!-- </div> -->
+      <!-- End Result Column-->
+      <!-- </div>  -->
+      <!-- End Row-->
+      <!-- </div>  -->
+      <!-- End Jumbotron -->
 
+      <!-- </div>  -->
+      <!-- End Container -->
 
-   </div> <!-- End Container -->
-
-
-   <!-- Begin Footer -->
-   <div class="jumbotron">
+      <!-- Begin Footer -->
+      <!-- <div class="jumbotron"> -->
       <!-- <div class="row"> -->
       <!-- footer -->
-      <footer class="col-12" style="background-color:grey">
-         <!-- <div class="container"> -->
-         <a href="#" style="color:#f5f5f5">Contact</a>
-         <a href="#" style="color:#f5f5f5">Priavcy Policy</a>
-         <!-- </div> -->
-      </footer>
+      <!-- <footer class="col-12" style="background-color:grey"> -->
+      <!-- <div class="container"> -->
+      <!-- <a href="#" style="color:#f5f5f5">Contact</a>
+         <a href="#" style="color:#f5f5f5">Priavcy Policy</a> -->
+      <!-- </div> -->
+      <!-- </footer> -->
       <!-- </div>  -->
       <!-- End Footer -->
-   </div> <!-- End Jumbotron -->
-
-
-   </div> <!-- end container -->
+      <!-- </div>  -->
+      <!-- End Jumbotron -->
+   </div>
+   <!-- end container -->
 
    <!-- Optional JavaScript -->
    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
@@ -125,7 +168,6 @@
    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
       integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
    </script>
-
 </body>
 
 </html>

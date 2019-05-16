@@ -29,6 +29,8 @@ function insertIntoListing(data) {
     if (err) throw err;
     console.log("Values inserted into table successfully...");
   }); // end query
+  // End Database Connection
+  db.end();
 } // end inserInto()
 
 // Export module

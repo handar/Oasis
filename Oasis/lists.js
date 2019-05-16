@@ -23,7 +23,7 @@ var img_url = [];
 var prop_type = [];
 var prop_add = [];
 var prop_city = [];
-var prop_state = "California"; // Default State
+var prop_state = []; // Default State
 var prop_zipcode = [];
 var prop_price = [];
 var prop_size = [];
@@ -46,6 +46,7 @@ app.use(express.static(__dirname + "/public")); // css
  * IMPORT MODULES - MySQL query
  */
 const createConnection = require(__dirname + "/mysql/createConnection.js");
+const createTable = require(__dirname + "/mysql/createTable.js");
 const countAllProperty = require(__dirname + "/mysql/countAllProperty.js");
 // const ascendPrice = require(__dirname + "/mysql/ascendPrice.js");
 // const filterByMinMax = require(__dirname + "/mysql/filterByMinMax.js");
@@ -54,13 +55,14 @@ const countAllMinMax = require(__dirname + "/mysql/countAllMinMax.js");
 // const insertInto = require(__dirname + "/mysql/insertInto.js");
 // const selectAll = require(__dirname + "/mysql/selectAll.js");
 // const percentLlike = require(__dirname + "/mysql/percentLike.js");
-const insertIntoListing = require(__dirname + "/mysql/insertIntoListing.js");
+// const insertIntoListing = require(__dirname + "/mysql/insertIntoListing.js");
 
 /**
  * MySQL Database Query Execution
  */
 // let db = createConnection(); // Create Database Connection
 // createDB();           // Create a Database name csc675
+//createTable.listing2();
 // alterTable();
 // insertInto();
 //
@@ -100,7 +102,7 @@ app.post("/postlisting", function(req, res) {
   // capture user input
   let add = req.body.streetAddress; // string
   let city = req.body.city; // string
-  // prop_state = "California"; // default STATE: California --> string
+  let state = req.body.state; // default STATE: California --> string
   let zipcode = req.body.zipcode; // string
   let price = Number(req.body.rentPrice); // number (int)
   let size = Number(req.body.size); // number (int)
@@ -111,8 +113,39 @@ app.post("/postlisting", function(req, res) {
   let title = req.body.title; // string
   let description = req.body.description; // string
 
-  // only needed to check that the lister has agreed to terms when terms == "on"
+  // the lister has agreed to terms when terms == "on"
   let terms = req.body.policyTerms;
+
+  // // pack input data into array object
+  let data = {
+    address: add,
+    city: city,
+    state: state,
+    zipcode: zipcode,
+    price: price,
+    size: size,
+    room: room,
+    bathroom: bathroom,
+    img: img,
+    type: type,
+    title: title,
+    description: description
+  };
+
+  // pack input data into array
+  // let data = [];
+  // data.push(add);
+  // data.push(city);
+  // data.push(state);
+  // data.push(zipcode);
+  // data.push(price);
+  // data.push(size);
+  // data.push(room);
+  // data.push(bathroom);
+  // data.push(img);
+  // data.push(type);
+  // data.push(title);
+  // data.push(description);
 
   // console.log
   console.log(
@@ -120,44 +153,46 @@ app.post("/postlisting", function(req, res) {
   );
   console.log("Address: " + add);
   console.log("city: " + city);
-  console.log("typeof city: " + typeof city);
-  console.log("state: " + prop_state);
+  // console.log("typeof city: " + typeof city);
+  console.log("state: " + state);
   console.log("zipcode: " + zipcode);
-  console.log("typeof zipcode: " + typeof zipcode);
+  // console.log("typeof zipcode: " + typeof zipcode);
   console.log("price: " + price);
-  console.log("typeof price: " + typeof price);
-  console.log("Room size: " + size);
-  console.log("typeof size: " + typeof size);
+  // console.log("typeof price: " + typeof price);
+  console.log("size: " + size);
+  // console.log("typeof size: " + typeof size);
   console.log("room: " + room);
-  console.log("typeof room: " + typeof room);
+  // console.log("typeof room: " + typeof room);
   console.log("bathroom: " + bathroom);
-  console.log("typeof bathroom: " + typeof bathroom);
-  console.log("Property img: " + img);
-  console.log("Property Type: " + type);
-  console.log("Property Title: " + title);
-  console.log("Property Description: " + description);
-  console.log("Property Terms: " + terms);
+  // console.log("typeof bathroom: " + typeof bathroom);
+  console.log("img: " + img);
+  console.log("Type: " + type);
+  // console.log("typeof type: " + typeof type);
+  console.log("Title: " + title);
+  // console.log("typeof title: " + typeof title);
+  console.log("Description: " + description);
+  // console.log("typeof description: " + typeof description);
+  console.log("Terms: " + terms);
+  // console.log("typeof terms: " + typeof terms);
 
   console.log(
     "--------------------------------------------------------------------"
   );
 
-  // pack input data into array
-  let data = [];
-  data.push(add);
-  data.push(city);
-  data.push(prop_state);
-  data.push(zipcode);
-  data.push(price);
-  data.push(size);
-  data.push(room);
-  data.push(bathroom);
-  data.push(img);
-  data.push(type);
-  data.push(title);
-  data.push(description);
+  // data.push(add);
+  // data.push(city);
+  // data.push(state);
+  // data.push(zipcode);
+  // data.push(price);
+  // data.push(size);
+  // data.push(room);
+  // data.push(bathroom);
+  // // data.push(img);
+  // data.push(type);
+  // data.push(title);
+  // data.push(description);
 
-  // inpu validation
+  // input validation
   try {
     // terms validation
     if (terms != "on") {
@@ -181,12 +216,26 @@ app.post("/postlisting", function(req, res) {
     // if ()
 
     // insertIntoListing
-    insertIntoListing(data);
+    // insertIntoListing(data);
+    // insertIntoListing2(data);
+    insertIntoListing3(data);
 
     // insertInto
   } catch (error) {
     throw error;
   }
+
+  // // create database connection
+  // let db = createConnection();
+
+  // // Database query
+  // let sql = "INSERT INTO listing2 SET ?";
+  // db.query(sql, data1, function(err, result, field) {
+  //   if (err) throw err;
+  //   console.log("Values inserted into table successfully...");
+  // }); // end query
+  // // End Database Connection
+  // db.end();
 });
 
 /**
@@ -245,7 +294,7 @@ function selectAll() {
         prop_type.push(result[i].type);
         prop_add.push(result[i].address);
         prop_city.push(result[i].city);
-        prop_state.push(result[i].state);
+        // prop_state.push(result[i].state);
         prop_zipcode.push(result[i].zipcode);
         prop_price.push(result[i].price);
         prop_size.push(result[i].size);
@@ -282,7 +331,7 @@ function percentLike(propType, searchParam) {
         prop_type.push(result[i].type);
         prop_add.push(result[i].address);
         prop_city.push(result[i].city);
-        prop_state.push(result[i].state);
+        // prop_state.push(result[i].state);
         prop_zipcode.push(result[i].zipcode);
         prop_price.push(result[i].price);
         prop_size.push(result[i].size);
@@ -314,7 +363,7 @@ function loadListings(id) {
     prop_info.push(result[0].type);
     prop_info.push(result[0].address);
     prop_info.push(result[0].city);
-    prop_info.push(result[0].state);
+    // prop_info.push(result[0].state);
     prop_info.push(result[0].zipcode);
     prop_info.push(result[0].price);
     prop_info.push(result[0].size);
@@ -326,6 +375,53 @@ function loadListings(id) {
     console.log(prop_info);
   });
 }
+
+// Populate Database
+function insertIntoListing(data) {
+  // create database connection
+  let db = createConnection();
+
+  // Database query
+  let sql =
+    "INSERT INTO listing2 (address, city, state, zipcode, price, size, room, bathroom,) VALUES ?";
+  db.query(sql, [data], function(err, result, field) {
+    if (err) throw err;
+    console.log("Values inserted into table successfully...");
+  }); // end query
+  // End Database Connection
+  db.end();
+} // end inserInto()
+
+// Populate Database
+function insertIntoListing2(data) {
+  // create database connection
+  let db = createConnection();
+
+  // Database query
+  let sql =
+    "INSERT INTO listing2 (address, city, state, zipcode, price, size, room, bathroom, type, title, description) VALUES ?";
+  db.query(sql, [data], function(err, result, field) {
+    if (err) throw err;
+    console.log("Values inserted into table successfully...");
+  }); // end query
+  // End Database Connection
+  db.end();
+} // end inserInto()
+
+// Populate Database
+function insertIntoListing3(data) {
+  // create database connection
+  let db = createConnection();
+
+  // Database query
+  let sql = "INSERT INTO listing SET ?";
+  db.query(sql, data, function(err, result, field) {
+    if (err) throw err;
+    console.log("Values inserted into table successfully...");
+  }); // end query
+  // End Database Connection
+  db.end();
+} // end inserInto()
 
 // listen to port
 app.listen(port, function() {
