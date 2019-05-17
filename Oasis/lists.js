@@ -98,16 +98,29 @@ app.get("/postlisting", function(req, res) {
   res.render("postlisting");
 });
 
+app.get("/thankyou", function(req, res) {
+  res.redirect("/thankyou");
+});
+
 app.post("/postlisting", function(req, res) {
   // capture user input
   let add = req.body.streetAddress; // string
   let city = req.body.city; // string
   let state = req.body.state; // default STATE: California --> string
   let zipcode = req.body.zipcode; // string
+
   let price = Number(req.body.rentPrice); // number (int)
+  let priceStr = req.body.rentPrice; // string
+
   let size = Number(req.body.size); // number (int)
+  let sizeStr = req.body.size; // string
+
   let room = Number(req.body.room); // number (int)
+  let roomStr = req.body.room; // string
+
   let bathroom = Number(req.body.bathroom); // number (int)
+  let bathroomStr = req.body.bathroom; // string
+
   let img = req.body.propertyImg; // string
   let type = req.body.rentalType; // string
   let title = req.body.title; // string
@@ -132,110 +145,58 @@ app.post("/postlisting", function(req, res) {
     description: description
   };
 
-  // pack input data into array
-  // let data = [];
-  // data.push(add);
-  // data.push(city);
-  // data.push(state);
-  // data.push(zipcode);
-  // data.push(price);
-  // data.push(size);
-  // data.push(room);
-  // data.push(bathroom);
-  // data.push(img);
-  // data.push(type);
-  // data.push(title);
-  // data.push(description);
-
-  // console.log
-  console.log(
-    "-------------Post a Listing Info:---------------------------------"
-  );
-  console.log("Address: " + add);
-  console.log("city: " + city);
-  // console.log("typeof city: " + typeof city);
-  console.log("state: " + state);
-  console.log("zipcode: " + zipcode);
-  // console.log("typeof zipcode: " + typeof zipcode);
-  console.log("price: " + price);
-  // console.log("typeof price: " + typeof price);
-  console.log("size: " + size);
-  // console.log("typeof size: " + typeof size);
-  console.log("room: " + room);
-  // console.log("typeof room: " + typeof room);
-  console.log("bathroom: " + bathroom);
-  // console.log("typeof bathroom: " + typeof bathroom);
-  console.log("img: " + img);
-  console.log("Type: " + type);
-  // console.log("typeof type: " + typeof type);
-  console.log("Title: " + title);
-  // console.log("typeof title: " + typeof title);
-  console.log("Description: " + description);
-  // console.log("typeof description: " + typeof description);
-  console.log("Terms: " + terms);
-  // console.log("typeof terms: " + typeof terms);
-
-  console.log(
-    "--------------------------------------------------------------------"
-  );
-
-  // data.push(add);
-  // data.push(city);
-  // data.push(state);
-  // data.push(zipcode);
-  // data.push(price);
-  // data.push(size);
-  // data.push(room);
-  // data.push(bathroom);
-  // // data.push(img);
-  // data.push(type);
-  // data.push(title);
-  // data.push(description);
-
-  // input validation
+  // input validation try-catch
   try {
     // terms validation
     if (terms != "on") {
       throw "Please accept our terms and conditions so we can process your listing.";
+    } else {
+      // address validation
+      if (add.length > 40) {
+        throw "Street address is too long. Please enter the address again. Example: 123 Main St.";
+      }
+      // city validation
+      if (city.length > 40) {
+        throw "City name is too long. Please enter the city name again. Example: San Francisco";
+      }
+      // state validation
+      if (state.length > 40) {
+        throw "State name is too long. Please enter the state name again. Example: California";
+      }
+      // zipcode validation
+      if (zipcode.length > 40) {
+        throw "Your entry to the Zipcode nubmer is too long. Please enter the zipcode again. Example: 94132";
+      }
+      // price validation
+      if (priceStr.length > 40) {
+        throw "Your entry to the Price column is too long. Please enter number only in the price column. Example: 1200";
+      }
+      // size validation
+      if (sizeStr.length > 40) {
+        throw "Your entry to the Size column is too long. Please enter number only in the size column. Example: 700";
+      } // room validation
+      if (roomStr.length > 40) {
+        throw "Your entry to the Room column is too long. Please enter number only in the room column. Example: 3";
+      }
+      // bathroom validation
+      if (bathroomStr.length > 40) {
+        throw "Your entry to the Bathroom column is too long. Please enter number only in the bathroom column. Example: 2";
+      }
+      // title validation
+      if (title.length > 40) {
+        throw "Your entry to the Title is too long. Please enter the title again. Example: A charming house close to SFSU";
+      }
+
+      // if all good then insert the data
+      insertIntoListing(data);
+      res.send(
+        "<h3>Thank you for your posting. Your listing may take up to 24 hours to be approved.</h3>"
+      );
     }
-
-    // address validation
-    if (add.length > 40) {
-      throw "Street address is too long. Please enter address less than 40 characters. Example: 123 Main St.";
-    }
-
-    // city validation
-    if (typeof city != "string") {
-      throw "City name cannot have digits. Please enter city name again. Example: San Francisco";
-    }
-    if (city.length > 40) {
-      throw "City name is too long. Please enter city name less than 40 characters. Example: San Francisco";
-    }
-
-    // zipcode validation
-    // if ()
-
-    // insertIntoListing
-    // insertIntoListing(data);
-    // insertIntoListing2(data);
-    insertIntoListing3(data);
-
     // insertInto
   } catch (error) {
     throw error;
-  }
-
-  // // create database connection
-  // let db = createConnection();
-
-  // // Database query
-  // let sql = "INSERT INTO listing2 SET ?";
-  // db.query(sql, data1, function(err, result, field) {
-  //   if (err) throw err;
-  //   console.log("Values inserted into table successfully...");
-  // }); // end query
-  // // End Database Connection
-  // db.end();
+  } // end input validation try-catch
 });
 
 /**
@@ -294,7 +255,7 @@ function selectAll() {
         prop_type.push(result[i].type);
         prop_add.push(result[i].address);
         prop_city.push(result[i].city);
-        // prop_state.push(result[i].state);
+        prop_state.push(result[i].state);
         prop_zipcode.push(result[i].zipcode);
         prop_price.push(result[i].price);
         prop_size.push(result[i].size);
@@ -314,7 +275,7 @@ function percentLike(propType, searchParam) {
   let type = propType;
   let search = "%" + searchParam + "%";
   let db = createConnection(); // create database connection
-  let sql = "SELECT * FROM listing WHERE type = ? OR address LIKE ?";
+  let sql = "SELECT * FROM listing WHERE type = ? OR description LIKE ?";
   db.query(sql, [type, search], function(err, result, field) {
     if (err) throw err;
     // console.log(result);
@@ -331,7 +292,7 @@ function percentLike(propType, searchParam) {
         prop_type.push(result[i].type);
         prop_add.push(result[i].address);
         prop_city.push(result[i].city);
-        // prop_state.push(result[i].state);
+        prop_state.push(result[i].state);
         prop_zipcode.push(result[i].zipcode);
         prop_price.push(result[i].price);
         prop_size.push(result[i].size);
@@ -363,7 +324,7 @@ function loadListings(id) {
     prop_info.push(result[0].type);
     prop_info.push(result[0].address);
     prop_info.push(result[0].city);
-    // prop_info.push(result[0].state);
+    prop_info.push(result[0].state);
     prop_info.push(result[0].zipcode);
     prop_info.push(result[0].price);
     prop_info.push(result[0].size);
@@ -378,38 +339,6 @@ function loadListings(id) {
 
 // Populate Database
 function insertIntoListing(data) {
-  // create database connection
-  let db = createConnection();
-
-  // Database query
-  let sql =
-    "INSERT INTO listing2 (address, city, state, zipcode, price, size, room, bathroom,) VALUES ?";
-  db.query(sql, [data], function(err, result, field) {
-    if (err) throw err;
-    console.log("Values inserted into table successfully...");
-  }); // end query
-  // End Database Connection
-  db.end();
-} // end inserInto()
-
-// Populate Database
-function insertIntoListing2(data) {
-  // create database connection
-  let db = createConnection();
-
-  // Database query
-  let sql =
-    "INSERT INTO listing2 (address, city, state, zipcode, price, size, room, bathroom, type, title, description) VALUES ?";
-  db.query(sql, [data], function(err, result, field) {
-    if (err) throw err;
-    console.log("Values inserted into table successfully...");
-  }); // end query
-  // End Database Connection
-  db.end();
-} // end inserInto()
-
-// Populate Database
-function insertIntoListing3(data) {
   // create database connection
   let db = createConnection();
 
