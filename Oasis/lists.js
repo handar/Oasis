@@ -13,14 +13,12 @@ const express = require("express");
 const app = express();
 
 const bodyParser = require("body-parser");
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 8080;
 
 var prop_info = [];
 var map;
 
 var prop_id = [];
-var img_url = [];
-var prop_type = [];
 var prop_add = [];
 var prop_city = [];
 var prop_state = []; // Default State
@@ -29,12 +27,15 @@ var prop_price = [];
 var prop_size = [];
 var prop_room = [];
 var prop_bathroom = [];
+var img_url = [];
+var prop_type = [];
 var prop_title = [];
-// var prop_description = [];
+var prop_description = [];
+var prop_distance = [];
 
 var countAllProp = 0;
 var resultLength = 0;
-// var terms = "";
+
 /**
  * CONFIGURATIONS
  */
@@ -62,7 +63,8 @@ const countAllMinMax = require(__dirname + "/mysql/countAllMinMax.js");
  */
 // let db = createConnection(); // Create Database Connection
 // createDB();           // Create a Database name csc675
-//createTable.listing2();
+//createTable.listing2(); // listing2
+// createTable.user(); // user
 // alterTable();
 // insertInto();
 //
@@ -77,11 +79,9 @@ app.get("/lists", function(req, res) {
   // count = countAllProperty();
   // console.log("countAllProperty @ lists Page: " + count);
   res.render("lists", {
-    id: prop_id,
     countAllListings: countAllProp,
     resultCount: resultLength,
-    listImg: img_url,
-    type: prop_type,
+    id: prop_id,
     addresss: prop_add,
     city: prop_city,
     state: prop_state,
@@ -90,7 +90,11 @@ app.get("/lists", function(req, res) {
     size: prop_size,
     room: prop_room,
     bathroom: prop_bathroom,
-    title: prop_title
+    listImg: img_url,
+    type: prop_type,
+    title: prop_title,
+    description: prop_description,
+    distance: prop_distance
   });
 });
 
@@ -103,46 +107,54 @@ app.get("/thankyou", function(req, res) {
 });
 
 app.post("/postlisting", function(req, res) {
-  // capture user input
+  // Property address
   let add = req.body.streetAddress; // string
   let city = req.body.city; // string
-  let state = req.body.state; // default STATE: California --> string
   let zipcode = req.body.zipcode; // string
+  let state = req.body.state; // default STATE: California --> string
 
+  // Tell us about property
   let price = Number(req.body.rentPrice); // number (int)
   let priceStr = req.body.rentPrice; // string
-
   let size = Number(req.body.size); // number (int)
   let sizeStr = req.body.size; // string
-
   let room = Number(req.body.room); // number (int)
   let roomStr = req.body.room; // string
-
   let bathroom = Number(req.body.bathroom); // number (int)
   let bathroomStr = req.body.bathroom; // string
+  let distance = Number(req.body.distance); // distance (real)
+  let distanceStr = req.body.distance; // distance (string)
 
-  let img = req.body.propertyImg; // string
+  // Select the property type
   let type = req.body.rentalType; // string
+
+  // Listing title
   let title = req.body.title; // string
+
+  // Tell us more about property
   let description = req.body.description; // string
 
-  // the lister has agreed to terms when terms == "on"
+  // Image link
+  let img = req.body.propertyImg; // string
+
+  // Terms and conditions: the lister has agreed to terms when terms == "on"
   let terms = req.body.policyTerms;
 
-  // // pack input data into array object
+  // pack input data into array object
   let data = {
     address: add,
     city: city,
-    state: state,
     zipcode: zipcode,
+    state: state,
     price: price,
     size: size,
     room: room,
     bathroom: bathroom,
-    img: img,
+    distance: distance,
     type: type,
     title: title,
-    description: description
+    description: description,
+    img: img
   };
 
   // input validation try-catch
@@ -164,26 +176,31 @@ app.post("/postlisting", function(req, res) {
         throw "State name is too long. Please enter the state name again. Example: California";
       }
       // zipcode validation
-      if (zipcode.length > 40) {
+      if (zipcode.length > 10) {
         throw "Your entry to the Zipcode nubmer is too long. Please enter the zipcode again. Example: 94132";
       }
       // price validation
-      if (priceStr.length > 40) {
+      if (priceStr.length > 10) {
         throw "Your entry to the Price column is too long. Please enter number only in the price column. Example: 1200";
       }
       // size validation
-      if (sizeStr.length > 40) {
+      if (sizeStr.length > 10) {
         throw "Your entry to the Size column is too long. Please enter number only in the size column. Example: 700";
       } // room validation
-      if (roomStr.length > 40) {
+      if (roomStr.length > 10) {
         throw "Your entry to the Room column is too long. Please enter number only in the room column. Example: 3";
       }
       // bathroom validation
-      if (bathroomStr.length > 40) {
+      if (bathroomStr.length > 10) {
         throw "Your entry to the Bathroom column is too long. Please enter number only in the bathroom column. Example: 2";
       }
+      // distance validation
+      if (distanceStr.length > 10) {
+        throw "Your entry to the Bathroom column is too long. Please enter number only in the bathroom column. Example: 2";
+      }
+
       // title validation
-      if (title.length > 40) {
+      if (title.length > 100) {
         throw "Your entry to the Title is too long. Please enter the title again. Example: A charming house close to SFSU";
       }
 
@@ -251,8 +268,6 @@ function selectAll() {
     if (result.length > 0) {
       for (var i = 0; i < result.length; i++) {
         prop_id.push(result[i].id);
-        img_url.push(result[i].img);
-        prop_type.push(result[i].type);
         prop_add.push(result[i].address);
         prop_city.push(result[i].city);
         prop_state.push(result[i].state);
@@ -261,7 +276,11 @@ function selectAll() {
         prop_size.push(result[i].size);
         prop_room.push(result[i].room);
         prop_bathroom.push(result[i].bathroom);
+        img_url.push(result[i].img);
+        prop_type.push(result[i].type);
         prop_title.push(result[i].title);
+        prop_description.push(result[i].description);
+        prop_distance.push(result[i].distance);
       }
     } else {
       console.log("Sorry no result found!");
@@ -288,8 +307,6 @@ function percentLike(propType, searchParam) {
     if (result.length > 0) {
       for (var i = 0; i < result.length; i++) {
         prop_id.push(result[i].id);
-        img_url.push(result[i].img);
-        prop_type.push(result[i].type);
         prop_add.push(result[i].address);
         prop_city.push(result[i].city);
         prop_state.push(result[i].state);
@@ -298,7 +315,11 @@ function percentLike(propType, searchParam) {
         prop_size.push(result[i].size);
         prop_room.push(result[i].room);
         prop_bathroom.push(result[i].bathroom);
+        img_url.push(result[i].img);
+        prop_type.push(result[i].type);
         prop_title.push(result[i].title);
+        prop_description.push(result[i].description);
+        prop_distance.push(result[i].distance);
       }
     } else {
       console.log("Sorry no result found!");
@@ -321,17 +342,21 @@ function loadListings(id) {
     // reset property array
     prop_info = [];
     prop_info.push(result[0].id);
-    prop_info.push(result[0].type);
+
     prop_info.push(result[0].address);
     prop_info.push(result[0].city);
     prop_info.push(result[0].state);
     prop_info.push(result[0].zipcode);
+
     prop_info.push(result[0].price);
     prop_info.push(result[0].size);
     prop_info.push(result[0].room);
     prop_info.push(result[0].bathroom);
     prop_info.push(result[0].img);
-    prop_title.push(result[i].title);
+    prop_info.push(result[0].type);
+    prop_title.push(result[0].title);
+    prop_title.push(result[0].description);
+    prop_title.push(result[0].distance);
     console.log(map);
     console.log(prop_info);
   });

@@ -58,10 +58,10 @@ exports.user = function() {
   let db = createConnection();
   // CREATE TABLE user
   let sql =
-    "CREATE TABLE IF NOT EXISTS user (id INT PRIMARY KEY AUTO_INCREMENT, firstName VARCHAR(100), lastName VARCHAR(100), email VARCHAR(100), phone VARCHAR(100))";
+    "CREATE TABLE IF NOT EXISTS user (id INT PRIMARY KEY AUTO_INCREMENT, name VARCHAR(100) NOT NULL, email VARCHAR(100) NOT NULL, password VARCHAR(100) NOT NULL)";
   db.query(sql, function(err, result, fields) {
     if (err) throw err;
-    console.log("Table created successfully...");
+    console.log("User table created successfully...");
   });
   // End Database Connection
   db.end();

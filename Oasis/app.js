@@ -17,7 +17,7 @@ const hbs = require("hbs");
 const fs = require("fs");
 
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 8080;
 
 // middleware
 hbs.registerPartials(__dirname + "views/partials");
@@ -85,7 +85,7 @@ app.get("/", function(req, res) {
   res.sendFile(__dirname + "/shuyuandeng.html");
 });
 
-// listen from express module
+// listen to port
 app.listen(port, function() {
-  console.log("App listening on port " + port + " ...");
+  console.log(`Server listening on port ${port}...`);
 });

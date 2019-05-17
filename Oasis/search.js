@@ -13,7 +13,7 @@ const express = require("express");
 const app = express();
 
 const bodyParser = require("body-parser");
-const port = 3000;
+const port = process.env.PORT || 8080;
 
 //testing Lou's address for google map api
 //var lou;
