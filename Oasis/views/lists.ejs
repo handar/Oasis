@@ -34,18 +34,33 @@
                   <!-- Group related data in a form -->
                   <fieldset>
                      <select name="type">
-                        <option value="all">All</option>
-                        <option value="room">Room</option>
-                        <option value="house">House</option>
-                        <option value="apartment">Apartment</option>
+                        <option value="" <%= all %>>All</option>
+                        <option value="room" <%= room %>>Room</option>
+                        <option value="house" <%= house %>>House</option>
+                        <option value="apartment" <%= apartment %>>Apartment</option>
                      </select>
-                     <input type="text" name="search" />
+                     <input type="text" name="search" value="<%= search %>"/>
                      <input type="submit" value="Search" />
                   </fieldset>
                </div>
             </div>
          </form>
          <!--End Form #00-->
+
+         <form action="/filter" method="POST">
+            <h7><i>miles from campus</i></h7>
+                  <div class="input-group">
+                    <select class="custom-select" name="distance" id="inputGroupSelect04">
+                      <option value="" <%= none %>>Choose...</option>
+                      <option value="1" <%= first %>> < 1 mile</option>
+                      <option value="5" <%= second %>> < 5 miles </option>
+                      <option value="50" <%= third %>> > 5 miles</option>
+                    </select>
+                    <div class="input-group-append">
+                      <button type="submit">filter</button>
+                    </div>
+                  </div>
+            </form>
          <br>
          <br>
          <hr>
@@ -86,75 +101,7 @@
       <!-- End Jumbotron-->
       <!-- End Navigation -->
 
-      <!-- Begin Result Card -->
-      <!-- <div class="jumbotron"> -->
-      <!-- <div class="jumbotron"> -->
-      <!-- <div class="row"> -->
-      <!-- <p><button type="button" class="btn btn-primary">Low To High</button></p>
-            <br>
-            <p><button type="button" class="btn btn-primary">High To Low</button></p> -->
-      <!-- <h3>Filter Section</h3>
-            <br /> -->
-      <!-- Filter Column -->
-      <!-- <div class="col-sm-4">
-               <br />
-               <br />
-               <br />
-               <p><button type="button" class="btn btn-primary">Low To High</button></p>
-               <br />
-               <p><button type="button" class="btn btn-primary">High To Low</button></p>
-               <br />
-            </div>
-            <-- End Filter Column -->
-
-      <!-- Result Column-->
-      <!-- <div class="col-sm-8 vertical-bar"> -->
-      <!-- Begin Result Card-->
-      <!-- <% if ( resultCount > 0) { %>
-               <h1>Result</h1>
-               <hr>
-               <p>Found <%= resultCount %> properties that match your search critera.</p>
-               <% } %>
-
-               <% for (var i=0; i < resultCount; i++) { %>
-               <div class="card" style="width: 18rem;">
-                  <img src="<%= listImg[i] %>" alt="house" class="img-thumbnail"> -->
-      <!-- <img src="<%= listImg[i] %>" width="100" height="100" class="card-img-top" alt="a house"> -->
-      <!-- <div class="card-body">
-                     <h5 class="card-title"><%= title[i] %> $<%= price[i] %></h5>
-                     <p><%= room[i] %> bed <%= bathroom[i] %> bath <%= size[i] %> sq. ft</p>
-                     <a href="/details/<%= id[i] %>" class="btn btn-primary btn-sm" tabindex="-1" role="button"
-                        aria-disabled="true">More
-                        details...</a>
-                  </div>
-               </div>
-               <br />
-               <% } %> -->
-      <!-- End Result Card -->
-      <!-- </div> -->
-      <!-- End Result Column-->
-      <!-- </div>  -->
-      <!-- End Row-->
-      <!-- </div>  -->
-      <!-- End Jumbotron -->
-
-      <!-- </div>  -->
-      <!-- End Container -->
-
-      <!-- Begin Footer -->
-      <!-- <div class="jumbotron"> -->
-      <!-- <div class="row"> -->
-      <!-- footer -->
-      <!-- <footer class="col-12" style="background-color:grey"> -->
-      <!-- <div class="container"> -->
-      <!-- <a href="#" style="color:#f5f5f5">Contact</a>
-         <a href="#" style="color:#f5f5f5">Priavcy Policy</a> -->
-      <!-- </div> -->
-      <!-- </footer> -->
-      <!-- </div>  -->
-      <!-- End Footer -->
-      <!-- </div>  -->
-      <!-- End Jumbotron -->
+      
    </div>
    <!-- end container -->
 
