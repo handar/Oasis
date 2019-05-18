@@ -18,6 +18,7 @@ const bodyParser = require("body-parser");
 const port = process.env.PORT || 8080;
 
 //  Authentication Packages
+// var expressValidator = require("express-validator");
 var session = require("express-session");
 var passport = require("passport");
 var LocalStrategy = require("passport-local").Strategy;
@@ -29,6 +30,7 @@ var MySQLStore = require("express-mysql-session")(session);
 app.set("view engine", "ejs"); // set view engine
 app.use(bodyParser.urlencoded({ extended: true })); // body-parser
 app.use(express.static(__dirname + "/public")); // css
+// app.use(expressValidator());
 
 let options = {
     // AWS RDS
@@ -143,6 +145,19 @@ let select_room = "";
 let select_apartment = "";
 let select_house = "";
 
+
+
+app.get("/", function(req, res) {
+  res.render("index");
+});
+
+app.get("/about", function(req, res) {
+  res.render("about");
+});
+
+app.get("/terms", function(req, res) {
+  res.render("terms");
+})
 
 /**
  * GET/POST lists THEN functions 
@@ -520,7 +535,7 @@ function loadListings(id, res) {
   });
 }
 
-app.get("/postlisting", function(req, res) {
+app.get("/postlisting", authenticationMiddleware(), function(req, res) {
   res.render("postlisting");
 });
 
@@ -672,14 +687,17 @@ app.post("/login", passport.authenticate(
 
 // For register app.get page
 app.get("/register", function(req, res) {
-  res.render("register");
+  res.render("register", {
+    success: req.session.success,
+    errors: req.session.errors
+  });
 });
 
 // To end session once user logs out
 app.get("/logout", function(req, res) {
   req.logout();
   req.session.destroy();
-  res.render("home");
+  res.redirect("/");
 });
 
 //for register app.post page
@@ -693,6 +711,7 @@ app.post("/register", function(req, res) {
       "password":hash
     }
 
+    let db = createConnection();
     // Store everything into DB
     let sql = "INSERT INTO user SET ?";
     db.query(sql, user, function(err, result, field) {
@@ -713,6 +732,19 @@ app.post("/register", function(req, res) {
     });
   });
 });
+
+// function alreadyHaveEmail(email) {
+//   let db = createConnection();
+//   let sql = "SELECT * FROM user WHERE email = ?";
+//   db.query(sql, email, function(err, result, field) {
+//     if (err) throw err;
+//     if(result.length > 0) {
+//       return false;
+//     } else {
+//       return true;
+//     }
+//   });
+// }
 
 passport.serializeUser(function(user_id, done) {
   done(null, user_id);
