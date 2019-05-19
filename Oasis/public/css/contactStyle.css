@@ -2,13 +2,6 @@
   box-sizing: border-box;
 }
 
-body {
-  background: #6B2D5C;
-  color: #485e74;
-  line-height: 1.6;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  padding: 1em;
-}
 
 .container {
   max-width: 1170px;

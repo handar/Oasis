@@ -13,22 +13,23 @@
 </head>
 
 <body>
+   <%- include partials/navbar.ejs %>
    <div class="container">
       <h1 class="brand"><span>OASIS</span></h1>
       <div class="wrapper animated bounceInLeft">
          <div class="company-info">
             <h3>Contact Landlord</h3>
             <ul>
-               <li><i class="fa fa-road"></i> 123 Main St</li>
-               <li><i class="fa fa-phone"></i> (415) 555-5555</li>
-               <li><i class="fa fa-envelope"></i> test@oasislisting.com</li>
+               <li><i class="fa fa-road"></i>  <%= address %></li>
+               <!-- <li><i class="fa fa-phone"></i> (415) 555-5555</li> -->
+               <li><i class="fa fa-envelope"></i>  <%= email %></li>
             </ul>
          </div>
          <div class="contact">
             <h3>Request More Info</h3>
 
             <!-- Begin Form -->
-            <form method="POST" action="/send">
+            <form method="POST" action="/send/<%= email %>">
                <p>
                   <label>Name</label>
                   <input type="text" name="name" placeholder="Enter your name">
@@ -52,6 +53,9 @@
          </div>
       </div>
    </div>
+   <br>
+   <br>
+<div><%- include partials/footer.ejs %></div>
 </body>
 
 </html>
