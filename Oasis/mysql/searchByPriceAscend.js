@@ -17,15 +17,15 @@ const createConnection = require(__dirname + "/createConnection.js");
 /**
  * sort the database in ascending order based in price column
  */
-function ascendPrice() {
+function searchByPriceAscend() {
   let db = createConnection(); // create database connection
   // select all property sorted by price column in ascending order
   let sql = "SELECT * FROM property ORDER by price ASC";
   db.query(sql, function(err, result, field) {
     if (err) throw err;
-    //console.log(result);
-    let item = JSON.stringify(result);
-    console.log(item); // JSON object
+    console.log(result);
+    // let item = JSON.stringify(result);
+    // console.log(item); // JSON object
   });
 
   // END DATABASE CONNECTION
@@ -33,4 +33,4 @@ function ascendPrice() {
 } // end ascendPrice()
 
 // Export as module countResultMinMax
-module.exports = ascendPrice;
+module.exports = searchByPriceAscend;

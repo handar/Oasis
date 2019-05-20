@@ -19,11 +19,11 @@ function createConnection() {
     user: "oasisCSC648007",
     password: "41839cSc64807",
     database: "oasisdb"
-    // host: 'localhost',
-    // user: 'root',
-    // password: '',
+    // host: "localhost",
+    // user: "root",
+    // password: "",
     // //database: '',      /** uncomment it if creating database for the first time */
-    // database: 'oasisdb',
+    // database: "oasisdb"
   });
 
   // Connect to MySQL

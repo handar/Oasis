@@ -1,0 +1,21 @@
+.vertical-bar {
+   border-left: 6px solid navy;
+   height: auto;
+}
+
+h1.OASIStitle {
+  text-align: center;
+}
+
+p.OASIStitle {
+  text-align: center;
+  font-size: 20px;
+}
+
+input.searchInput {
+  padding: 6px;
+}
+
+#searchCard {
+  padding-left: 96px;
+}

@@ -72,7 +72,6 @@ button {
   margin-left: 10px;
   font-size: 40px;
   font-style: Helvetica oblique;
-
 }
 
 .p-2 #navbardrop {}
@@ -183,9 +182,8 @@ h1 {
   padding: 20px;
   margin-left: 500px;
 }
-<<<<<<< HEAD
 
-.bs-example {
+<<<<<<< HEAD .bs-example {
   margin-left: 400px;
 }
 
@@ -225,65 +223,70 @@ h1 {
 .buttonid {
   background-color: #ac17e8;
 }
-=======
-.bs-example{
-    	margin-left: 400px;
-    }
-	/* Fix alignment issue of label on extra small devices in Bootstrap 3.2 */
-  .form-horizontal .control-label{
-        padding-top: 7px;
-    }
-  .border{
-    width: 400px;
-    padding: 30px;
-  }
-  .btn-lg{
-    width: 350px;
-    background-color:#ac17e8;
-  }
+
+=======.bs-example {
+  margin-left: 400px;
+}
+
+/* Fix alignment issue of label on extra small devices in Bootstrap 3.2 */
+.form-horizontal .control-label {
+  padding-top: 7px;
+}
+
+.border {
+  width: 400px;
+  padding: 30px;
+}
+
+.btn-lg {
+  width: 350px;
+  background-color: #ac17e8;
+}
 
 //hidden objects for dash page
-  #inbox {
-    display:none;
-  }
+#inbox {
+  display: none;
+}
 
-  #outbox {
-    display:none;
-  }
+#outbox {
+  display: none;
+}
 
-  #listings {
-    display:none;
-  }
+#listings {
+  display: none;
+}
 
-  #favorites {
-    display:none;
-  }
+#favorites {
+  display: none;
+}
 
-  #usersList {
-  display:none;
+#usersList {
+  display: none;
 }
 
 #allListingsList {
-  display:none;
+  display: none;
 }
 
 #unapprovedList {
-  display:none:
+  display: none:
 }
 
 #unapprovedItem {
-  display:none;
+  display: none;
 }
 
 #userItem {
-  display:none;
+  display: none;
 }
 
 #listingItem {
-  display:none;
+  display: none;
 }
-  //description page
-  .buttonid{
-    background-color:#ac17e8;
-  }
->>>>>>> 6144c9a39006cc7ce79fbf82e5949e7529a0f08d
+
+//description page
+.buttonid {
+  background-color: #ac17e8;
+}
+
+>>>>>>>6144c9a39006cc7ce79fbf82e5949e7529a0f08d

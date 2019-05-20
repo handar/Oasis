@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <meta http-equiv="X-UA-Compatible" content="ie=edge">
+   <title>Contact</title>
+   <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
+      integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.css" />
+   <link rel="stylesheet" href="/css/contactStyle.css">
+</head>
+
+<body>
+   <%- include partials/navbar.ejs %>
+   <div class="container">
+      <h1 class="brand"><span>OASIS</span></h1>
+      <div class="wrapper animated bounceInLeft">
+         <div class="company-info">
+            <h3>Contact Landlord</h3>
+            <ul>
+               <li><i class="fa fa-road"></i>  <%= address %></li>
+               <!-- <li><i class="fa fa-phone"></i> (415) 555-5555</li> -->
+               <li><i class="fa fa-envelope"></i>  <%= email %></li>
+            </ul>
+         </div>
+         <div class="contact">
+            <h3>Request More Info</h3>
+
+            <!-- Begin Form -->
+            <form method="POST" action="/send/<%= email %>">
+               <p>
+                  <label>Name</label>
+                  <input type="text" name="name" placeholder="Enter your name">
+               </p>
+               <p>
+                  <label>Email Address</label>
+                  <input type="email" name="email" placeholder="Enter your valid email">
+               </p>
+               <p>
+                  <label>Phone Number</label>
+                  <input type="text" name="phone" placeholder="Enter your valid phone number">
+               </p>
+               <p class="full">
+                  <label>Message</label>
+                  <textarea name="message" rows="5" placeholder="Enter your message to the landlord"></textarea>
+               </p>
+               <p class="full">
+                  <button type="submit">Submit</button>
+               </p>
+            </form> <!-- End Form -->
+         </div>
+      </div>
+   </div>
+   <br>
+   <br>
+<div><%- include partials/footer.ejs %></div>
+</body>
+
+</html>
