@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-135963438-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-135963438-1');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+
+     <link rel="stylesheet" href="../css/style.css">
+
+    <!-- <link rel="stylesheet" href="style.css"> -->
+    <title>Oasis</title>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <!-- <script>
+    $(document).ready(function(){
+        $('#nav-placeholder').load('../navbar.html');
+    });
+    </script> -->
+
+  </head>
+  <body>
+
+    <!-- <div id="nav-placeholder"> -->
+      <%- include partials/navbar.ejs %>
+
+    </div>
+    <!--end of Navigation bar-->
+
+    <div class="container">
+    <p>New User Registration</p>
+
+    <p>Account Information (all fields are mandatory) Already have an account? <a href="/login">Sign in here.</a></p>
+
+    <form action="/register" method="POST" class="needs-validation">
+      <!-- <form> -->
+
+      <div class="form-group">
+        <label for="validationTooltip01">Name</label>
+        <input name="name", type="validationServer01" class="form-control" id="validationTooltip01" required>
+        <div class="invalid-tooltip">
+          Please write your name.
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="validationTooltip02">Email</label>
+        <input name="email", type="validationServer02" class="form-control" id="validationTooltip02" aria-describedby="emailHelp" required>
+        <div class="invalid-tooltip">
+          Please provide a valid email.
+        </div>
+        <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+      </div>
+
+      <div class="form-group">
+        <label for="validationTooltip03">Password</label>
+        <input name="password", type="password" class="form-control" id="validationTooltip03" required>
+        <div class="invalid-tooltip">
+          Please provide a password.
+        </div>
+      </div>
+
+      <button type="submit" class="btn btn-primary" style="background-color:#5F3F91; border-color: #5F3F91;">Register</button>
+    </form> 
+  </div>
+  <br>
+  <br>
+  <br>
+  <div><%- include partials/footer.ejs %></div>
+  </body>
+</html>

@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
+
+  <title>Post Your Listing</title>
+</head>
+
+<%- include partials/navbar.ejs %>
+<br>
+
+<body>
+  <!-- Begin Container -->
+  <div class="container">
+    <!-- Begin Jumbotron -->
+    <div class="jumbotron">
+      <h1>Add Your Listing</h1>
+      <br />
+      <hr />
+      <br />
+
+      <!-- Begin Post Listing Form #00 -->
+      <div>
+        <form action="/postlisting/<%= postUserID %>" method="POST" class="was-validated">
+          <div class="form-row">
+            <div class="col-7">
+              <i>All fields are required.</i><br /><br />
+
+              <!-- Begin Address section -->
+              <div class="form-group">
+                <!-- Group related data in a form -->
+                <fieldset>
+                  <legend>Property Address</legend>
+                  <input type="text" name="streetAddress" placeholder="Street Address" required class="form-control" />
+                  <br />
+                  <input type="text" name="city" placeholder="city" required class="form-control" />
+                  <br />
+                  <input type="text" name="zipcode" placeholder="zip code" required class="form-control" />
+                  <br />
+                  <input type="text" name="state" value="California" class="form-control" />
+                  <br />
+                </fieldset>
+              </div>
+              <!-- End Address section -->
+
+              <!-- Begin rooms and rent section -->
+              <div class="form-group">
+                <fieldset>
+                  <legend>Tell us about your property</legend>
+                  <input type="text" name="rentPrice" placeholder="Monthy rent" required class="form-control" />
+                  <br />
+                  <input type="text" name="size" placeholder="Room size in Sq. Feet" required class="form-control" />
+                  <br />
+                  <input type="text" name="room" placeholder="Number of rooms" required class="form-control" />
+                  <br />
+                  <input type="text" name="bathroom" placeholder="Number of bathroom" required class="form-control" />
+                  <br />
+                  <input type="text" name="distance" placeholder="Approximate distance from SFSU" required
+                    class="form-control" />
+                  <br />
+                </fieldset>
+              </div>
+              <!-- Begin rooms and rent section -->
+
+              <!-- Begin property type section -->
+              <div class="form-group">
+                <fieldset>
+                  <legend>Select the property type</legend>
+                  <input type="radio" name="rentalType" value="room" checked />Single Room<br />
+                  <input type="radio" name="rentalType" value="apartment" />Apartment<br />
+                  <input type="radio" name="rentalType" value="house" />House<br /><br />
+                </fieldset>
+              </div>
+              <!-- End property type section -->
+
+              <!-- Begin property title -->
+              <div class="mb-3">
+                <label for="validationTextarea">Listing Title</label>
+                <textarea name="title" class="form-control is-invalid" id="validationTextarea"
+                  placeholder="Example: A sunny house close to SFSU" required></textarea>
+                <div class="invalid-feedback">
+                  Please enter your listing title.
+                </div>
+              </div>
+              <!-- End property title -->
+
+              <!-- Begin description section -->
+              <div class="mb-3">
+                <label for="validationTextarea">Tell us more about your property</label>
+                <textarea name="description" class="form-control is-invalid" id="validationTextarea"
+                  placeholder="Please describe your property" required></textarea>
+                <div class="invalid-feedback">
+                  Property details can help potential renters find your
+                  listing faster.
+                </div>
+              </div>
+              <!-- End description section -->
+
+              <!-- Begin Image upload section -->
+              <!-- <div class="form-group">
+                  Add image link to your property
+                  <input type="file" name="propertyImg" id="picture" />
+                </div> -->
+              <!-- End Image upload section -->
+
+              <!-- Begin Image upload section -->
+              <div class="mb-3">
+                <label for="validationTextarea">Image link</label>
+                <textarea name="propertyImg" class="form-control is-invalid" id="validationTextarea"
+                  placeholder="Add image link to your property" required></textarea>
+                <div class="invalid-feedback">
+                  Please enter the image link.
+                </div>
+              </div>
+              <!-- End Image upload section -->
+
+              <!-- <h3>Your listing may take up to 24 hours to be approved.</h3> -->
+
+              <br />
+
+              <div class="form-group form-check">
+                <input type="checkbox" name="policyTerms" class="form-check-input" id="termsCheck" />
+                <label class="form-check-label" for="termsCheck">I agree to <a href="#">terms and conditions</a>
+                  .</label>
+              </div>
+
+              <!-- <input type="submit" value="Submit"> -->
+              <button type="submit" value="Submit" class="btn btn-primary btn-lg">
+                Submit
+              </button>
+            </div>
+          </div>
+        </form>
+        <!-- End POST form -->
+      </div>
+      <!--End Post Listing Form #00-->
+    </div>
+    <!-- End Jumbotron -->
+  </div>
+  <!-- End Container -->
+
+  <div><%- include partials/footer.ejs %></div>
+
+  <!-- Optional JavaScript -->
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
+  </script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
+  </script>
+</body>
+
+</html>
