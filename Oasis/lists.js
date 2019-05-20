@@ -767,9 +767,8 @@ app.post("/postlisting/:id", function(req, res) {
 
       // if all good then insert the data
       insertIntoListing(data);
-      res.send(
-        "<h3>Thank you for your posting. Your listing may take up to 24 hours to be approved.</h3>"
-      );
+      req.flash("success", "Thank you for your posting. Your listing may take up to 24 hours to be approved.");
+      res.redirect("/");
     }
     // insertInto
   } catch (error) {
@@ -805,7 +804,7 @@ app.get("/login", function(req, res) {
 // For login app.get authentication 
 app.post("/login", passport.authenticate(
   'local',  {
-    successRedirect: "/dashboard",
+    successRedirect: "/",
     failureRedirect: "/login"
 }));
 
@@ -819,6 +818,7 @@ app.get("/register", function(req, res) {
 app.get("/logout", function(req, res) {
   req.logout();
   req.session.destroy();
+  // req.flash("success", "Logout successful");
   res.redirect("/login");
 });
 
@@ -848,7 +848,7 @@ app.post("/register", function(req, res) {
 
           req.login(user_id, function(err) {
             req.flash("success", "Account created");
-            res.redirect("/dashboard");
+            res.redirect("/");
           });
         });
       }
@@ -953,7 +953,7 @@ app.post("/send/:email", (req, res) => {
     console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
 
     req.flash("success", "Your message has been successfully passed on to the landlord. The landlord shall contact you soon. Please check your email and/or phone.");
-    res.redirect("/dashboard");
+    res.redirect("/");
   });
 });
 
