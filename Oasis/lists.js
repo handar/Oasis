@@ -11,8 +11,10 @@
 
 const express = require("express");
 const app = express();
-const bcrypt = require("bcrypt");
-const saltRounds = 10;
+// const bcrypt = require("bcrypt");
+// const saltRounds = 10;
+var bcrypt = require("bcryptjs");
+var saltRounds = bcrypt.genSaltSync(10);
 
 const nodemailer = require("nodemailer");
 
