@@ -23,7 +23,7 @@ when all the dependencies are installed, run : $ node search.js
 ## Screenrecording
 ![Logging in and viewing info](https://media.giphy.com/media/ciwftmsz4GAav23fGt/giphy.gif)
 ![Uploading a listing](https://media.giphy.com/media/RKG0W8SPmrs1oqpHcm/giphy.gif)
-![Logging out](https://media.giphy.com/media/RKG0W8SPmrs1oqpHcm/giphy.gif)
+![Logging out](https://media.giphy.com/media/JmscaFls8Ef303OZHI/giphy.gif)
 
 
 ## Connection Endpoint
