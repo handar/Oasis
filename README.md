@@ -20,6 +20,9 @@ You will also need my sql database connection. Currently you are directly connec
 
 when all the dependencies are installed, run : $ node search.js
 
+## Screenrecording
+![Logging in and viewing info](https://i.imgur.com/nq00qSP.gifv)
+
 ## Connection Endpoint
 http://52.53.190.148:8080
 bit.ly/oasislisting
